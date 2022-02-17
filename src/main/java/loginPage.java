@@ -13,7 +13,11 @@ public class loginPage extends javax.swing.JFrame {
      * Creates new form loginPage
      */
     public loginPage() {
+
         initComponents();
+        Method.center_screen( this );
+        Method.Escape( this );
+
     }
 
     /**
@@ -25,18 +29,60 @@ public class loginPage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        side_bar = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(232, 232, 255));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setUndecorated(true);
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        side_bar.setBackground(new java.awt.Color(104, 103, 172));
+        side_bar.setPreferredSize(new java.awt.Dimension(350, 600));
+
+        jLabel1.setFont(new java.awt.Font("Cambria", 1, 20)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setLabelFor(side_bar);
+        jLabel1.setText("Banking System");
+
+        jLabel3.setFont(new java.awt.Font("Cambria", 1, 30)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("DIT102 PROJECT");
+
+        javax.swing.GroupLayout side_barLayout = new javax.swing.GroupLayout(side_bar);
+        side_bar.setLayout(side_barLayout);
+        side_barLayout.setHorizontalGroup(
+            side_barLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(side_barLayout.createSequentialGroup()
+                .addContainerGap(64, Short.MAX_VALUE)
+                .addGroup(side_barLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, side_barLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(97, 97, 97))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, side_barLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(53, 53, 53))))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        side_barLayout.setVerticalGroup(
+            side_barLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(side_barLayout.createSequentialGroup()
+                .addGap(235, 235, 235)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addContainerGap(299, Short.MAX_VALUE))
         );
+
+        getContentPane().add(side_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jPanel1.setBackground(new java.awt.Color(232, 232, 255));
+        jPanel1.setPreferredSize(new java.awt.Dimension(900, 600));
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -77,5 +123,9 @@ public class loginPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel side_bar;
     // End of variables declaration//GEN-END:variables
 }

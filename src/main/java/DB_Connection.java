@@ -19,7 +19,7 @@ public class DB_Connection {
     // </editor-fold>
 
 
-    // -------Method ที่ใช้ในการเชื่อมต่อกับ Database--------
+    // -------Method for connect Database--------
     public void connectDB() throws SQLException {
         try{
             conn = DriverManager.getConnection(url,username,password);
@@ -31,7 +31,7 @@ public class DB_Connection {
     // ----------------------------------------------
 
 
-    // ------Method ที่ใช้ในการตัดการเชื่อมต่อกับฐานข้อมูล--------
+    // ------Method for disconnect database--------
     public void disconnect() throws SQLException {
         try {
             conn.close();
@@ -41,7 +41,7 @@ public class DB_Connection {
     }
     // -----------------------------------------------
 
-    // -----------Method ที่ใช้ในการสั่ง exceute คำสั่ง Sql-----------------
+    // -----------Method for exceute Sql-----------------
     public boolean execute (String query) throws SQLException {
         boolean rs;
         try{
@@ -49,20 +49,22 @@ public class DB_Connection {
             st = conn.createStatement();
             st.execute(query);
             rs = true;
+            disconnect();
         }catch (SQLException ex){
             rs = false;
         }
-        disconnect();
+
         return rs;
     }
     // ------------------------------------------------------------
 
-    // ----------Method ที่ใช้ในการเก็บค่า ResultSet ที่ได้จากการ execute-------------
+    // ----------Method get ResultSet from execute-------------
     public ResultSet getResultSet (String query) throws SQLException {
         try{
             connectDB();
             st = conn.createStatement();
             rs = st.executeQuery(query);
+            disconnect();
         }catch (Exception ex){
             rs = null;
         }
