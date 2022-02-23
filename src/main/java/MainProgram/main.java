@@ -6,6 +6,8 @@ package MainProgram;
 
 
 import java.awt.*;
+
+import event.EventMenuSelected;
 import swing.PanelBorder;
 
 import javax.swing.event.ListSelectionEvent;
@@ -20,11 +22,27 @@ public class main extends javax.swing.JFrame {
     /**
      * Creates new form Test
      */
+    CardLayout cardLayout;
     public main() {
         initComponents();
         setBackground(new Color(0,0,0,0));
         Method.Escape( this );
-
+        cardLayout = (CardLayout) card_panel.getLayout();
+        sidebar.initMoving( this );
+        sidebar.addEventMenuSelected( new EventMenuSelected() {
+            @Override
+            public void selected (int index) {
+                if (index == 0) cardLayout.show( card_panel,"dashboard" );
+                else if (index == 1) cardLayout.show( card_panel,"account");
+                else if (index == 2) cardLayout.show( card_panel,"banking");
+                else if (index == 3) cardLayout.show( card_panel,"aboutme");
+                else {
+                    dispose();
+                    loginPage lp = new loginPage();
+                    lp.setVisible( true );
+                }
+            }
+        } );
 
     }
 
@@ -39,11 +57,15 @@ public class main extends javax.swing.JFrame {
 
         main_panel = new swing.PanelBorder();
         sidebar = new component.Menu();
-        tabbed = new javax.swing.JTabbedPane();
+        card_panel = new swing.PanelBorder();
         dashboard = new swing.PanelBorder();
+        jLabel1 = new javax.swing.JLabel();
         account = new swing.PanelBorder();
+        jLabel2 = new javax.swing.JLabel();
         banking = new swing.PanelBorder();
+        jLabel3 = new javax.swing.JLabel();
         aboutme = new swing.PanelBorder();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusable(false);
@@ -58,59 +80,104 @@ public class main extends javax.swing.JFrame {
         main_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         main_panel.add(sidebar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, 600));
 
+        card_panel.setBackground(new java.awt.Color(232, 232, 255));
+        card_panel.setLayout(new java.awt.CardLayout());
+
+        dashboard.setBackground(new java.awt.Color(232, 232, 255));
+        dashboard.setToolTipText("");
+        dashboard.setName(""); // NOI18N
+
+        jLabel1.setText("Dashboard");
+
         javax.swing.GroupLayout dashboardLayout = new javax.swing.GroupLayout(dashboard);
         dashboard.setLayout(dashboardLayout);
         dashboardLayout.setHorizontalGroup(
             dashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 470, Short.MAX_VALUE)
+            .addGroup(dashboardLayout.createSequentialGroup()
+                .addGap(291, 291, 291)
+                .addComponent(jLabel1)
+                .addContainerGap(322, Short.MAX_VALUE))
         );
         dashboardLayout.setVerticalGroup(
             dashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 277, Short.MAX_VALUE)
+            .addGroup(dashboardLayout.createSequentialGroup()
+                .addGap(287, 287, 287)
+                .addComponent(jLabel1)
+                .addContainerGap(297, Short.MAX_VALUE))
         );
 
-        tabbed.addTab("Dashboard", dashboard);
+        card_panel.add(dashboard, "dashboard");
+
+        account.setBackground(new java.awt.Color(232, 232, 255));
+
+        jLabel2.setText("Account");
 
         javax.swing.GroupLayout accountLayout = new javax.swing.GroupLayout(account);
         account.setLayout(accountLayout);
         accountLayout.setHorizontalGroup(
             accountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 470, Short.MAX_VALUE)
+            .addGroup(accountLayout.createSequentialGroup()
+                .addGap(291, 291, 291)
+                .addComponent(jLabel2)
+                .addContainerGap(334, Short.MAX_VALUE))
         );
         accountLayout.setVerticalGroup(
             accountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 277, Short.MAX_VALUE)
+            .addGroup(accountLayout.createSequentialGroup()
+                .addGap(287, 287, 287)
+                .addComponent(jLabel2)
+                .addContainerGap(297, Short.MAX_VALUE))
         );
 
-        tabbed.addTab("Account", account);
+        card_panel.add(account, "account");
+
+        banking.setBackground(new java.awt.Color(232, 232, 255));
+
+        jLabel3.setText("Banking");
 
         javax.swing.GroupLayout bankingLayout = new javax.swing.GroupLayout(banking);
         banking.setLayout(bankingLayout);
         bankingLayout.setHorizontalGroup(
             bankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 470, Short.MAX_VALUE)
+            .addGroup(bankingLayout.createSequentialGroup()
+                .addGap(291, 291, 291)
+                .addComponent(jLabel3)
+                .addContainerGap(336, Short.MAX_VALUE))
         );
         bankingLayout.setVerticalGroup(
             bankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 277, Short.MAX_VALUE)
+            .addGroup(bankingLayout.createSequentialGroup()
+                .addGap(287, 287, 287)
+                .addComponent(jLabel3)
+                .addContainerGap(297, Short.MAX_VALUE))
         );
 
-        tabbed.addTab("Banking", banking);
+        card_panel.add(banking, "banking");
+
+        aboutme.setBackground(new java.awt.Color(232, 232, 255));
+
+        jLabel4.setText("About Me");
 
         javax.swing.GroupLayout aboutmeLayout = new javax.swing.GroupLayout(aboutme);
         aboutme.setLayout(aboutmeLayout);
         aboutmeLayout.setHorizontalGroup(
             aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 470, Short.MAX_VALUE)
+            .addGroup(aboutmeLayout.createSequentialGroup()
+                .addGap(291, 291, 291)
+                .addComponent(jLabel4)
+                .addContainerGap(326, Short.MAX_VALUE))
         );
         aboutmeLayout.setVerticalGroup(
             aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 277, Short.MAX_VALUE)
+            .addGroup(aboutmeLayout.createSequentialGroup()
+                .addGap(287, 287, 287)
+                .addComponent(jLabel4)
+                .addContainerGap(297, Short.MAX_VALUE))
         );
 
-        tabbed.addTab("About Me", aboutme);
+        card_panel.add(aboutme, "aboutme");
 
-        main_panel.add(tabbed, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 140, 470, 310));
+        main_panel.add(card_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 670, 600));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -123,41 +190,34 @@ public class main extends javax.swing.JFrame {
             .addComponent(main_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        sidebar.listMenu1.addListSelectionListener( new ListSelectionListener() {
-            @Override
-            public void valueChanged (ListSelectionEvent evt) {
-                ListvalueChanged( evt );
-            }
-        } );
-
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    public void ListvalueChanged (ListSelectionEvent e) {
-
-        int selectedIndex = sidebar.listMenu1.getSelectedIndex();
-
-
-        switch (selectedIndex) {
-            case 0:
-                main.tabbed.setSelectedIndex( 0 );
-                break;
-            case 1:
-                main.tabbed.setSelectedIndex( 1 );
-                break;
-            case 2:
-                main.tabbed.setSelectedIndex( 2 );
-                break;
-            case 3:
-                main.tabbed.setSelectedIndex( 3 );
-                break;
-            case 4:
-                loginPage lp = new loginPage();
-                this.dispose();
-                lp.setVisible( true );
-        }
-    }
+//    public void ListvalueChanged (ListSelectionEvent e) {
+//
+//        int selectedIndex = sidebar.listMenu1.getSelectedIndex();
+//
+//
+//        switch (selectedIndex) {
+//            case 0:
+//                main.tabbed.setSelectedIndex( 0 );
+//                break;
+//            case 1:
+//                main.tabbed.setSelectedIndex( 1 );
+//                break;
+//            case 2:
+//                main.tabbed.setSelectedIndex( 2 );
+//                break;
+//            case 3:
+//                main.tabbed.setSelectedIndex( 3 );
+//                break;
+//            case 4:
+//                loginPage lp = new loginPage();
+//                this.dispose();
+//                lp.setVisible( true );
+//        }
+//    }
 
 
 
@@ -203,9 +263,13 @@ public class main extends javax.swing.JFrame {
     private swing.PanelBorder aboutme;
     private swing.PanelBorder account;
     private swing.PanelBorder banking;
+    private swing.PanelBorder card_panel;
     private swing.PanelBorder dashboard;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private swing.PanelBorder main_panel;
     private component.Menu sidebar;
-    public static javax.swing.JTabbedPane tabbed;
     // End of variables declaration//GEN-END:variables
 }
