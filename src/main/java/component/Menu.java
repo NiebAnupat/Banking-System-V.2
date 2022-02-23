@@ -1,10 +1,9 @@
 package component;
 
-import MainProgram.main;
-import MainProgram.loginPage;
+
 import event.EventMenuSelected;
 import model.Model_Menu;
-import swing.ListMenu;
+
 
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -15,8 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+
 
 public class Menu extends javax.swing.JPanel {
 
@@ -52,52 +50,50 @@ public class Menu extends javax.swing.JPanel {
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents () {
+    private void initComponents() {
 
         panelMoving = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        listMenu1 = new swing.ListMenu();
+        listMenu1 = new swing.ListMenu<>();
 
-        panelMoving.setOpaque( false );
+        panelMoving.setOpaque(false);
 
-        jLabel1.setFont( new java.awt.Font( "sansserif", 1, 18 ) ); // NOI18N
-        jLabel1.setForeground( new java.awt.Color( 255, 255, 255 ) );
-        jLabel1.setIcon( new javax.swing.ImageIcon( getClass().getResource( "/resources/bank_logo_60.png" ) ) ); // NOI18N
-        jLabel1.setText( "Banking System" );
+        jLabel1.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/bank_logo_60.png"))); // NOI18N
+        jLabel1.setText("Banking System");
 
-        javax.swing.GroupLayout panelMovingLayout = new javax.swing.GroupLayout( panelMoving );
-        panelMoving.setLayout( panelMovingLayout );
+        javax.swing.GroupLayout panelMovingLayout = new javax.swing.GroupLayout(panelMoving);
+        panelMoving.setLayout(panelMovingLayout);
         panelMovingLayout.setHorizontalGroup(
-                panelMovingLayout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-                        .addGroup( panelMovingLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent( jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE )
-                                .addContainerGap() )
+            panelMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelMovingLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelMovingLayout.setVerticalGroup(
-                panelMovingLayout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-                        .addGroup( javax.swing.GroupLayout.Alignment.TRAILING, panelMovingLayout.createSequentialGroup()
-                                .addGap( 15, 15, 15 )
-                                .addComponent( jLabel1 )
-                                .addContainerGap() )
+            panelMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMovingLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel1)
+                .addContainerGap())
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout( this );
-        this.setLayout( layout );
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-                        .addComponent( panelMoving, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE )
-                        .addComponent( listMenu1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE )
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelMoving, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(listMenu1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-                        .addGroup( layout.createSequentialGroup()
-                                .addComponent( panelMoving, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE )
-                                .addGap( 15, 15, 15 )
-                                .addComponent( listMenu1, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE ) )
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelMoving, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
+                .addComponent(listMenu1, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE))
         );
-
-
     }// </editor-fold>//GEN-END:initComponents
 
     @Override
@@ -133,7 +129,7 @@ public class Menu extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    public static ListMenu listMenu1;
+    public static swing.ListMenu<String> listMenu1;
     private javax.swing.JPanel panelMoving;
     // End of variables declaration//GEN-END:variables
 }
