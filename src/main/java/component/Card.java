@@ -51,18 +51,15 @@ public class Card extends javax.swing.JPanel {
         lbValues = new javax.swing.JLabel();
         lbDescription = new javax.swing.JLabel();
 
-        lbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/raven/icon/stock.png"))); // NOI18N
+        lbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/stock.png"))); // NOI18N
 
-        lbTitle.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        lbTitle.setForeground(new java.awt.Color(255, 255, 255));
+        lbTitle.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
         lbTitle.setText("Title");
 
-        lbValues.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
-        lbValues.setForeground(new java.awt.Color(255, 255, 255));
+        lbValues.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
         lbValues.setText("Values");
 
-        lbDescription.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        lbDescription.setForeground(new java.awt.Color(255, 255, 255));
+        lbDescription.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
         lbDescription.setText("Description");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -70,26 +67,28 @@ public class Card extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbIcon)
+                        .addGap(18, 18, 18)
+                        .addComponent(lbTitle))
                     .addComponent(lbDescription)
-                    .addComponent(lbValues)
-                    .addComponent(lbTitle)
-                    .addComponent(lbIcon))
-                .addContainerGap(283, Short.MAX_VALUE))
+                    .addComponent(lbValues))
+                .addContainerGap(272, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(lbIcon)
                 .addGap(18, 18, 18)
-                .addComponent(lbTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbTitle)
+                    .addComponent(lbIcon))
+                .addGap(18, 18, 18)
                 .addComponent(lbValues)
                 .addGap(18, 18, 18)
                 .addComponent(lbDescription)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

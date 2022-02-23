@@ -22,12 +22,24 @@ public class main extends javax.swing.JFrame {
     /**
      * Creates new form Test
      */
-    CardLayout cardLayout;
+
     public main() {
+
         initComponents();
+        init();
+
+
+    }
+
+
+    CardLayout cardLayout;
+    private void init() {
+
         setBackground(new Color(0,0,0,0));
         Method.Escape( this );
+
         cardLayout = (CardLayout) card_panel.getLayout();
+        cardLayout.show( card_panel,"dashboard" );
         sidebar.initMoving( this );
         sidebar.addEventMenuSelected( new EventMenuSelected() {
             @Override
@@ -44,6 +56,9 @@ public class main extends javax.swing.JFrame {
             }
         } );
 
+
+
+
     }
 
     /**
@@ -58,14 +73,22 @@ public class main extends javax.swing.JFrame {
         main_panel = new swing.PanelBorder();
         sidebar = new component.Menu();
         card_panel = new swing.PanelBorder();
-        dashboard = new swing.PanelBorder();
-        jLabel1 = new javax.swing.JLabel();
         account = new swing.PanelBorder();
         jLabel2 = new javax.swing.JLabel();
         banking = new swing.PanelBorder();
         jLabel3 = new javax.swing.JLabel();
         aboutme = new swing.PanelBorder();
         jLabel4 = new javax.swing.JLabel();
+        dashboard = new swing.PanelBorder();
+        show_balance = new component.Card();
+        recent_panel = new swing.PanelBorder();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table1 = new swing.Table();
+        show_ac_panel = new swing.PanelBorder();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        table2 = new swing.Table();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusable(false);
@@ -82,31 +105,6 @@ public class main extends javax.swing.JFrame {
 
         card_panel.setBackground(new java.awt.Color(232, 232, 255));
         card_panel.setLayout(new java.awt.CardLayout());
-
-        dashboard.setBackground(new java.awt.Color(232, 232, 255));
-        dashboard.setToolTipText("");
-        dashboard.setName(""); // NOI18N
-
-        jLabel1.setText("Dashboard");
-
-        javax.swing.GroupLayout dashboardLayout = new javax.swing.GroupLayout(dashboard);
-        dashboard.setLayout(dashboardLayout);
-        dashboardLayout.setHorizontalGroup(
-            dashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dashboardLayout.createSequentialGroup()
-                .addGap(291, 291, 291)
-                .addComponent(jLabel1)
-                .addContainerGap(322, Short.MAX_VALUE))
-        );
-        dashboardLayout.setVerticalGroup(
-            dashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dashboardLayout.createSequentialGroup()
-                .addGap(287, 287, 287)
-                .addComponent(jLabel1)
-                .addContainerGap(297, Short.MAX_VALUE))
-        );
-
-        card_panel.add(dashboard, "dashboard");
 
         account.setBackground(new java.awt.Color(232, 232, 255));
 
@@ -176,6 +174,125 @@ public class main extends javax.swing.JFrame {
         );
 
         card_panel.add(aboutme, "aboutme");
+
+        dashboard.setBackground(new java.awt.Color(232, 232, 255));
+        dashboard.setToolTipText("");
+        dashboard.setName(""); // NOI18N
+
+        show_balance.setColor1(new java.awt.Color(151, 150, 232));
+        show_balance.setFont(new java.awt.Font("Cambria", 0, 12)); // NOI18N
+
+        recent_panel.setBackground(new java.awt.Color(151, 150, 232));
+
+        jLabel1.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Recent Banking");
+
+        table1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(table1);
+
+        javax.swing.GroupLayout recent_panelLayout = new javax.swing.GroupLayout(recent_panel);
+        recent_panel.setLayout(recent_panelLayout);
+        recent_panelLayout.setHorizontalGroup(
+            recent_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(recent_panelLayout.createSequentialGroup()
+                .addGap(78, 78, 78)
+                .addComponent(jLabel1)
+                .addContainerGap(90, Short.MAX_VALUE))
+            .addGroup(recent_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        recent_panelLayout.setVerticalGroup(
+            recent_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(recent_panelLayout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        show_ac_panel.setBackground(new java.awt.Color(151, 150, 232));
+
+        jLabel5.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("All Account");
+
+        table2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(table2);
+
+        javax.swing.GroupLayout show_ac_panelLayout = new javax.swing.GroupLayout(show_ac_panel);
+        show_ac_panel.setLayout(show_ac_panelLayout);
+        show_ac_panelLayout.setHorizontalGroup(
+            show_ac_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(show_ac_panelLayout.createSequentialGroup()
+                .addGap(102, 102, 102)
+                .addComponent(jLabel5)
+                .addContainerGap(103, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, show_ac_panelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        show_ac_panelLayout.setVerticalGroup(
+            show_ac_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(show_ac_panelLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout dashboardLayout = new javax.swing.GroupLayout(dashboard);
+        dashboard.setLayout(dashboardLayout);
+        dashboardLayout.setHorizontalGroup(
+            dashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dashboardLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(dashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(show_balance, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(recent_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(show_ac_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
+        );
+        dashboardLayout.setVerticalGroup(
+            dashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dashboardLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(dashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(show_ac_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(dashboardLayout.createSequentialGroup()
+                        .addComponent(show_balance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(recent_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(50, 50, 50))
+        );
+
+        card_panel.add(dashboard, "dashboard");
 
         main_panel.add(card_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 670, 600));
 
@@ -269,7 +386,15 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private swing.PanelBorder main_panel;
+    private swing.PanelBorder recent_panel;
+    private swing.PanelBorder show_ac_panel;
+    private component.Card show_balance;
     private component.Menu sidebar;
+    private swing.Table table1;
+    private swing.Table table2;
     // End of variables declaration//GEN-END:variables
 }
