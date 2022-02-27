@@ -126,6 +126,11 @@ public class loginPage extends javax.swing.JFrame {
         signin_panel.setBackground(new java.awt.Color(104, 103, 172));
         signin_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         signin_panel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        signin_panel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signin_panelMouseClicked(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -277,6 +282,13 @@ public class loginPage extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_close_btnMouseClicked
+
+    private void signin_panelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signin_panelMouseClicked
+        // TODO add your handling code here:
+        main m = new main();
+        m.setVisible( true );
+        this.setVisible( false );
+    }//GEN-LAST:event_signin_panelMouseClicked
 
     /**
      * @param args the command line arguments

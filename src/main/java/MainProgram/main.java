@@ -49,9 +49,9 @@ public class main extends javax.swing.JFrame {
                 else if (index == 2) cardLayout.show( card_panel,"banking");
                 else if (index == 3) cardLayout.show( card_panel,"aboutme");
                 else {
-                    dispose();
                     loginPage lp = new loginPage();
                     lp.setVisible( true );
+                    dispose();
                 }
             }
         } );
@@ -73,12 +73,6 @@ public class main extends javax.swing.JFrame {
         main_panel = new swing.PanelBorder();
         sidebar = new component.Menu();
         card_panel = new swing.PanelBorder();
-        account = new swing.PanelBorder();
-        jLabel2 = new javax.swing.JLabel();
-        banking = new swing.PanelBorder();
-        jLabel3 = new javax.swing.JLabel();
-        aboutme = new swing.PanelBorder();
-        jLabel4 = new javax.swing.JLabel();
         dashboard = new swing.PanelBorder();
         show_balance = new component.Card();
         recent_panel = new swing.PanelBorder();
@@ -89,6 +83,12 @@ public class main extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         table2 = new swing.Table();
+        account = new swing.PanelBorder();
+        jLabel2 = new javax.swing.JLabel();
+        banking = new swing.PanelBorder();
+        jLabel3 = new javax.swing.JLabel();
+        aboutme = new swing.PanelBorder();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusable(false);
@@ -105,75 +105,6 @@ public class main extends javax.swing.JFrame {
 
         card_panel.setBackground(new java.awt.Color(232, 232, 255));
         card_panel.setLayout(new java.awt.CardLayout());
-
-        account.setBackground(new java.awt.Color(232, 232, 255));
-
-        jLabel2.setText("Account");
-
-        javax.swing.GroupLayout accountLayout = new javax.swing.GroupLayout(account);
-        account.setLayout(accountLayout);
-        accountLayout.setHorizontalGroup(
-            accountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(accountLayout.createSequentialGroup()
-                .addGap(291, 291, 291)
-                .addComponent(jLabel2)
-                .addContainerGap(334, Short.MAX_VALUE))
-        );
-        accountLayout.setVerticalGroup(
-            accountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(accountLayout.createSequentialGroup()
-                .addGap(287, 287, 287)
-                .addComponent(jLabel2)
-                .addContainerGap(297, Short.MAX_VALUE))
-        );
-
-        card_panel.add(account, "account");
-
-        banking.setBackground(new java.awt.Color(232, 232, 255));
-
-        jLabel3.setText("Banking");
-
-        javax.swing.GroupLayout bankingLayout = new javax.swing.GroupLayout(banking);
-        banking.setLayout(bankingLayout);
-        bankingLayout.setHorizontalGroup(
-            bankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(bankingLayout.createSequentialGroup()
-                .addGap(291, 291, 291)
-                .addComponent(jLabel3)
-                .addContainerGap(336, Short.MAX_VALUE))
-        );
-        bankingLayout.setVerticalGroup(
-            bankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(bankingLayout.createSequentialGroup()
-                .addGap(287, 287, 287)
-                .addComponent(jLabel3)
-                .addContainerGap(297, Short.MAX_VALUE))
-        );
-
-        card_panel.add(banking, "banking");
-
-        aboutme.setBackground(new java.awt.Color(232, 232, 255));
-
-        jLabel4.setText("About Me");
-
-        javax.swing.GroupLayout aboutmeLayout = new javax.swing.GroupLayout(aboutme);
-        aboutme.setLayout(aboutmeLayout);
-        aboutmeLayout.setHorizontalGroup(
-            aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(aboutmeLayout.createSequentialGroup()
-                .addGap(291, 291, 291)
-                .addComponent(jLabel4)
-                .addContainerGap(326, Short.MAX_VALUE))
-        );
-        aboutmeLayout.setVerticalGroup(
-            aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(aboutmeLayout.createSequentialGroup()
-                .addGap(287, 287, 287)
-                .addComponent(jLabel4)
-                .addContainerGap(297, Short.MAX_VALUE))
-        );
-
-        card_panel.add(aboutme, "aboutme");
 
         dashboard.setBackground(new java.awt.Color(232, 232, 255));
         dashboard.setToolTipText("");
@@ -293,6 +224,75 @@ public class main extends javax.swing.JFrame {
         );
 
         card_panel.add(dashboard, "dashboard");
+
+        account.setBackground(new java.awt.Color(232, 232, 255));
+
+        jLabel2.setText("Account");
+
+        javax.swing.GroupLayout accountLayout = new javax.swing.GroupLayout(account);
+        account.setLayout(accountLayout);
+        accountLayout.setHorizontalGroup(
+            accountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(accountLayout.createSequentialGroup()
+                .addGap(291, 291, 291)
+                .addComponent(jLabel2)
+                .addContainerGap(334, Short.MAX_VALUE))
+        );
+        accountLayout.setVerticalGroup(
+            accountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(accountLayout.createSequentialGroup()
+                .addGap(287, 287, 287)
+                .addComponent(jLabel2)
+                .addContainerGap(297, Short.MAX_VALUE))
+        );
+
+        card_panel.add(account, "account");
+
+        banking.setBackground(new java.awt.Color(232, 232, 255));
+
+        jLabel3.setText("Banking");
+
+        javax.swing.GroupLayout bankingLayout = new javax.swing.GroupLayout(banking);
+        banking.setLayout(bankingLayout);
+        bankingLayout.setHorizontalGroup(
+            bankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bankingLayout.createSequentialGroup()
+                .addGap(291, 291, 291)
+                .addComponent(jLabel3)
+                .addContainerGap(336, Short.MAX_VALUE))
+        );
+        bankingLayout.setVerticalGroup(
+            bankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bankingLayout.createSequentialGroup()
+                .addGap(287, 287, 287)
+                .addComponent(jLabel3)
+                .addContainerGap(297, Short.MAX_VALUE))
+        );
+
+        card_panel.add(banking, "banking");
+
+        aboutme.setBackground(new java.awt.Color(232, 232, 255));
+
+        jLabel4.setText("About Me");
+
+        javax.swing.GroupLayout aboutmeLayout = new javax.swing.GroupLayout(aboutme);
+        aboutme.setLayout(aboutmeLayout);
+        aboutmeLayout.setHorizontalGroup(
+            aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(aboutmeLayout.createSequentialGroup()
+                .addGap(291, 291, 291)
+                .addComponent(jLabel4)
+                .addContainerGap(326, Short.MAX_VALUE))
+        );
+        aboutmeLayout.setVerticalGroup(
+            aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(aboutmeLayout.createSequentialGroup()
+                .addGap(287, 287, 287)
+                .addComponent(jLabel4)
+                .addContainerGap(297, Short.MAX_VALUE))
+        );
+
+        card_panel.add(aboutme, "aboutme");
 
         main_panel.add(card_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 670, 600));
 
