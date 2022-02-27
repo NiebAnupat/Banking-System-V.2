@@ -19,6 +19,8 @@ public class loginPage extends javax.swing.JFrame {
         initComponents();
         setBackground(new Color(0,0,0,0));
         Method.Escape( this );
+        id_txt.setHint( "Your ID" );
+        pwd_txt.setHint( "Your Password" );
     }
 
     /**
@@ -36,10 +38,10 @@ public class loginPage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         bank_logo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        id_txt = new javax.swing.JTextField();
+        id_txt = new swing.SearchText();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
-        pwd_txt = new javax.swing.JTextField();
+        pwd_txt = new swing.SearchText();
         jSeparator2 = new javax.swing.JSeparator();
         signin_panel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -92,36 +94,21 @@ public class loginPage extends javax.swing.JFrame {
         bank_logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/bank_logo.png"))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(153, 153, 153));
         jLabel2.setText("ID");
 
         id_txt.setBackground(new java.awt.Color(232, 232, 255));
-        id_txt.setText("Your ID");
-        id_txt.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        id_txt.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                id_txtFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                id_txtFocusLost(evt);
+        id_txt.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+        id_txt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                id_txtActionPerformed(evt);
             }
         });
 
         jLabel4.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(153, 153, 153));
         jLabel4.setText("Password");
 
         pwd_txt.setBackground(new java.awt.Color(232, 232, 255));
-        pwd_txt.setText("Your Password");
-        pwd_txt.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        pwd_txt.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                pwd_txtFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                pwd_txtFocusLost(evt);
-            }
-        });
+        pwd_txt.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
 
         signin_panel.setBackground(new java.awt.Color(104, 103, 172));
         signin_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
@@ -199,21 +186,21 @@ public class loginPage extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel4)
-                            .addComponent(pwd_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addComponent(signin_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(signup_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                                     .addComponent(bank_logo)
                                     .addComponent(jLabel2)
-                                    .addComponent(id_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(id_txt, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)))
+                            .addComponent(pwd_txt, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE))
                         .addGap(141, 141, 141))))
         );
         panelBorder1Layout.setVerticalGroup(
@@ -224,17 +211,17 @@ public class loginPage extends javax.swing.JFrame {
                 .addComponent(bank_logo)
                 .addGap(47, 47, 47)
                 .addComponent(jLabel2)
-                .addGap(6, 6, 6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(id_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
+                .addGap(2, 2, 2)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jLabel4)
-                .addGap(8, 8, 8)
+                .addGap(2, 2, 2)
                 .addComponent(pwd_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(signin_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(signup_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -258,26 +245,6 @@ public class loginPage extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void id_txtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_id_txtFocusGained
-        // TODO add your handling code here:
-        if(id_txt.getText().equals("Your ID")) id_txt.setText(null);
-    }//GEN-LAST:event_id_txtFocusGained
-
-    private void id_txtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_id_txtFocusLost
-        // TODO add your handling code here:
-        if(id_txt.getText().equals("")) id_txt.setText("Your ID");
-    }//GEN-LAST:event_id_txtFocusLost
-
-    private void pwd_txtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pwd_txtFocusGained
-        // TODO add your handling code here:
-        if(pwd_txt.getText().equals("Your Password")) pwd_txt.setText(null);
-    }//GEN-LAST:event_pwd_txtFocusGained
-
-    private void pwd_txtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pwd_txtFocusLost
-        // TODO add your handling code here:
-        if(pwd_txt.getText().equals("")) pwd_txt.setText("Your Password");
-    }//GEN-LAST:event_pwd_txtFocusLost
-
     private void close_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_close_btnMouseClicked
         // TODO add your handling code here:
         System.exit(0);
@@ -289,6 +256,10 @@ public class loginPage extends javax.swing.JFrame {
         m.setVisible( true );
         this.setVisible( false );
     }//GEN-LAST:event_signin_panelMouseClicked
+
+    private void id_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_id_txtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_id_txtActionPerformed
 
     /**
      * @param args the command line arguments
@@ -329,7 +300,7 @@ public class loginPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bank_logo;
     private javax.swing.JLabel close_btn;
-    private javax.swing.JTextField id_txt;
+    private swing.SearchText id_txt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -340,7 +311,7 @@ public class loginPage extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private swing.PanelBorder panelBorder1;
     private swing.PanelBorder panelBorder2;
-    private javax.swing.JTextField pwd_txt;
+    private swing.SearchText pwd_txt;
     private javax.swing.JPanel signin_panel;
     private javax.swing.JPanel signup_panel;
     // End of variables declaration//GEN-END:variables
