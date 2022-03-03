@@ -5,6 +5,7 @@
 package MainProgram;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -41,13 +42,13 @@ public class loginPage extends javax.swing.JFrame {
         id_txt = new swing.SearchText();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
-        pwd_txt = new swing.SearchText();
         jSeparator2 = new javax.swing.JSeparator();
         signin_panel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         signup_panel = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         close_btn = new javax.swing.JLabel();
+        pwd_txt = new swing.PasswordText();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(900, 600));
@@ -107,9 +108,6 @@ public class loginPage extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
         jLabel4.setText("Password");
 
-        pwd_txt.setBackground(new java.awt.Color(232, 232, 255));
-        pwd_txt.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
-
         signin_panel.setBackground(new java.awt.Color(104, 103, 172));
         signin_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         signin_panel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -143,6 +141,11 @@ public class loginPage extends javax.swing.JFrame {
         signup_panel.setBackground(new java.awt.Color(104, 103, 172));
         signup_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         signup_panel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        signup_panel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signup_panelMouseClicked(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -173,6 +176,14 @@ public class loginPage extends javax.swing.JFrame {
             }
         });
 
+        pwd_txt.setBackground(new java.awt.Color(232, 232, 255));
+        pwd_txt.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+        pwd_txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                pwd_txtKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
         panelBorder1Layout.setHorizontalGroup(
@@ -181,27 +192,30 @@ public class loginPage extends javax.swing.JFrame {
                 .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createSequentialGroup()
-                        .addGap(494, 494, 494)
-                        .addComponent(close_btn)
-                        .addContainerGap())
+                        .addGap(184, 184, 184)
+                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(panelBorder1Layout.createSequentialGroup()
+                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(panelBorder1Layout.createSequentialGroup()
+                                        .addComponent(signin_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(signup_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(panelBorder1Layout.createSequentialGroup()
+                                        .addGap(1, 1, 1)
+                                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                            .addComponent(bank_logo)
+                                            .addComponent(jLabel2)
+                                            .addComponent(id_txt, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))))
+                                .addGap(141, 141, 141))
+                            .addComponent(pwd_txt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 21, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel4)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(panelBorder1Layout.createSequentialGroup()
-                                .addComponent(signin_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(signup_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelBorder1Layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                    .addComponent(bank_logo)
-                                    .addComponent(jLabel2)
-                                    .addComponent(id_txt, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)))
-                            .addComponent(pwd_txt, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE))
-                        .addGap(141, 141, 141))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(close_btn)
+                        .addContainerGap())))
         );
         panelBorder1Layout.setVerticalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,9 +231,9 @@ public class loginPage extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jLabel4)
-                .addGap(2, 2, 2)
-                .addComponent(pwd_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
+                .addGap(8, 8, 8)
+                .addComponent(pwd_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,14 +266,24 @@ public class loginPage extends javax.swing.JFrame {
 
     private void signin_panelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signin_panelMouseClicked
         // TODO add your handling code here:
-        main m = new main();
-        m.setVisible( true );
-        this.setVisible( false );
+        Method.Login( this,id_txt.getText(),pwd_txt.getText() );
     }//GEN-LAST:event_signin_panelMouseClicked
 
     private void id_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_id_txtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_id_txtActionPerformed
+
+    private void signup_panelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_panelMouseClicked
+        // TODO add your handling code here:
+        registerPage regis = new registerPage();
+        regis.setVisible( true );
+        this.dispose();
+    }//GEN-LAST:event_signup_panelMouseClicked
+
+    private void pwd_txtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pwd_txtKeyPressed
+        // TODO add your handling code here:
+        if( evt.getKeyCode() == KeyEvent.VK_ENTER) Method.Login( this,id_txt.getText(),pwd_txt.getText() );
+    }//GEN-LAST:event_pwd_txtKeyPressed
 
     /**
      * @param args the command line arguments
@@ -311,7 +335,7 @@ public class loginPage extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private swing.PanelBorder panelBorder1;
     private swing.PanelBorder panelBorder2;
-    private swing.SearchText pwd_txt;
+    private swing.PasswordText pwd_txt;
     private javax.swing.JPanel signin_panel;
     private javax.swing.JPanel signup_panel;
     // End of variables declaration//GEN-END:variables

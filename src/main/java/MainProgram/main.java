@@ -6,13 +6,14 @@ package MainProgram;
 
 
 import java.awt.*;
+import java.sql.ResultSet;
+import java.util.Random;
 
 import event.EventMenuSelected;
 
 import javax.swing.*;
 
 /**
- *
  * @author niebz
  */
 public class main extends javax.swing.JFrame {
@@ -21,33 +22,39 @@ public class main extends javax.swing.JFrame {
      * Creates new form Test
      */
 
-    public main() {
+    public main () {
 
         initComponents();
         init();
-
 
     }
 
 
     CardLayout main_cardLayout;
     public static CardLayout select_ac_card;
-    private void init() {
 
-        setBackground(new Color(0,0,0,0));
+    private void init () {
+
+        setBackground( new Color( 0, 0, 0, 0 ) );
         Method.Escape( this );
 
         main_cardLayout = (CardLayout) card_panel.getLayout();
-        main_cardLayout.show( card_panel,"dashboard" );
+        main_cardLayout.show( card_panel, "dashboard" );
 
         sidebar.initMoving( this );
         sidebar.addEventMenuSelected( new EventMenuSelected() {
             @Override
             public void selected (int index) {
-                if (index == 0) main_cardLayout.show( card_panel,"dashboard" );
-                else if (index == 1) main_cardLayout.show( card_panel,"account");
-                else if (index == 2) main_cardLayout.show( card_panel,"banking");
-                else if (index == 3) main_cardLayout.show( card_panel,"aboutme");
+                if ( index == 0 ) {
+                    main_cardLayout.show( card_panel, "dashboard" );
+                    Method.SetTotalBalance_Dashboard( show_total_balance );
+                    Method.SetAllAcTable_Dashboard( show_all_ac_dashboard, all_ac_dashboard );}
+                else if ( index == 1 ){
+                    main_cardLayout.show( card_panel, "account" );
+                    Method.SetAllAcTable_Account( all_ac_table_account, all_ac_scroll_account );
+                }
+                else if ( index == 2 ) main_cardLayout.show( card_panel, "banking" );
+                else if ( index == 3 ) main_cardLayout.show( card_panel, "aboutme" );
                 else {
                     loginPage lp = new loginPage();
                     lp.setVisible( true );
@@ -56,31 +63,43 @@ public class main extends javax.swing.JFrame {
             }
         } );
 
-        // Account Page
-        register_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ));
+        // Dashboard Page
+        Method.SetTotalBalance_Dashboard( show_total_balance );
+        Method.SetAllAcTable_Dashboard( show_all_ac_dashboard, all_ac_dashboard );
 
-       
+        // Account Page
+        Method.SetBank_Combobox( input_bank );
+        register_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
+        close_ac_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
+        refresh_table_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
+        Method.SetAllAcTable_Account( all_ac_table_account, all_ac_scroll_account );
+
+        // Confirm Open Account Page
+        confirm_regis_pin.setHint( "PIN CODE" );
+        con_register_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
+        cancle_regis_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
+
         // Banking Page
-        trans_btn.setCursor( new Cursor( Cursor.HAND_CURSOR));
-        deposit_btn.setCursor( new Cursor( Cursor.HAND_CURSOR));
-        withdraw_btn.setCursor( new Cursor( Cursor.HAND_CURSOR));
+        trans_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
+        deposit_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
+        withdraw_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
         input_money_trans_txt.setHint( "Amount to transfer (฿)" );
         input_ac_number_recipient_txt.setHint( "Recipient Account Number" );
         select_ac_card = (CardLayout) show_ac_card.getLayout();
-        show_ac_card.add( new component.AC_Select_Card(select_ac_card,show_ac_card,"NiebBanking","Anupat Kaewmee","123456",2000.00),"ac"+1 );
-        show_ac_card.add( new component.AC_Select_Card(select_ac_card,show_ac_card,"Test2","Test2","123456",9999.99),"ac"+2);
-        show_ac_card.add( new component.AC_Select_Card(select_ac_card,show_ac_card,"Test3","Test3","123456",9999.99),"ac"+3);
+        show_ac_card.add( new component.AC_Select_Card( select_ac_card, show_ac_card, "NiebBanking", "Anupat Kaewmee", "123456", 2000.00 ), "ac" + 1 );
+        show_ac_card.add( new component.AC_Select_Card( select_ac_card, show_ac_card, "Test2", "Test2", "123456", 9999.99 ), "ac" + 2 );
+        show_ac_card.add( new component.AC_Select_Card( select_ac_card, show_ac_card, "Test3", "Test3", "123456", 9999.99 ), "ac" + 3 );
 
-        select_ac_card.show( show_ac_card,"ac"+1 );
+        select_ac_card.show( show_ac_card, "ac" + 1 );
 
         // Transfer Page
-        next_trans_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ));
-        cancel_trans_btn.setCursor( new Cursor( Cursor.HAND_CURSOR));
+        next_trans_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
+        cancel_trans_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
 
         // Transfer Confirm Page
         input_pin_trans.setHint( "PIN CODE" );
-        confirm_transfer_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ));
-        fianal_cancel_trans_btn.setCursor( new Cursor( Cursor.HAND_CURSOR));
+        confirm_transfer_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
+        fianal_cancel_trans_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
 
     }
 
@@ -104,11 +123,11 @@ public class main extends javax.swing.JFrame {
         table1 = new swing.Table();
         show_ac_panel = new swing.PanelBorder();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        table2 = new swing.Table();
+        all_ac_dashboard = new javax.swing.JScrollPane();
+        show_all_ac_dashboard = new swing.Table();
         panelBorder1 = new swing.PanelBorder();
         jLabel7 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        show_total_balance = new javax.swing.JLabel();
         account = new swing.PanelBorder();
         jLabel2 = new javax.swing.JLabel();
         input_ac_name_panel = new javax.swing.JPanel();
@@ -126,7 +145,7 @@ public class main extends javax.swing.JFrame {
         input_ac_pin_panel = new javax.swing.JPanel();
         PinCode_label = new javax.swing.JLabel();
         round4 = new swing.PanelBorder();
-        input_ac_pin_txt = new javax.swing.JTextField();
+        input_ac_pin_txt = new swing.PasswordText();
         input_ac_bank_panel = new javax.swing.JPanel();
         Bank_label = new javax.swing.JLabel();
         input_bank = new javax.swing.JComboBox<>();
@@ -138,12 +157,39 @@ public class main extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         all_ac_panel = new swing.PanelBorder();
         jLabel8 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        all_ac_table = new swing.Table();
+        all_ac_scroll_account = new javax.swing.JScrollPane();
+        all_ac_table_account = new swing.Table();
         close_ac_btn = new swing.PanelBorder();
         jLabel10 = new javax.swing.JLabel();
         refresh_table_btn = new swing.PanelBorder();
         jLabel11 = new javax.swing.JLabel();
+        open_ac_comfirm = new swing.PanelBorder();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel44 = new javax.swing.JLabel();
+        show_rg_ac_number = new javax.swing.JLabel();
+        jSeparator10 = new javax.swing.JSeparator();
+        jSeparator13 = new javax.swing.JSeparator();
+        show_rg_ac_name = new javax.swing.JLabel();
+        jLabel51 = new javax.swing.JLabel();
+        jLabel52 = new javax.swing.JLabel();
+        show_rg_ac_bank = new javax.swing.JLabel();
+        jSeparator14 = new javax.swing.JSeparator();
+        jSeparator15 = new javax.swing.JSeparator();
+        show_rg_ac_tel = new javax.swing.JLabel();
+        jLabel55 = new javax.swing.JLabel();
+        jSeparator16 = new javax.swing.JSeparator();
+        jLabel56 = new javax.swing.JLabel();
+        show_rg_ac_citizenid = new javax.swing.JLabel();
+        show_rg_ac_address = new javax.swing.JLabel();
+        jLabel59 = new javax.swing.JLabel();
+        jSeparator17 = new javax.swing.JSeparator();
+        jLabel60 = new javax.swing.JLabel();
+        jSeparator18 = new javax.swing.JSeparator();
+        con_register_btn = new swing.PanelBorder();
+        jLabel61 = new javax.swing.JLabel();
+        cancle_regis_btn = new swing.PanelBorder();
+        jLabel62 = new javax.swing.JLabel();
+        confirm_regis_pin = new swing.PasswordText();
         banking = new swing.PanelBorder();
         jLabel12 = new javax.swing.JLabel();
         show_ac_card = new swing.PanelBorder();
@@ -154,7 +200,21 @@ public class main extends javax.swing.JFrame {
         withdraw_btn = new swing.PanelBorder();
         jLabel14 = new javax.swing.JLabel();
         aboutme = new swing.PanelBorder();
+        jLabel30 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        jLabel43 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
+        jLabel46 = new javax.swing.JLabel();
+        jLabel47 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
+        jSeparator9 = new javax.swing.JSeparator();
         transfer__input = new swing.PanelBorder();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -272,18 +332,24 @@ public class main extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("All Account");
 
-        table2.setModel(new javax.swing.table.DefaultTableModel(
+        show_all_ac_dashboard.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Number", "Bank", "Name", "Balance"
             }
-        ));
-        jScrollPane2.setViewportView(table2);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        show_all_ac_dashboard.setFont(new java.awt.Font("Cambria", 0, 12)); // NOI18N
+        all_ac_dashboard.setViewportView(show_all_ac_dashboard);
 
         javax.swing.GroupLayout show_ac_panelLayout = new javax.swing.GroupLayout(show_ac_panel);
         show_ac_panel.setLayout(show_ac_panelLayout);
@@ -295,7 +361,7 @@ public class main extends javax.swing.JFrame {
                 .addContainerGap(103, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, show_ac_panelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(all_ac_dashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         show_ac_panelLayout.setVerticalGroup(
@@ -304,7 +370,7 @@ public class main extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
+                .addComponent(all_ac_dashboard, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -315,9 +381,9 @@ public class main extends javax.swing.JFrame {
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/money_40px.png"))); // NOI18N
         jLabel7.setText("  Total Balance");
 
-        jLabel6.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("###Total_Balance### ฿");
+        show_total_balance.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        show_total_balance.setForeground(new java.awt.Color(255, 255, 255));
+        show_total_balance.setText("###Total_Balance### ฿");
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
@@ -326,7 +392,7 @@ public class main extends javax.swing.JFrame {
             .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
+                    .addComponent(show_total_balance)
                     .addComponent(jLabel7))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -336,7 +402,7 @@ public class main extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel7)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel6)
+                .addComponent(show_total_balance)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -425,7 +491,7 @@ public class main extends javax.swing.JFrame {
             .addGroup(input_ac_name_panelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(round, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
             .addGroup(input_ac_name_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(input_ac_name_panelLayout.createSequentialGroup()
                     .addGap(7, 7, 7)
@@ -563,7 +629,7 @@ public class main extends javax.swing.JFrame {
             .addGroup(input_tel_panelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(round2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
             .addGroup(input_tel_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(input_tel_panelLayout.createSequentialGroup()
                     .addGap(7, 7, 7)
@@ -591,38 +657,22 @@ public class main extends javax.swing.JFrame {
         round4.setBackground(new java.awt.Color(204, 204, 204));
 
         input_ac_pin_txt.setBackground(new java.awt.Color(204, 204, 204));
-        input_ac_pin_txt.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
-        input_ac_pin_txt.setForeground(new java.awt.Color(255, 255, 255));
-        input_ac_pin_txt.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        input_ac_pin_txt.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                input_ac_pin_txtFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                input_ac_pin_txtFocusLost(evt);
-            }
-        });
-        input_ac_pin_txt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                input_ac_pin_txtActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout round4Layout = new javax.swing.GroupLayout(round4);
         round4.setLayout(round4Layout);
         round4Layout.setHorizontalGroup(
             round4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, round4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(input_ac_pin_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5))
+            .addGroup(round4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(input_ac_pin_txt, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
+                .addContainerGap())
         );
         round4Layout.setVerticalGroup(
             round4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(round4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(input_ac_pin_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, round4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(input_ac_pin_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout input_ac_pin_panelLayout = new javax.swing.GroupLayout(input_ac_pin_panel);
@@ -656,8 +706,6 @@ public class main extends javax.swing.JFrame {
 
         Bank_label.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
         Bank_label.setText("Bank");
-
-        input_bank.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout input_ac_bank_panelLayout = new javax.swing.GroupLayout(input_ac_bank_panel);
         input_ac_bank_panel.setLayout(input_ac_bank_panelLayout);
@@ -753,6 +801,11 @@ public class main extends javax.swing.JFrame {
         );
 
         register_btn.setBackground(new java.awt.Color(162, 103, 172));
+        register_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                register_btnMouseClicked(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -781,20 +834,24 @@ public class main extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("All Account");
 
-        all_ac_table.setModel(new javax.swing.table.DefaultTableModel(
+        all_ac_table_account.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Number", "Bank", "Name", "Balance", "Status"
             }
         ));
-        jScrollPane3.setViewportView(all_ac_table);
+        all_ac_table_account.setEditingRow(0);
+        all_ac_table_account.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+        all_ac_scroll_account.setViewportView(all_ac_table_account);
 
         close_ac_btn.setBackground(new java.awt.Color(162, 103, 172));
+        close_ac_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                close_ac_btnMouseClicked(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -818,6 +875,11 @@ public class main extends javax.swing.JFrame {
         );
 
         refresh_table_btn.setBackground(new java.awt.Color(162, 103, 172));
+        refresh_table_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                refresh_table_btnMouseClicked(evt);
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
@@ -853,7 +915,7 @@ public class main extends javax.swing.JFrame {
                         .addComponent(close_ac_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(refresh_table_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(all_ac_scroll_account, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(195, 195, 195))
         );
         all_ac_panelLayout.setVerticalGroup(
@@ -865,7 +927,7 @@ public class main extends javax.swing.JFrame {
                     .addComponent(close_ac_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(refresh_table_btn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                .addComponent(all_ac_scroll_account, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -926,6 +988,222 @@ public class main extends javax.swing.JFrame {
         );
 
         card_panel.add(account, "account");
+
+        open_ac_comfirm.setBackground(new java.awt.Color(232, 232, 255));
+        open_ac_comfirm.setName(""); // NOI18N
+
+        jLabel6.setFont(new java.awt.Font("Cambria", 1, 36)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(162, 103, 172));
+        jLabel6.setText("Account Detail");
+
+        jLabel44.setFont(new java.awt.Font("Cambria", 0, 24)); // NOI18N
+        jLabel44.setForeground(new java.awt.Color(162, 103, 172));
+        jLabel44.setText("Account Number");
+
+        show_rg_ac_number.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        show_rg_ac_number.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        show_rg_ac_number.setText("###AC_NUMBER###");
+
+        show_rg_ac_name.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        show_rg_ac_name.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        show_rg_ac_name.setText("###AC_NAME###");
+
+        jLabel51.setFont(new java.awt.Font("Cambria", 0, 24)); // NOI18N
+        jLabel51.setForeground(new java.awt.Color(162, 103, 172));
+        jLabel51.setText("Account Name");
+
+        jLabel52.setFont(new java.awt.Font("Cambria", 0, 24)); // NOI18N
+        jLabel52.setForeground(new java.awt.Color(162, 103, 172));
+        jLabel52.setText("Bank");
+
+        show_rg_ac_bank.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        show_rg_ac_bank.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        show_rg_ac_bank.setText("###AC_BANK###");
+
+        show_rg_ac_tel.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        show_rg_ac_tel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        show_rg_ac_tel.setText("###AC_TEL###");
+
+        jLabel55.setFont(new java.awt.Font("Cambria", 0, 24)); // NOI18N
+        jLabel55.setForeground(new java.awt.Color(162, 103, 172));
+        jLabel55.setText("Tel");
+
+        jLabel56.setFont(new java.awt.Font("Cambria", 0, 24)); // NOI18N
+        jLabel56.setForeground(new java.awt.Color(162, 103, 172));
+        jLabel56.setText("Citizen ID.");
+
+        show_rg_ac_citizenid.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        show_rg_ac_citizenid.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        show_rg_ac_citizenid.setText("###AC_CITIZENID###");
+
+        show_rg_ac_address.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        show_rg_ac_address.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        show_rg_ac_address.setText("###AC_ADDRESS###");
+
+        jLabel59.setFont(new java.awt.Font("Cambria", 0, 24)); // NOI18N
+        jLabel59.setForeground(new java.awt.Color(162, 103, 172));
+        jLabel59.setText("Address");
+
+        jLabel60.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        jLabel60.setForeground(new java.awt.Color(162, 103, 172));
+        jLabel60.setText("PIN CODE");
+
+        con_register_btn.setBackground(new java.awt.Color(162, 103, 172));
+        con_register_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                con_register_btnMouseClicked(evt);
+            }
+        });
+
+        jLabel61.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        jLabel61.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel61.setText("Register");
+
+        javax.swing.GroupLayout con_register_btnLayout = new javax.swing.GroupLayout(con_register_btn);
+        con_register_btn.setLayout(con_register_btnLayout);
+        con_register_btnLayout.setHorizontalGroup(
+            con_register_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(con_register_btnLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel61)
+                .addGap(20, 20, 20))
+        );
+        con_register_btnLayout.setVerticalGroup(
+            con_register_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, con_register_btnLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel61)
+                .addGap(10, 10, 10))
+        );
+
+        cancle_regis_btn.setBackground(new java.awt.Color(162, 103, 172));
+        cancle_regis_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cancle_regis_btnMouseClicked(evt);
+            }
+        });
+
+        jLabel62.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        jLabel62.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel62.setText("Cancel");
+
+        javax.swing.GroupLayout cancle_regis_btnLayout = new javax.swing.GroupLayout(cancle_regis_btn);
+        cancle_regis_btn.setLayout(cancle_regis_btnLayout);
+        cancle_regis_btnLayout.setHorizontalGroup(
+            cancle_regis_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cancle_regis_btnLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel62)
+                .addGap(25, 25, 25))
+        );
+        cancle_regis_btnLayout.setVerticalGroup(
+            cancle_regis_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cancle_regis_btnLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel62)
+                .addGap(10, 10, 10))
+        );
+
+        confirm_regis_pin.setBackground(new java.awt.Color(232, 232, 255));
+        confirm_regis_pin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        confirm_regis_pin.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+
+        javax.swing.GroupLayout open_ac_comfirmLayout = new javax.swing.GroupLayout(open_ac_comfirm);
+        open_ac_comfirm.setLayout(open_ac_comfirmLayout);
+        open_ac_comfirmLayout.setHorizontalGroup(
+            open_ac_comfirmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(open_ac_comfirmLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(open_ac_comfirmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jSeparator15, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel52)
+                    .addComponent(jSeparator17, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel51)
+                    .addComponent(jLabel59)
+                    .addComponent(show_rg_ac_name)
+                    .addComponent(show_rg_ac_address, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator13, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(show_rg_ac_citizenid)
+                    .addComponent(jSeparator10, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel56)
+                    .addComponent(show_rg_ac_number)
+                    .addComponent(jSeparator16, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel44)
+                    .addComponent(jLabel55)
+                    .addComponent(jLabel6)
+                    .addComponent(show_rg_ac_tel)
+                    .addComponent(jSeparator14, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(show_rg_ac_bank))
+                .addGap(39, 39, 39)
+                .addGroup(open_ac_comfirmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(cancle_regis_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(con_register_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator18)
+                    .addComponent(jLabel60)
+                    .addComponent(confirm_regis_pin, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(119, 119, 119))
+        );
+        open_ac_comfirmLayout.setVerticalGroup(
+            open_ac_comfirmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(open_ac_comfirmLayout.createSequentialGroup()
+                .addGroup(open_ac_comfirmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(open_ac_comfirmLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel44)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(show_rg_ac_number)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator10, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel51)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(show_rg_ac_name)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator13, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel52)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(show_rg_ac_bank)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator14, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel59)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(show_rg_ac_address)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator17, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(open_ac_comfirmLayout.createSequentialGroup()
+                        .addGap(193, 193, 193)
+                        .addGroup(open_ac_comfirmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(open_ac_comfirmLayout.createSequentialGroup()
+                                .addComponent(jLabel60)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(confirm_regis_pin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator18, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34)
+                                .addComponent(con_register_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cancle_regis_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(open_ac_comfirmLayout.createSequentialGroup()
+                                .addComponent(jLabel55)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(show_rg_ac_tel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator15, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel56)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(show_rg_ac_citizenid)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator16, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27))
+        );
+
+        card_panel.add(open_ac_comfirm, "open_ac_confirm");
 
         banking.setBackground(new java.awt.Color(232, 232, 255));
         banking.setForeground(new java.awt.Color(255, 255, 255));
@@ -1024,7 +1302,7 @@ public class main extends javax.swing.JFrame {
                     .addComponent(trans_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(deposit_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(withdraw_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         bankingLayout.setVerticalGroup(
             bankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1049,23 +1327,111 @@ public class main extends javax.swing.JFrame {
 
         aboutme.setBackground(new java.awt.Color(232, 232, 255));
 
-        jLabel4.setText("About Me");
+        jLabel30.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
+        jLabel30.setText("Tools");
+
+        jLabel4.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel4.setText("Apache Netbeans IDE 12.5");
+
+        jLabel34.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel34.setText("IntelliJ IDEA 2021.2.2");
+
+        jLabel37.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel37.setText("XAMPP 3.3.0");
+
+        jLabel38.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel38.setText("MySQL");
+
+        jLabel39.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel39.setText("By : Anupat Kaewmee 6400922");
+
+        jLabel40.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
+        jLabel40.setText("DIT102 Project : Banking System");
+
+        jLabel41.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel41.setText("It is a banking simulator.");
+
+        jLabel42.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel42.setText("to simulate various financial transactions within the program,");
+
+        jLabel43.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel43.setText("1) Sign in - Sign up");
+
+        jLabel45.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel45.setText("2) Account Management");
+
+        jLabel46.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel46.setText("3) Financial Transactions");
+
+        jLabel47.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel47.setText("The data will be stored within the local server ");
+
+        jLabel48.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel48.setText("with the following systems:");
 
         javax.swing.GroupLayout aboutmeLayout = new javax.swing.GroupLayout(aboutme);
         aboutme.setLayout(aboutmeLayout);
         aboutmeLayout.setHorizontalGroup(
             aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(aboutmeLayout.createSequentialGroup()
-                .addGap(291, 291, 291)
-                .addComponent(jLabel4)
-                .addContainerGap(326, Short.MAX_VALUE))
+                .addGroup(aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, aboutmeLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel39))
+                    .addGroup(aboutmeLayout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addGroup(aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel34)
+                            .addComponent(jLabel37)
+                            .addComponent(jLabel38)
+                            .addComponent(jLabel30)
+                            .addComponent(jLabel40)
+                            .addComponent(jLabel41)
+                            .addComponent(jLabel43)
+                            .addComponent(jLabel45)
+                            .addComponent(jLabel46)
+                            .addComponent(jLabel47)
+                            .addComponent(jLabel48)
+                            .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel42))
+                        .addGap(0, 64, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         aboutmeLayout.setVerticalGroup(
             aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(aboutmeLayout.createSequentialGroup()
-                .addGap(287, 287, 287)
+                .addGap(30, 30, 30)
+                .addComponent(jLabel40)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel42)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel48)
+                .addGap(35, 35, 35)
+                .addComponent(jLabel43)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel45)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel46)
+                .addGap(35, 35, 35)
+                .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel30)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addContainerGap(297, Short.MAX_VALUE))
+                .addGap(8, 8, 8)
+                .addComponent(jLabel34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addComponent(jLabel39)
+                .addContainerGap())
         );
 
         card_panel.add(aboutme, "aboutme");
@@ -1506,109 +1872,159 @@ public class main extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void input_ac_name_txtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_ac_name_txtFocusGained
+    private void input_ac_name_txtFocusGained (java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_ac_name_txtFocusGained
         // TODO add your handling code here:
 
     }//GEN-LAST:event_input_ac_name_txtFocusGained
 
-    private void input_ac_name_txtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_ac_name_txtFocusLost
+    private void input_ac_name_txtFocusLost (java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_ac_name_txtFocusLost
         // TODO add your handling code here:
 
     }//GEN-LAST:event_input_ac_name_txtFocusLost
 
-    private void input_ac_name_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_ac_name_txtActionPerformed
+    private void input_ac_name_txtActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_ac_name_txtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_input_ac_name_txtActionPerformed
 
-    private void input_citizenid_txtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_citizenid_txtFocusGained
+    private void input_citizenid_txtFocusGained (java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_citizenid_txtFocusGained
         // TODO add your handling code here:
     }//GEN-LAST:event_input_citizenid_txtFocusGained
 
-    private void input_citizenid_txtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_citizenid_txtFocusLost
+    private void input_citizenid_txtFocusLost (java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_citizenid_txtFocusLost
         // TODO add your handling code here:
     }//GEN-LAST:event_input_citizenid_txtFocusLost
 
-    private void input_citizenid_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_citizenid_txtActionPerformed
+    private void input_citizenid_txtActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_citizenid_txtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_input_citizenid_txtActionPerformed
 
-    private void input_tel_txtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_tel_txtFocusGained
+    private void input_tel_txtFocusGained (java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_tel_txtFocusGained
         // TODO add your handling code here:
     }//GEN-LAST:event_input_tel_txtFocusGained
 
-    private void input_tel_txtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_tel_txtFocusLost
+    private void input_tel_txtFocusLost (java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_tel_txtFocusLost
         // TODO add your handling code here:
     }//GEN-LAST:event_input_tel_txtFocusLost
 
-    private void input_tel_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_tel_txtActionPerformed
+    private void input_tel_txtActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_tel_txtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_input_tel_txtActionPerformed
 
-    private void input_ac_address_txtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_ac_address_txtFocusGained
+    private void input_ac_address_txtFocusGained (java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_ac_address_txtFocusGained
         // TODO add your handling code here:
     }//GEN-LAST:event_input_ac_address_txtFocusGained
 
-    private void input_ac_address_txtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_ac_address_txtFocusLost
+    private void input_ac_address_txtFocusLost (java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_ac_address_txtFocusLost
         // TODO add your handling code here:
     }//GEN-LAST:event_input_ac_address_txtFocusLost
 
-    private void input_ac_address_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_ac_address_txtActionPerformed
+    private void input_ac_address_txtActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_ac_address_txtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_input_ac_address_txtActionPerformed
 
-    private void input_ac_pin_txtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_ac_pin_txtFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_input_ac_pin_txtFocusGained
-
-    private void input_ac_pin_txtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_ac_pin_txtFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_input_ac_pin_txtFocusLost
-
-    private void input_ac_pin_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_ac_pin_txtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_input_ac_pin_txtActionPerformed
-
-    private void input_money_trans_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_money_trans_txtActionPerformed
+    private void input_money_trans_txtActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_money_trans_txtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_input_money_trans_txtActionPerformed
 
-    private void trans_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_trans_btnMouseClicked
+    private void trans_btnMouseClicked (java.awt.event.MouseEvent evt) {//GEN-FIRST:event_trans_btnMouseClicked
         // TODO add your handling code here:
-        main_cardLayout.show( card_panel,"trans_input" );
+        main_cardLayout.show( card_panel, "trans_input" );
     }//GEN-LAST:event_trans_btnMouseClicked
 
-    private void input_ac_number_recipient_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_ac_number_recipient_txtActionPerformed
+    private void input_ac_number_recipient_txtActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_ac_number_recipient_txtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_input_ac_number_recipient_txtActionPerformed
 
-    private void next_trans_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_next_trans_btnMouseClicked
+    private void next_trans_btnMouseClicked (java.awt.event.MouseEvent evt) {//GEN-FIRST:event_next_trans_btnMouseClicked
         // TODO add your handling code here:
-        main_cardLayout.show( card_panel,"transfer_confirm");
+        main_cardLayout.show( card_panel, "transfer_confirm" );
     }//GEN-LAST:event_next_trans_btnMouseClicked
 
-    private void cancel_trans_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancel_trans_btnMouseClicked
+    private void cancel_trans_btnMouseClicked (java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancel_trans_btnMouseClicked
         // TODO add your handling code here:
-        main_cardLayout.show( card_panel,"banking");
+        main_cardLayout.show( card_panel, "banking" );
     }//GEN-LAST:event_cancel_trans_btnMouseClicked
 
-    private void fianal_cancel_trans_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fianal_cancel_trans_btnMouseClicked
+    private void fianal_cancel_trans_btnMouseClicked (java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fianal_cancel_trans_btnMouseClicked
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Cancel transfer");
-        main_cardLayout.show( card_panel,"banking");
+        JOptionPane.showMessageDialog( this, "Cancel transfer" );
+        main_cardLayout.show( card_panel, "banking" );
     }//GEN-LAST:event_fianal_cancel_trans_btnMouseClicked
 
-    private void confirm_transfer_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirm_transfer_btnMouseClicked
+    private void confirm_transfer_btnMouseClicked (java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirm_transfer_btnMouseClicked
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog( this, "Confirm transfer");
-        main_cardLayout.show( card_panel,"banking");
+        JOptionPane.showMessageDialog( this, "Confirm transfer" );
+        main_cardLayout.show( card_panel, "banking" );
     }//GEN-LAST:event_confirm_transfer_btnMouseClicked
 
-    private void input_pin_transActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_pin_transActionPerformed
+    private void input_pin_transActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_pin_transActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_input_pin_transActionPerformed
 
+    private void refresh_table_btnMouseClicked (java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refresh_table_btnMouseClicked
+        // TODO add your handling code here:
+        Method.SetAllAcTable_Account( all_ac_table_account, all_ac_scroll_account );
+    }//GEN-LAST:event_refresh_table_btnMouseClicked
+
+    private void close_ac_btnMouseClicked (java.awt.event.MouseEvent evt) {//GEN-FIRST:event_close_ac_btnMouseClicked
+        // TODO add your handling code here:
+        String ac_number = all_ac_table_account.getValueAt( all_ac_table_account.getSelectedRow(), 0 ).toString();
+        Method.CloseAccount( ac_number );
+        Method.SetAllAcTable_Account( all_ac_table_account, all_ac_scroll_account );
+
+    }//GEN-LAST:event_close_ac_btnMouseClicked
+
+    private String rg_ac_name, rg_ac_citizenid, rg_ac_tel, rg_ac_address, rg_ac_pin, rg_ac_bank,rg_ac_number,rg_bank_id;
+    private void register_btnMouseClicked (java.awt.event.MouseEvent evt) {//GEN-FIRST:event_register_btnMouseClicked
+        // TODO add your handling code here:
 
 
+
+        rg_ac_name = input_ac_name_txt.getText();
+        rg_ac_citizenid = input_citizenid_txt.getText();
+        rg_ac_tel = input_tel_txt.getText();
+        rg_ac_address = input_ac_address_txt.getText();
+        rg_ac_pin = input_ac_pin_txt.getText();
+        rg_ac_bank = String.valueOf( input_bank.getSelectedItem() );
+        rg_bank_id = String.valueOf( input_bank.getSelectedIndex()+1 );
+        rg_ac_number = Method.Random_AC_Number( rg_ac_bank );
+
+        if(rg_ac_name != "" &&  rg_ac_citizenid != "" && rg_ac_tel != "" && rg_ac_address != "" && rg_ac_pin != "" && rg_ac_bank != "" && rg_ac_number != "") {
+
+            if ( Method.isNumeric( rg_ac_pin ) ) {
+
+                show_rg_ac_number.setText( rg_ac_number );
+                show_rg_ac_name.setText( rg_ac_name );
+                show_rg_ac_tel.setText( rg_ac_tel );
+                show_rg_ac_citizenid.setText( rg_ac_citizenid );
+                show_rg_ac_bank.setText( rg_ac_bank );
+                show_rg_ac_address.setText( rg_ac_address );
+
+                main_cardLayout = (CardLayout) card_panel.getLayout();
+                main_cardLayout.show( card_panel, "open_ac_confirm" );
+            } else {
+                Method.displayError( "Pin Code must be digit!!!" );
+                input_ac_pin_txt.setText( null );
+            }
+        }else{
+            Method.displayError( "Please enter your information");
+        }
+    }//GEN-LAST:event_register_btnMouseClicked
+
+    private void con_register_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_con_register_btnMouseClicked
+        // TODO add your handling code here:
+        String confirm_pin = confirm_regis_pin.getText();
+        if( confirm_pin != "" && Method.isNumeric( confirm_pin )) {
+            if( confirm_pin.equals( rg_ac_pin ) ) Method.Register_ac(rg_ac_number,rg_bank_id,rg_ac_name,rg_ac_pin,rg_ac_tel,rg_ac_citizenid,rg_ac_address);
+            else Method.displayError( "Wrong Pin Code!!!" );
+        }else Method.displayError( "Wrong Pin Code!!!" );
+    }//GEN-LAST:event_con_register_btnMouseClicked
+
+    private void cancle_regis_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancle_regis_btnMouseClicked
+        // TODO add your handling code here:
+        main_cardLayout = (CardLayout) card_panel.getLayout();
+        main_cardLayout.show( card_panel, "account" );
+    }//GEN-LAST:event_cancle_regis_btnMouseClicked
 
 
     /**
@@ -1616,37 +2032,37 @@ public class main extends javax.swing.JFrame {
      */
 
 
-    public static void main(String args[]) {
+    public static void main (String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                if ( "Nimbus".equals( info.getName() ) ) {
+                    javax.swing.UIManager.setLookAndFeel( info.getClassName() );
                     break;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger( main.class.getName() ).log( java.util.logging.Level.SEVERE, null, ex );
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger( main.class.getName() ).log( java.util.logging.Level.SEVERE, null, ex );
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger( main.class.getName() ).log( java.util.logging.Level.SEVERE, null, ex );
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger( main.class.getName() ).log( java.util.logging.Level.SEVERE, null, ex );
         }
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new main().setVisible(true);
+        java.awt.EventQueue.invokeLater( new Runnable() {
+            public void run () {
+                new main().setVisible( true );
             }
-        });
+        } );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1658,12 +2074,17 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel TelephoneNumber_label;
     private swing.PanelBorder aboutme;
     private swing.PanelBorder account;
+    private javax.swing.JScrollPane all_ac_dashboard;
     private swing.PanelBorder all_ac_panel;
-    private swing.Table all_ac_table;
+    private javax.swing.JScrollPane all_ac_scroll_account;
+    private swing.Table all_ac_table_account;
     private swing.PanelBorder banking;
     private swing.PanelBorder cancel_trans_btn;
+    private swing.PanelBorder cancle_regis_btn;
     private swing.PanelBorder card_panel;
     private swing.PanelBorder close_ac_btn;
+    private swing.PanelBorder con_register_btn;
+    private swing.PasswordText confirm_regis_pin;
     private swing.PanelBorder confirm_transfer_btn;
     private swing.PanelBorder dashboard;
     private swing.PanelBorder deposit_btn;
@@ -1675,7 +2096,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JTextField input_ac_name_txt;
     private swing.SearchText input_ac_number_recipient_txt;
     private javax.swing.JPanel input_ac_pin_panel;
-    private javax.swing.JTextField input_ac_pin_txt;
+    private swing.PasswordText input_ac_pin_txt;
     private javax.swing.JComboBox<String> input_bank;
     private javax.swing.JComboBox<String> input_bank_recipient;
     private javax.swing.JPanel input_citizenid_panel;
@@ -1707,24 +2128,51 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel55;
+    private javax.swing.JLabel jLabel56;
+    private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel60;
+    private javax.swing.JLabel jLabel61;
+    private javax.swing.JLabel jLabel62;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator12;
+    private javax.swing.JSeparator jSeparator13;
+    private javax.swing.JSeparator jSeparator14;
+    private javax.swing.JSeparator jSeparator15;
+    private javax.swing.JSeparator jSeparator16;
+    private javax.swing.JSeparator jSeparator17;
+    private javax.swing.JSeparator jSeparator18;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
@@ -1732,8 +2180,10 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JSeparator jSeparator9;
     private swing.PanelBorder main_panel;
     private swing.PanelBorder next_trans_btn;
+    private swing.PanelBorder open_ac_comfirm;
     private swing.PanelBorder panelBorder1;
     private swing.PanelBorder recent_panel;
     private swing.PanelBorder refresh_table_btn;
@@ -1752,9 +2202,16 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel show_ac_number_recipient;
     private javax.swing.JLabel show_ac_number_transferor;
     private swing.PanelBorder show_ac_panel;
+    private swing.Table show_all_ac_dashboard;
+    private javax.swing.JLabel show_rg_ac_address;
+    private javax.swing.JLabel show_rg_ac_bank;
+    private javax.swing.JLabel show_rg_ac_citizenid;
+    private javax.swing.JLabel show_rg_ac_name;
+    private javax.swing.JLabel show_rg_ac_number;
+    private javax.swing.JLabel show_rg_ac_tel;
+    private javax.swing.JLabel show_total_balance;
     private component.Menu sidebar;
     private swing.Table table1;
-    private swing.Table table2;
     private swing.PanelBorder trans_btn;
     private swing.PanelBorder transfer__input;
     private swing.PanelBorder transfer_confirm;

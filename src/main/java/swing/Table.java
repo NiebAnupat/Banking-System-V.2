@@ -51,4 +51,9 @@ public class Table extends JTable {
         DefaultTableModel model = (DefaultTableModel) getModel();
         model.addRow(row);
     }
+
+    public void clearTable(){
+        DefaultTableModel model = (DefaultTableModel) getModel();
+        model.setRowCount( 0 );
+    }
 }

@@ -1,5 +1,5 @@
 package model;
 
 public enum StatusType {
-    PENDING, APPROVED, REJECT
+    PENDING, ACTIVATE, DEACTIVATE
 }
