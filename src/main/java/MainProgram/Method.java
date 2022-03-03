@@ -1,8 +1,10 @@
 package MainProgram;
 
+import swing.PanelBorder;
 import swing.ScrollBar;
 import swing.Table;
 import model.StatusType;
+import component.AC_Select_Card;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -264,5 +266,33 @@ public class Method {
 
 
     // ------------------------------------------------------------------------------------------
+
+    // -------------------------------------- Banking Page --------------------------------------
+
+    public static void SetAccountCard(CardLayout parent_layout, PanelBorder parent_panel){
+        parent_layout = (CardLayout) parent_panel.getLayout();
+        String query = String.format("select bk.bank_name,ac_name,ac_number,ac_balance from account inner join bank as bk on account.bank_id = bk.bank_id where user_id='%s' and ac_status='t'",current_id);
+        DB_Connection db = new DB_Connection();
+        parent_panel.removeAll();
+        try {
+            ResultSet rs = db.getResultSet( query );
+            int num=0;
+            while (rs.next()) {
+                num++;
+                parent_panel.add( new AC_Select_Card(parent_layout,parent_panel,rs.getString(1),rs.getString(2),rs.getString(3),rs.getDouble( 4 ) ),String.valueOf( num ));
+            }
+            parent_layout.show( parent_panel,"1" );
+        }catch (Exception e){
+            displayError( e.getMessage() );
+        }
+    }
+
+    public static String GetSelectedAccount(){
+            return AC_Select_Card.get_show_ac_number();
+    }
+
+    // ------------------------------------------------------------------------------------------
+
+
 
 }

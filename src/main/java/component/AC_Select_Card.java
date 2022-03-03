@@ -7,6 +7,7 @@ package component;
 import swing.PanelBorder;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,11 +20,14 @@ public class AC_Select_Card extends javax.swing.JPanel {
      */
     CardLayout current_parent;
     PanelBorder current_panel;
+    static ArrayList<String> all_ac_number = new ArrayList<String>();
+    private static int Index = 0 ;
     public AC_Select_Card(CardLayout parent_layout, PanelBorder parent_panel, String ac_bank_name, String ac_name, String ac_number, Double ac_balance) {
         initComponents();
         setShow_ac_bank( ac_bank_name );
         setShow_ac_name( ac_name );
         setShow_ac_number( ac_number );
+        all_ac_number.add( ac_number );
         setShow_ac_balance( ac_balance );
         setOpaque(false);
         current_parent = parent_layout;
@@ -158,11 +162,15 @@ public class AC_Select_Card extends javax.swing.JPanel {
     private void next_ac_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_next_ac_btnMouseClicked
         // TODO add your handling code here:
         current_parent.next(current_panel);
+        Index+=1;
+        if(Index == all_ac_number.size()) Index = 0;
     }//GEN-LAST:event_next_ac_btnMouseClicked
 
     private void previous_ac_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_previous_ac_btnMouseClicked
         // TODO add your handling code here:
         current_parent.previous( current_panel );
+        Index-=1;
+        if ( Index < 0 ) Index = all_ac_number.size()-1;
     }//GEN-LAST:event_previous_ac_btnMouseClicked
 
 
@@ -182,6 +190,10 @@ public class AC_Select_Card extends javax.swing.JPanel {
         show_ac_balance.setText( String.valueOf( ac_balance )+" ฿" );
     }
 
+    public static String get_show_ac_number (){
+        return all_ac_number.get( Index );
+    }
+
     protected void paintComponent(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -199,6 +211,6 @@ public class AC_Select_Card extends javax.swing.JPanel {
     private javax.swing.JLabel show_ac_balance;
     private javax.swing.JLabel show_ac_bank;
     private javax.swing.JLabel show_ac_name;
-    private javax.swing.JLabel show_ac_number;
+    private static javax.swing.JLabel show_ac_number;
     // End of variables declaration//GEN-END:variables
 }

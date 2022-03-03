@@ -53,7 +53,10 @@ public class main extends javax.swing.JFrame {
                     main_cardLayout.show( card_panel, "account" );
                     Method.SetAllAcTable_Account( all_ac_table_account, all_ac_scroll_account );
                 }
-                else if ( index == 2 ) main_cardLayout.show( card_panel, "banking" );
+                else if ( index == 2 ) {
+                    main_cardLayout.show( card_panel, "banking" );
+                    Method.SetAccountCard(new CardLayout(),show_ac_card);
+                }
                 else if ( index == 3 ) main_cardLayout.show( card_panel, "aboutme" );
                 else {
                     loginPage lp = new loginPage();
@@ -85,12 +88,8 @@ public class main extends javax.swing.JFrame {
         withdraw_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
         input_money_trans_txt.setHint( "Amount to transfer (฿)" );
         input_ac_number_recipient_txt.setHint( "Recipient Account Number" );
-        select_ac_card = (CardLayout) show_ac_card.getLayout();
-        show_ac_card.add( new component.AC_Select_Card( select_ac_card, show_ac_card, "NiebBanking", "Anupat Kaewmee", "123456", 2000.00 ), "ac" + 1 );
-        show_ac_card.add( new component.AC_Select_Card( select_ac_card, show_ac_card, "Test2", "Test2", "123456", 9999.99 ), "ac" + 2 );
-        show_ac_card.add( new component.AC_Select_Card( select_ac_card, show_ac_card, "Test3", "Test3", "123456", 9999.99 ), "ac" + 3 );
 
-        select_ac_card.show( show_ac_card, "ac" + 1 );
+        Method.SetAccountCard(new CardLayout(),show_ac_card);
 
         // Transfer Page
         next_trans_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
@@ -199,6 +198,7 @@ public class main extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         withdraw_btn = new swing.PanelBorder();
         jLabel14 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         aboutme = new swing.PanelBorder();
         jLabel30 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -1288,6 +1288,13 @@ public class main extends javax.swing.JFrame {
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout bankingLayout = new javax.swing.GroupLayout(banking);
         banking.setLayout(bankingLayout);
         bankingLayout.setHorizontalGroup(
@@ -1302,7 +1309,11 @@ public class main extends javax.swing.JFrame {
                     .addComponent(trans_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(deposit_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(withdraw_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bankingLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(194, 194, 194))
         );
         bankingLayout.setVerticalGroup(
             bankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1320,7 +1331,9 @@ public class main extends javax.swing.JFrame {
                         .addComponent(deposit_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
                         .addComponent(withdraw_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(90, 90, 90))
         );
 
         card_panel.add(banking, "banking");
@@ -2026,6 +2039,11 @@ public class main extends javax.swing.JFrame {
         main_cardLayout.show( card_panel, "account" );
     }//GEN-LAST:event_cancle_regis_btnMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Method.displayInfo( Method.GetSelectedAccount() );
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -2105,6 +2123,7 @@ public class main extends javax.swing.JFrame {
     private swing.SearchText input_pin_trans;
     private javax.swing.JPanel input_tel_panel;
     private javax.swing.JTextField input_tel_txt;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
