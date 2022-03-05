@@ -190,7 +190,7 @@ public class AC_Select_Card extends javax.swing.JPanel {
         show_ac_balance.setText( String.valueOf( ac_balance )+" ฿" );
     }
 
-    public static String get_show_ac_number (){
+    public static String get_showwing_ac_number (){
         return all_ac_number.get( Index );
     }
 
