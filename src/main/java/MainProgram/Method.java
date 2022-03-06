@@ -280,6 +280,7 @@ public class Method {
         try {
             if ( db.execute( query ) ) displayInfo( "Open account done" );
             else throw new Exception( "Fail to open account" );
+            AC_Select_Card.Reset_AC_number();
 
         } catch (Exception e) {
             displayError( e.getMessage() );

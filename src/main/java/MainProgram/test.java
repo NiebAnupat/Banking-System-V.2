@@ -31,6 +31,8 @@ public class test extends javax.swing.JFrame {
     private void initComponents() {
 
         show_time_btn = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -43,6 +45,12 @@ public class test extends javax.swing.JFrame {
         });
         getContentPane().add(show_time_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, -1, -1));
 
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -51,6 +59,7 @@ public class test extends javax.swing.JFrame {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         Method.displayInfo( String.valueOf( formatter.format( date )));
+
     }//GEN-LAST:event_show_time_btnActionPerformed
 
     /**
@@ -89,6 +98,8 @@ public class test extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton show_time_btn;
     // End of variables declaration//GEN-END:variables
 }

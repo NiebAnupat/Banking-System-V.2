@@ -1,7 +1,6 @@
 package MainProgram;
-
 import java.sql.*;
-import javax.swing.JOptionPane;
+
 public class DB_Connection {
 
     // <editor-fold defaultstate="collapsed" desc="Database Connection">
@@ -37,7 +36,7 @@ public class DB_Connection {
         try {
             conn.close();
         }catch (SQLException ex){
-            JOptionPane.showMessageDialog(null,"Error disconnecting");
+            Method.displayError( "Error disconnecting" );
         }
     }
     // -----------------------------------------------
