@@ -32,6 +32,7 @@ public class AC_Select_Card extends javax.swing.JPanel {
         setOpaque(false);
         current_parent = parent_layout;
         current_panel = parent_panel;
+        Index = 0;
 
     }
 

@@ -29,6 +29,14 @@ public class Method {
         JOptionPane.showMessageDialog( null, message, "Information", JOptionPane.INFORMATION_MESSAGE );
     }
 
+    public static void displayInfo (double message) {
+        JOptionPane.showMessageDialog( null, String.valueOf(message), "Information", JOptionPane.INFORMATION_MESSAGE );
+    }
+
+    public static void displayInfo (int message) {
+        JOptionPane.showMessageDialog( null, String.valueOf(message), "Information", JOptionPane.INFORMATION_MESSAGE );
+    }
+
     public static boolean isNumeric (String string) {
         int intValue;
         if ( string == null || string.equals( "" ) ) {
@@ -298,7 +306,6 @@ public class Method {
         double money = 0.0;
         String query;
         DB_Connection db = new DB_Connection();
-
         SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy HH:mm:ss" );
         SimpleDateFormat sdfSql = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
         String date = sdf.format( new Date() );
@@ -307,40 +314,37 @@ public class Method {
 
         try {
             money = Double.parseDouble( amount_to_deposit );
+            ResultSet rs;
 
-            query = String.format( "select bank_id from account where ac_number='%s'", ac_number );
-            ResultSet rs = db.getResultSet( query );
-            rs.next();
-            String bank_id = rs.getString( 1 );
+            // Update Account balance after deposit
+            query = String.format( "update account set ac_balance=((select ac_balance from account where ac_number='%s') + '%f') where ac_number='%s'",ac_number,money,ac_number);
+            if ( db.execute( query ) ) {}
+            else throw new Exception( "Can't execute SQL");
 
-            query = String.format( "select bank_balance from bank where bank_id='%s'", bank_id );
-            rs = db.getResultSet( query );
-            rs.next();
-            double bank_balance = rs.getDouble( 1 );
+            // Save deposit history
+            query = String.format("insert into moneydeposit (dp_money,ac_number) values ('%f','%s');",money,ac_number);
+            if ( db.execute( query ) ) {}
+            else throw new Exception( "Can't execute SQL");
 
-            if ( money > bank_balance ) throw new Exception("Your bank not enough money");
-
-            query = String.format( "select ac_balance from account where ac_number='%s",ac_number );
-            rs = db.getResultSet( query );
-            rs.next();
-            double ac_balance = money + rs.getDouble(1);
-
-            query = String.format( "update account set ac_balance='%f' where ac_number='%s'",ac_balance,ac_number);
-            is_success = db.execute( query );
-
-            query = String.format("insert into moneydeposit (dp_money,ac_number) VALUES ('%f','%s');",money,ac_number);
-            is_success = db.execute(query);
-
+            // Get deposit ID to save as statement
             query = String.format("select MAX(dp_id) from moneydeposit ;");
             rs = db.getResultSet(query);
             rs.next();
             String dp_id = rs.getString(1);
 
+            // Save transaction statement
             query = String.format( "insert into statements (stm_date,type_id,ac_number,banking_id,amount) VALUES ('%s','%d','%s','%s','%f')",dateSql,1,ac_number,dp_id,money);
-            is_success = db.execute( query );
+            if ( db.execute( query ) ) {}
+            else throw new Exception( "Can't execute SQL");
 
-            query = String.format("update bank set bank_balance = (select sum(ac_balance) from account where bank_id='%s') where bank_id='%s'",bank_id,bank_id);
-            is_success = db.execute( query );
+            // Update bank balance by bank id from account number that deposit
+            query = String.format("update bank set bank_balance = (select sum(ac_balance) " +
+                    "from account as ac inner join bank b on ac.bank_id = b.bank_id " +
+                    "where ac.bank_id=(select bank_id from account where ac_number='%s')) " +
+                    "where bank_id=(select bank_id from account where ac_number='%s')"
+                    ,ac_number,ac_number);
+            if ( db.execute( query ) ) is_success = true;
+            else throw new Exception( "Can't execute SQL");
 
         } catch (ClassCastException e) {
             displayError( "Please input money to deposit" );
@@ -351,7 +355,7 @@ public class Method {
         }
 
         if ( is_success )
-            displayInfo( String.format( "Transaction successful\nTime : %s\namount to deposit : %.2f", date, money ) );
+            displayInfo( String.format( "Transaction successful\nTime : %s\nDeposit to account number : %s \nAmount to deposit : %.2f ฿", date,ac_number, money ) );
         else displayError( String.format( "Transaction fail\nTime : %s\n", date ) );
 
 

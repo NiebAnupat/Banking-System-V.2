@@ -9,6 +9,7 @@ import java.awt.*;
 import java.sql.ResultSet;
 import java.util.Random;
 
+import component.AC_Select_Card;
 import event.EventMenuSelected;
 
 import javax.swing.*;
@@ -88,7 +89,6 @@ public class main extends javax.swing.JFrame {
         withdraw_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
         input_money_trans_txt.setHint( "Amount to transfer (฿)" );
         input_ac_number_recipient_txt.setHint( "Recipient Account Number" );
-
         Method.SetAccountCard(new CardLayout(),show_ac_card);
 
         // Transfer Page
@@ -198,7 +198,6 @@ public class main extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         withdraw_btn = new swing.PanelBorder();
         jLabel14 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         aboutme = new swing.PanelBorder();
         jLabel30 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -1243,6 +1242,11 @@ public class main extends javax.swing.JFrame {
         );
 
         deposit_btn.setBackground(new java.awt.Color(162, 103, 172));
+        deposit_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deposit_btnMouseClicked(evt);
+            }
+        });
 
         jLabel13.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
@@ -1288,13 +1292,6 @@ public class main extends javax.swing.JFrame {
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout bankingLayout = new javax.swing.GroupLayout(banking);
         banking.setLayout(bankingLayout);
         bankingLayout.setHorizontalGroup(
@@ -1310,10 +1307,6 @@ public class main extends javax.swing.JFrame {
                     .addComponent(deposit_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(withdraw_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(93, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bankingLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(194, 194, 194))
         );
         bankingLayout.setVerticalGroup(
             bankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1331,9 +1324,7 @@ public class main extends javax.swing.JFrame {
                         .addComponent(deposit_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
                         .addComponent(withdraw_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(90, 90, 90))
+                .addContainerGap(150, Short.MAX_VALUE))
         );
 
         card_panel.add(banking, "banking");
@@ -2028,7 +2019,11 @@ public class main extends javax.swing.JFrame {
         // TODO add your handling code here:
         String confirm_pin = confirm_regis_pin.getText();
         if( confirm_pin != "" && Method.isNumeric( confirm_pin )) {
-            if( confirm_pin.equals( rg_ac_pin ) ) Method.Register_ac(rg_ac_number,rg_bank_id,rg_ac_name,rg_ac_pin,rg_ac_tel,rg_ac_citizenid,rg_ac_address);
+            if( confirm_pin.equals( rg_ac_pin ) ) {
+                Method.Register_ac(rg_ac_number,rg_bank_id,rg_ac_name,rg_ac_pin,rg_ac_tel,rg_ac_citizenid,rg_ac_address);
+                main_cardLayout = (CardLayout) card_panel.getLayout();
+                main_cardLayout.show( card_panel, "account");
+            }
             else Method.displayError( "Wrong Pin Code!!!" );
         }else Method.displayError( "Wrong Pin Code!!!" );
     }//GEN-LAST:event_con_register_btnMouseClicked
@@ -2039,10 +2034,11 @@ public class main extends javax.swing.JFrame {
         main_cardLayout.show( card_panel, "account" );
     }//GEN-LAST:event_cancle_regis_btnMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void deposit_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deposit_btnMouseClicked
         // TODO add your handling code here:
-        Method.displayInfo( Method.GetSelectedAccount() );
-    }//GEN-LAST:event_jButton1ActionPerformed
+        Method.Deposit( JOptionPane.showInputDialog( this,"Amount to deposit : " ), AC_Select_Card.get_showwing_ac_number() );
+        Method.SetAccountCard(new CardLayout(),show_ac_card);
+    }//GEN-LAST:event_deposit_btnMouseClicked
 
 
     /**
@@ -2123,7 +2119,6 @@ public class main extends javax.swing.JFrame {
     private swing.SearchText input_pin_trans;
     private javax.swing.JPanel input_tel_panel;
     private javax.swing.JTextField input_tel_txt;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
