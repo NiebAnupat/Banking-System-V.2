@@ -9,6 +9,7 @@ import component.AC_Select_Card;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -69,6 +70,7 @@ public class Method {
             }
         } );
     }
+
 
     // -------------------------------------- SignIn - SignUp Part --------------------------------------
     private static String current_id;
@@ -167,7 +169,7 @@ public class Method {
         try {
             ResultSet rs = db.getResultSet( query );
             while (rs.next()) {
-                Object[] ac_data = {rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), rs.getString( 4 )};
+                Object[] ac_data = {rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), rs.getString( 4 )+" ฿"};
                 parent.addRow( ac_data );
             }
             parent_scrollbar.setVerticalScrollBar( new ScrollBar() );
@@ -176,14 +178,32 @@ public class Method {
         }
     }
 
-    // show recent statement
+    public static void SetRecentTable (Table parent,JScrollPane parent_scrollbar) {
+        parent.clearTable();
+        DB_Connection db = new DB_Connection();
+        try {
+            String query = String.format( "select st.stm_id,bt.type_name,st.ac_number,st.amount from statements as st " +
+                    "inner join banking_type as bt on st.type_id = bt.type_id " +
+                    "inner join account as ac on st.ac_number = ac.ac_number " +
+                    "where ac.user_id = '%s' and ac.ac_status='t' order by st.stm_id DESC",current_id);
+            ResultSet rs = db.getResultSet( query );
+            while (rs.next()) {
+                Object[] recent_data = {rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), rs.getString( 4 )+" ฿"};
+                parent.addRow( recent_data );
+            }
+            parent_scrollbar.setVerticalScrollBar( new ScrollBar());
+        }catch (Exception e) {
+            displayError( e.getMessage() );
+        }
+
+    }
 
     // --------------------------------------------------------------------------------------------
 
     // -------------------------------------- Account Part --------------------------------------
 
     public static void SetBank_Combobox (JComboBox parent) {
-        String query = String.format( "select bank_name from bank" );
+        String query = "select bank_name from bank";
         DB_Connection db = new DB_Connection();
         try {
 
@@ -229,8 +249,22 @@ public class Method {
         DB_Connection db = new DB_Connection();
         try {
             if ( db.execute( query ) ) {
+                AC_Select_Card.Reset_AC_number();
                 displayInfo( "Account number " + ac_number + " has deactivated" );
             } else throw new Exception( "Deactivate fail" );
+        } catch (Exception e) {
+            displayError( e.getMessage() );
+        }
+    }
+
+    public static void ActivateAccount (String ac_number){
+        String query = String.format( "update account set ac_status='t' where ac_number='%s'", ac_number );
+        DB_Connection db = new DB_Connection();
+        try {
+            if ( db.execute( query ) ) {
+                AC_Select_Card.Reset_AC_number();
+                displayInfo( "Account number " + ac_number + " has activate" );
+            } else throw new Exception( "activate fail" );
         } catch (Exception e) {
             displayError( e.getMessage() );
         }
@@ -274,6 +308,26 @@ public class Method {
 
     }
 
+    public static void SetStatementsTable (String ac_number, Table parent, JScrollPane parent_scrollbar, JLabel label_display_number){
+        String query = String.format( "select st.stm_id,bt.type_name,st.ac_number,st.amount from statements as st " +
+                "inner join banking_type as bt on st.type_id = bt.type_id " +
+                "where st.ac_number = '%s' order by st.stm_id DESC",ac_number);
+        DB_Connection db = new DB_Connection();
+        parent.clearTable();
+        try{
+            label_display_number.setText( ac_number );
+            ResultSet rs = db.getResultSet( query );
+            while (rs.next()) {
+                Object[] stm_data = {rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), rs.getString( 4 )+" ฿"};
+                parent.addRow( stm_data );
+            }
+            parent_scrollbar.setVerticalScrollBar( new ScrollBar());
+
+        }catch(Exception e){
+            displayError( e.getMessage() );
+        }
+    }
+
 
     // ------------------------------------------------------------------------------------------
 
@@ -281,7 +335,7 @@ public class Method {
 
     public static void SetAccountCard (CardLayout parent_layout, PanelBorder parent_panel) {
         parent_layout = (CardLayout) parent_panel.getLayout();
-        String query = String.format( "select bk.bank_name,ac_name,ac_number,ac_balance from account inner join bank as bk on account.bank_id = bk.bank_id where user_id='%s' and ac_status='t'", current_id );
+        String query = String.format( "select bk.bank_name,ac_name,ac_number,ac_balance from account as ac inner join bank as bk on ac.bank_id = bk.bank_id where ac.user_id='%s' and ac.ac_status='t'", current_id );
         DB_Connection db = new DB_Connection();
         parent_panel.removeAll();
         try {
@@ -327,7 +381,7 @@ public class Method {
             else throw new Exception( "Can't execute SQL");
 
             // Get deposit ID to save as statement
-            query = String.format("select MAX(dp_id) from moneydeposit ;");
+            query = "select MAX(dp_id) from moneydeposit ;";
             rs = db.getResultSet(query);
             rs.next();
             String dp_id = rs.getString(1);

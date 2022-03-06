@@ -20,7 +20,7 @@ public class AC_Select_Card extends javax.swing.JPanel {
      */
     CardLayout current_parent;
     PanelBorder current_panel;
-    static ArrayList<String> all_ac_number = new ArrayList<String>();
+    private static final ArrayList<String> all_ac_number = new ArrayList<String>();
     private static int Index = 0 ;
     public AC_Select_Card(CardLayout parent_layout, PanelBorder parent_panel, String ac_bank_name, String ac_name, String ac_number, Double ac_balance) {
         initComponents();
@@ -193,6 +193,10 @@ public class AC_Select_Card extends javax.swing.JPanel {
 
     public static String get_showwing_ac_number (){
         return all_ac_number.get( Index );
+    }
+
+    public static void Reset_AC_number() {
+        all_ac_number.clear();
     }
 
     protected void paintComponent(Graphics grphcs) {

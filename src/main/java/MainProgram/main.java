@@ -49,7 +49,8 @@ public class main extends javax.swing.JFrame {
                 if ( index == 0 ) {
                     main_cardLayout.show( card_panel, "dashboard" );
                     Method.SetTotalBalance_Dashboard( show_total_balance );
-                    Method.SetAllAcTable_Dashboard( show_all_ac_dashboard, all_ac_dashboard );}
+                    Method.SetAllAcTable_Dashboard(show_all_ac_dashboard, all_ac_dashboard_scrollbar );
+                    Method.SetRecentTable( show_recent_table, recent_scrollbar);}
                 else if ( index == 1 ){
                     main_cardLayout.show( card_panel, "account" );
                     Method.SetAllAcTable_Account( all_ac_table_account, all_ac_scroll_account );
@@ -69,14 +70,20 @@ public class main extends javax.swing.JFrame {
 
         // Dashboard Page
         Method.SetTotalBalance_Dashboard( show_total_balance );
-        Method.SetAllAcTable_Dashboard( show_all_ac_dashboard, all_ac_dashboard );
+        Method.SetAllAcTable_Dashboard(show_all_ac_dashboard, all_ac_dashboard_scrollbar );
+        Method.SetRecentTable( show_recent_table, recent_scrollbar);
 
         // Account Page
         Method.SetBank_Combobox( input_bank );
         register_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
         close_ac_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
+        activate_ac_btn.setCursor( new Cursor( Cursor.HAND_CURSOR));
+        view_stm_ac_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
         refresh_table_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
         Method.SetAllAcTable_Account( all_ac_table_account, all_ac_scroll_account );
+
+        stm_detail_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
+        stm_back_ac_btn.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
 
         // Confirm Open Account Page
         confirm_regis_pin.setHint( "PIN CODE" );
@@ -118,11 +125,11 @@ public class main extends javax.swing.JFrame {
         dashboard = new swing.PanelBorder();
         recent_panel = new swing.PanelBorder();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table1 = new swing.Table();
+        recent_scrollbar = new javax.swing.JScrollPane();
+        show_recent_table = new swing.Table();
         show_ac_panel = new swing.PanelBorder();
         jLabel5 = new javax.swing.JLabel();
-        all_ac_dashboard = new javax.swing.JScrollPane();
+        all_ac_dashboard_scrollbar = new javax.swing.JScrollPane();
         show_all_ac_dashboard = new swing.Table();
         panelBorder1 = new swing.PanelBorder();
         jLabel7 = new javax.swing.JLabel();
@@ -162,6 +169,10 @@ public class main extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         refresh_table_btn = new swing.PanelBorder();
         jLabel11 = new javax.swing.JLabel();
+        activate_ac_btn = new swing.PanelBorder();
+        jLabel49 = new javax.swing.JLabel();
+        view_stm_ac_btn = new swing.PanelBorder();
+        jLabel50 = new javax.swing.JLabel();
         open_ac_comfirm = new swing.PanelBorder();
         jLabel6 = new javax.swing.JLabel();
         jLabel44 = new javax.swing.JLabel();
@@ -189,6 +200,16 @@ public class main extends javax.swing.JFrame {
         cancle_regis_btn = new swing.PanelBorder();
         jLabel62 = new javax.swing.JLabel();
         confirm_regis_pin = new swing.PasswordText();
+        view_statement = new swing.PanelBorder();
+        statement_panel = new swing.PanelBorder();
+        jLabel53 = new javax.swing.JLabel();
+        show_statement_scrollbar = new javax.swing.JScrollPane();
+        show_statement_table = new swing.Table();
+        stm_ac_number = new javax.swing.JLabel();
+        stm_back_ac_btn = new swing.PanelBorder();
+        jLabel63 = new javax.swing.JLabel();
+        stm_detail_btn = new swing.PanelBorder();
+        jLabel64 = new javax.swing.JLabel();
         banking = new swing.PanelBorder();
         jLabel12 = new javax.swing.JLabel();
         show_ac_card = new swing.PanelBorder();
@@ -289,18 +310,16 @@ public class main extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Recent Banking");
 
-        table1.setModel(new javax.swing.table.DefaultTableModel(
+        show_recent_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Statement", "Banking", "Number", "Amount"
             }
         ));
-        jScrollPane1.setViewportView(table1);
+        show_recent_table.setFont(new java.awt.Font("Cambria", 0, 12)); // NOI18N
+        recent_scrollbar.setViewportView(show_recent_table);
 
         javax.swing.GroupLayout recent_panelLayout = new javax.swing.GroupLayout(recent_panel);
         recent_panel.setLayout(recent_panelLayout);
@@ -312,7 +331,7 @@ public class main extends javax.swing.JFrame {
                 .addContainerGap(90, Short.MAX_VALUE))
             .addGroup(recent_panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(recent_scrollbar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
         recent_panelLayout.setVerticalGroup(
@@ -321,7 +340,7 @@ public class main extends javax.swing.JFrame {
                 .addContainerGap(16, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(recent_scrollbar, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -348,7 +367,7 @@ public class main extends javax.swing.JFrame {
             }
         });
         show_all_ac_dashboard.setFont(new java.awt.Font("Cambria", 0, 12)); // NOI18N
-        all_ac_dashboard.setViewportView(show_all_ac_dashboard);
+        all_ac_dashboard_scrollbar.setViewportView(show_all_ac_dashboard);
 
         javax.swing.GroupLayout show_ac_panelLayout = new javax.swing.GroupLayout(show_ac_panel);
         show_ac_panel.setLayout(show_ac_panelLayout);
@@ -360,7 +379,7 @@ public class main extends javax.swing.JFrame {
                 .addContainerGap(103, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, show_ac_panelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(all_ac_dashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(all_ac_dashboard_scrollbar, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         show_ac_panelLayout.setVerticalGroup(
@@ -369,7 +388,7 @@ public class main extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(all_ac_dashboard, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
+                .addComponent(all_ac_dashboard_scrollbar)
                 .addContainerGap())
         );
 
@@ -706,6 +725,10 @@ public class main extends javax.swing.JFrame {
         Bank_label.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
         Bank_label.setText("Bank");
 
+        input_bank.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+        input_bank.setBorder(null);
+        input_bank.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
         javax.swing.GroupLayout input_ac_bank_panelLayout = new javax.swing.GroupLayout(input_ac_bank_panel);
         input_ac_bank_panel.setLayout(input_ac_bank_panelLayout);
         input_ac_bank_panelLayout.setHorizontalGroup(
@@ -901,20 +924,82 @@ public class main extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        activate_ac_btn.setBackground(new java.awt.Color(162, 103, 172));
+        activate_ac_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                activate_ac_btnMouseClicked(evt);
+            }
+        });
+
+        jLabel49.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+        jLabel49.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel49.setText("Activate");
+
+        javax.swing.GroupLayout activate_ac_btnLayout = new javax.swing.GroupLayout(activate_ac_btn);
+        activate_ac_btn.setLayout(activate_ac_btnLayout);
+        activate_ac_btnLayout.setHorizontalGroup(
+            activate_ac_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(activate_ac_btnLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel49)
+                .addGap(20, 20, 20))
+        );
+        activate_ac_btnLayout.setVerticalGroup(
+            activate_ac_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, activate_ac_btnLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        view_stm_ac_btn.setBackground(new java.awt.Color(162, 103, 172));
+        view_stm_ac_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                view_stm_ac_btnMouseClicked(evt);
+            }
+        });
+
+        jLabel50.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+        jLabel50.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel50.setText("Statement");
+
+        javax.swing.GroupLayout view_stm_ac_btnLayout = new javax.swing.GroupLayout(view_stm_ac_btn);
+        view_stm_ac_btn.setLayout(view_stm_ac_btnLayout);
+        view_stm_ac_btnLayout.setHorizontalGroup(
+            view_stm_ac_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(view_stm_ac_btnLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel50)
+                .addGap(20, 20, 20))
+        );
+        view_stm_ac_btnLayout.setVerticalGroup(
+            view_stm_ac_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, view_stm_ac_btnLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout all_ac_panelLayout = new javax.swing.GroupLayout(all_ac_panel);
         all_ac_panel.setLayout(all_ac_panelLayout);
         all_ac_panelLayout.setHorizontalGroup(
             all_ac_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(all_ac_panelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(all_ac_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(all_ac_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(all_ac_panelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(all_ac_scroll_account, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(all_ac_panelLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
                         .addComponent(jLabel8)
-                        .addGap(47, 47, 47)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(view_stm_ac_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(activate_ac_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
                         .addComponent(close_ac_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(refresh_table_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(all_ac_scroll_account, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addComponent(refresh_table_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(195, 195, 195))
         );
         all_ac_panelLayout.setVerticalGroup(
@@ -924,9 +1009,11 @@ public class main extends javax.swing.JFrame {
                 .addGroup(all_ac_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(close_ac_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(refresh_table_btn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(refresh_table_btn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(activate_ac_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(view_stm_ac_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
-                .addComponent(all_ac_scroll_account, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+                .addComponent(all_ac_scroll_account, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1204,6 +1291,113 @@ public class main extends javax.swing.JFrame {
 
         card_panel.add(open_ac_comfirm, "open_ac_confirm");
 
+        view_statement.setBackground(new java.awt.Color(232, 232, 255));
+
+        statement_panel.setBackground(new java.awt.Color(151, 150, 232));
+        statement_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel53.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        jLabel53.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel53.setText("Statement of account number :");
+        statement_panel.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+
+        show_statement_table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Statement", "Banking", "Number", "Amount"
+            }
+        ));
+        show_statement_table.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+        show_statement_scrollbar.setViewportView(show_statement_table);
+
+        statement_panel.add(show_statement_scrollbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 628, 500));
+
+        stm_ac_number.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        stm_ac_number.setForeground(new java.awt.Color(255, 255, 255));
+        stm_ac_number.setText("###AC_Number###");
+        statement_panel.add(stm_ac_number, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, -1));
+
+        stm_back_ac_btn.setBackground(new java.awt.Color(162, 103, 172));
+        stm_back_ac_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                stm_back_ac_btnMouseClicked(evt);
+            }
+        });
+
+        jLabel63.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+        jLabel63.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel63.setText("Back");
+
+        javax.swing.GroupLayout stm_back_ac_btnLayout = new javax.swing.GroupLayout(stm_back_ac_btn);
+        stm_back_ac_btn.setLayout(stm_back_ac_btnLayout);
+        stm_back_ac_btnLayout.setHorizontalGroup(
+            stm_back_ac_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, stm_back_ac_btnLayout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addComponent(jLabel63)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+        stm_back_ac_btnLayout.setVerticalGroup(
+            stm_back_ac_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(stm_back_ac_btnLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel63, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        statement_panel.add(stm_back_ac_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 20, -1, -1));
+
+        stm_detail_btn.setBackground(new java.awt.Color(162, 103, 172));
+        stm_detail_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                stm_detail_btnMouseClicked(evt);
+            }
+        });
+
+        jLabel64.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+        jLabel64.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel64.setText("Detail");
+
+        javax.swing.GroupLayout stm_detail_btnLayout = new javax.swing.GroupLayout(stm_detail_btn);
+        stm_detail_btn.setLayout(stm_detail_btnLayout);
+        stm_detail_btnLayout.setHorizontalGroup(
+            stm_detail_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(stm_detail_btnLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel64)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+        stm_detail_btnLayout.setVerticalGroup(
+            stm_detail_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, stm_detail_btnLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel64, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        statement_panel.add(stm_detail_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, -1, -1));
+
+        javax.swing.GroupLayout view_statementLayout = new javax.swing.GroupLayout(view_statement);
+        view_statement.setLayout(view_statementLayout);
+        view_statementLayout.setHorizontalGroup(
+            view_statementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(view_statementLayout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(statement_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(11, Short.MAX_VALUE))
+        );
+        view_statementLayout.setVerticalGroup(
+            view_statementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(view_statementLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(statement_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+
+        card_panel.add(view_statement, "view_statement");
+
         banking.setBackground(new java.awt.Color(232, 232, 255));
         banking.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -1347,7 +1541,7 @@ public class main extends javax.swing.JFrame {
         jLabel38.setText("MySQL");
 
         jLabel39.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
-        jLabel39.setText("By : Anupat Kaewmee 6400922");
+        jLabel39.setText("Project By : Anupat Kaewmee 6400922");
 
         jLabel40.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         jLabel40.setText("DIT102 Project : Banking System");
@@ -1378,34 +1572,32 @@ public class main extends javax.swing.JFrame {
         aboutmeLayout.setHorizontalGroup(
             aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(aboutmeLayout.createSequentialGroup()
-                .addGroup(aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, aboutmeLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel39))
-                    .addGroup(aboutmeLayout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addGroup(aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel34)
-                            .addComponent(jLabel37)
-                            .addComponent(jLabel38)
-                            .addComponent(jLabel30)
-                            .addComponent(jLabel40)
-                            .addComponent(jLabel41)
-                            .addComponent(jLabel43)
-                            .addComponent(jLabel45)
-                            .addComponent(jLabel46)
-                            .addComponent(jLabel47)
-                            .addComponent(jLabel48)
-                            .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel42))
-                        .addGap(0, 64, Short.MAX_VALUE)))
+                .addContainerGap(362, Short.MAX_VALUE)
+                .addComponent(jLabel39)
                 .addContainerGap())
+            .addGroup(aboutmeLayout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addGroup(aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel34)
+                    .addComponent(jLabel37)
+                    .addComponent(jLabel38)
+                    .addComponent(jLabel30)
+                    .addComponent(jLabel40)
+                    .addComponent(jLabel41)
+                    .addComponent(jLabel43)
+                    .addComponent(jLabel45)
+                    .addComponent(jLabel46)
+                    .addComponent(jLabel47)
+                    .addComponent(jLabel48)
+                    .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel42))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         aboutmeLayout.setVerticalGroup(
             aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(aboutmeLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addContainerGap(47, Short.MAX_VALUE)
                 .addComponent(jLabel40)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1433,7 +1625,7 @@ public class main extends javax.swing.JFrame {
                 .addComponent(jLabel37)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel38)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addGap(42, 42, 42)
                 .addComponent(jLabel39)
                 .addContainerGap())
         );
@@ -1980,7 +2172,7 @@ public class main extends javax.swing.JFrame {
 
     private String rg_ac_name, rg_ac_citizenid, rg_ac_tel, rg_ac_address, rg_ac_pin, rg_ac_bank,rg_ac_number,rg_bank_id;
     private void register_btnMouseClicked (java.awt.event.MouseEvent evt) {//GEN-FIRST:event_register_btnMouseClicked
-        // TODO add your handling code here:
+
 
 
 
@@ -2016,7 +2208,7 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_register_btnMouseClicked
 
     private void con_register_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_con_register_btnMouseClicked
-        // TODO add your handling code here:
+
         String confirm_pin = confirm_regis_pin.getText();
         if( confirm_pin != "" && Method.isNumeric( confirm_pin )) {
             if( confirm_pin.equals( rg_ac_pin ) ) {
@@ -2029,16 +2221,40 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_con_register_btnMouseClicked
 
     private void cancle_regis_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancle_regis_btnMouseClicked
-        // TODO add your handling code here:
+
         main_cardLayout = (CardLayout) card_panel.getLayout();
         main_cardLayout.show( card_panel, "account" );
     }//GEN-LAST:event_cancle_regis_btnMouseClicked
 
     private void deposit_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deposit_btnMouseClicked
-        // TODO add your handling code here:
+
         Method.Deposit( JOptionPane.showInputDialog( this,"Amount to deposit : " ), AC_Select_Card.get_showwing_ac_number() );
         Method.SetAccountCard(new CardLayout(),show_ac_card);
     }//GEN-LAST:event_deposit_btnMouseClicked
+
+    private void activate_ac_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activate_ac_btnMouseClicked
+
+        String ac_number = all_ac_table_account.getValueAt( all_ac_table_account.getSelectedRow(), 0 ).toString();
+        Method.ActivateAccount( ac_number );
+        Method.SetAllAcTable_Account( all_ac_table_account, all_ac_scroll_account );
+    }//GEN-LAST:event_activate_ac_btnMouseClicked
+
+    private void view_stm_ac_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_view_stm_ac_btnMouseClicked
+        String ac_number = all_ac_table_account.getValueAt( all_ac_table_account.getSelectedRow(), 0 ).toString();
+        Method.SetStatementsTable( ac_number,show_statement_table,show_statement_scrollbar, stm_ac_number);
+        main_cardLayout = (CardLayout) card_panel.getLayout();
+        main_cardLayout.show( card_panel, "view_statement" );
+    }//GEN-LAST:event_view_stm_ac_btnMouseClicked
+
+    private void stm_back_ac_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stm_back_ac_btnMouseClicked
+        // TODO add your handling code here:
+        main_cardLayout = (CardLayout) card_panel.getLayout();
+        main_cardLayout.show( card_panel, "account" );
+    }//GEN-LAST:event_stm_back_ac_btnMouseClicked
+
+    private void stm_detail_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stm_detail_btnMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_stm_detail_btnMouseClicked
 
 
     /**
@@ -2088,7 +2304,8 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel TelephoneNumber_label;
     private swing.PanelBorder aboutme;
     private swing.PanelBorder account;
-    private javax.swing.JScrollPane all_ac_dashboard;
+    private swing.PanelBorder activate_ac_btn;
+    private javax.swing.JScrollPane all_ac_dashboard_scrollbar;
     private swing.PanelBorder all_ac_panel;
     private javax.swing.JScrollPane all_ac_scroll_account;
     private swing.Table all_ac_table_account;
@@ -2162,9 +2379,12 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel59;
@@ -2172,11 +2392,12 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel62;
+    private javax.swing.JLabel jLabel63;
+    private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
@@ -2200,6 +2421,7 @@ public class main extends javax.swing.JFrame {
     private swing.PanelBorder open_ac_comfirm;
     private swing.PanelBorder panelBorder1;
     private swing.PanelBorder recent_panel;
+    private javax.swing.JScrollPane recent_scrollbar;
     private swing.PanelBorder refresh_table_btn;
     private swing.PanelBorder register_btn;
     private swing.PanelBorder round;
@@ -2217,18 +2439,26 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel show_ac_number_transferor;
     private swing.PanelBorder show_ac_panel;
     private swing.Table show_all_ac_dashboard;
+    private swing.Table show_recent_table;
     private javax.swing.JLabel show_rg_ac_address;
     private javax.swing.JLabel show_rg_ac_bank;
     private javax.swing.JLabel show_rg_ac_citizenid;
     private javax.swing.JLabel show_rg_ac_name;
     private javax.swing.JLabel show_rg_ac_number;
     private javax.swing.JLabel show_rg_ac_tel;
+    private javax.swing.JScrollPane show_statement_scrollbar;
+    private swing.Table show_statement_table;
     private javax.swing.JLabel show_total_balance;
     private component.Menu sidebar;
-    private swing.Table table1;
+    private swing.PanelBorder statement_panel;
+    private javax.swing.JLabel stm_ac_number;
+    private swing.PanelBorder stm_back_ac_btn;
+    private swing.PanelBorder stm_detail_btn;
     private swing.PanelBorder trans_btn;
     private swing.PanelBorder transfer__input;
     private swing.PanelBorder transfer_confirm;
+    private swing.PanelBorder view_statement;
+    private swing.PanelBorder view_stm_ac_btn;
     private swing.PanelBorder withdraw_btn;
     // End of variables declaration//GEN-END:variables
 }

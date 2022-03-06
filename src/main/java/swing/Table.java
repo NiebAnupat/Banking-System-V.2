@@ -3,8 +3,7 @@ package swing;
 import model.StatusType;
 import java.awt.Color;
 import java.awt.Component;
-import javax.swing.JLabel;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,9 +18,7 @@ public class Table extends JTable {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
                 TableHeader header = new TableHeader(o + "");
-                if (i1 == 4) {
-                    header.setHorizontalAlignment(JLabel.CENTER);
-                }
+                header.setHorizontalAlignment(SwingConstants.CENTER);
                 return header;
             }
         });
@@ -43,6 +40,11 @@ public class Table extends JTable {
                     CellStatus cell = new CellStatus(type);
                     return cell;
                 }
+            }
+
+            @Override
+            public void setHorizontalAlignment (int alignment) {
+                super.setHorizontalAlignment( SwingConstants.CENTER );
             }
         });
     }
