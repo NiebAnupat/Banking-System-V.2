@@ -4,6 +4,9 @@
  */
 package MainProgram;
 
+import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import java.awt.*;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,6 +22,9 @@ public class test extends javax.swing.JFrame {
      */
     public test() {
         initComponents();
+        jTable1.getTableHeader().setFont(new java.awt.Font("TH Sarabun New", 1, 18));
+
+
     }
 
     /**
@@ -30,43 +36,61 @@ public class test extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        show_time_btn = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+
+        jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        show_time_btn.setText("time");
-        show_time_btn.addActionListener(new java.awt.event.ActionListener() {
+        jTable1.setFont(new java.awt.Font("TH Sarabun New", 1, 18)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"ฤฆฏ", "ฤฆฏ", "ฤฆฏ", null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ฤฆฏ", "ฤฆฏ", "ฤฆฏ", "ฤฆฏ"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 310, 210));
+
+        jLabel2.setFont(new java.awt.Font("TH Sarabun New", 1, 14)); // NOI18N
+        jLabel2.setText("ฤฆฏ");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 250, 80, -1));
+
+        jButton1.setFont(new java.awt.Font("TH Sarabun New", 1, 24)); // NOI18N
+        jButton1.setText("ปุ่ม");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                show_time_btnActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(show_time_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, -1, -1));
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void show_time_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_show_time_btnActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        Method.displayInfo( String.valueOf( formatter.format( date )));
-
-    }//GEN-LAST:event_show_time_btnActionPerformed
+        if ( jTable1.getSelectedRow() == -1 ) Method.displayError( "Please select item" );
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
+
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -75,6 +99,7 @@ public class test extends javax.swing.JFrame {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    javax.swing.UIManager.put("JOptionPane.messageFont", new Font("TH Sarabun New", 1, 18));
                     break;
                 }
             }
@@ -98,8 +123,10 @@ public class test extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JButton show_time_btn;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

@@ -219,22 +219,6 @@ public class main extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         withdraw_btn = new swing.PanelBorder();
         jLabel14 = new javax.swing.JLabel();
-        aboutme = new swing.PanelBorder();
-        jLabel30 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel34 = new javax.swing.JLabel();
-        jLabel37 = new javax.swing.JLabel();
-        jLabel38 = new javax.swing.JLabel();
-        jLabel39 = new javax.swing.JLabel();
-        jLabel40 = new javax.swing.JLabel();
-        jLabel41 = new javax.swing.JLabel();
-        jLabel42 = new javax.swing.JLabel();
-        jLabel43 = new javax.swing.JLabel();
-        jLabel45 = new javax.swing.JLabel();
-        jLabel46 = new javax.swing.JLabel();
-        jLabel47 = new javax.swing.JLabel();
-        jLabel48 = new javax.swing.JLabel();
-        jSeparator9 = new javax.swing.JSeparator();
         transfer__input = new swing.PanelBorder();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -273,7 +257,7 @@ public class main extends javax.swing.JFrame {
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
         jSeparator11 = new javax.swing.JSeparator();
-        show_ac_bank_recipient1 = new javax.swing.JLabel();
+        show_amount_transfer = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         input_pin_trans = new swing.SearchText();
         jLabel24 = new javax.swing.JLabel();
@@ -282,6 +266,22 @@ public class main extends javax.swing.JFrame {
         jLabel26 = new javax.swing.JLabel();
         fianal_cancel_trans_btn = new swing.PanelBorder();
         jLabel28 = new javax.swing.JLabel();
+        aboutme = new swing.PanelBorder();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        jLabel43 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
+        jLabel46 = new javax.swing.JLabel();
+        jLabel47 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
+        jSeparator9 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusable(false);
@@ -1306,7 +1306,7 @@ public class main extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Statement", "Banking", "Number", "Amount"
+                "Statement", "Banking", "Amount"
             }
         ));
         show_statement_table.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
@@ -1464,6 +1464,11 @@ public class main extends javax.swing.JFrame {
         );
 
         withdraw_btn.setBackground(new java.awt.Color(162, 103, 172));
+        withdraw_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                withdraw_btnMouseClicked(evt);
+            }
+        });
 
         jLabel14.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
@@ -1523,115 +1528,6 @@ public class main extends javax.swing.JFrame {
 
         card_panel.add(banking, "banking");
 
-        aboutme.setBackground(new java.awt.Color(232, 232, 255));
-
-        jLabel30.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
-        jLabel30.setText("Tools");
-
-        jLabel4.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
-        jLabel4.setText("Apache Netbeans IDE 12.5");
-
-        jLabel34.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
-        jLabel34.setText("IntelliJ IDEA 2021.2.2");
-
-        jLabel37.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
-        jLabel37.setText("XAMPP 3.3.0");
-
-        jLabel38.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
-        jLabel38.setText("MySQL");
-
-        jLabel39.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
-        jLabel39.setText("Project By : Anupat Kaewmee 6400922");
-
-        jLabel40.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
-        jLabel40.setText("DIT102 Project : Banking System");
-
-        jLabel41.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
-        jLabel41.setText("It is a banking simulator.");
-
-        jLabel42.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
-        jLabel42.setText("to simulate various financial transactions within the program,");
-
-        jLabel43.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
-        jLabel43.setText("1) Sign in - Sign up");
-
-        jLabel45.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
-        jLabel45.setText("2) Account Management");
-
-        jLabel46.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
-        jLabel46.setText("3) Financial Transactions");
-
-        jLabel47.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
-        jLabel47.setText("The data will be stored within the local server ");
-
-        jLabel48.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
-        jLabel48.setText("with the following systems:");
-
-        javax.swing.GroupLayout aboutmeLayout = new javax.swing.GroupLayout(aboutme);
-        aboutme.setLayout(aboutmeLayout);
-        aboutmeLayout.setHorizontalGroup(
-            aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(aboutmeLayout.createSequentialGroup()
-                .addContainerGap(362, Short.MAX_VALUE)
-                .addComponent(jLabel39)
-                .addContainerGap())
-            .addGroup(aboutmeLayout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addGroup(aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel34)
-                    .addComponent(jLabel37)
-                    .addComponent(jLabel38)
-                    .addComponent(jLabel30)
-                    .addComponent(jLabel40)
-                    .addComponent(jLabel41)
-                    .addComponent(jLabel43)
-                    .addComponent(jLabel45)
-                    .addComponent(jLabel46)
-                    .addComponent(jLabel47)
-                    .addComponent(jLabel48)
-                    .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel42))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        aboutmeLayout.setVerticalGroup(
-            aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(aboutmeLayout.createSequentialGroup()
-                .addContainerGap(47, Short.MAX_VALUE)
-                .addComponent(jLabel40)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel42)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel48)
-                .addGap(35, 35, 35)
-                .addComponent(jLabel43)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel45)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel46)
-                .addGap(35, 35, 35)
-                .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel30)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addGap(8, 8, 8)
-                .addComponent(jLabel34)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel37)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel38)
-                .addGap(42, 42, 42)
-                .addComponent(jLabel39)
-                .addContainerGap())
-        );
-
-        card_panel.add(aboutme, "aboutme");
-
         transfer__input.setBackground(new java.awt.Color(232, 232, 255));
         transfer__input.setMaximumSize(new java.awt.Dimension(670, 600));
         transfer__input.setMinimumSize(new java.awt.Dimension(670, 600));
@@ -1667,7 +1563,8 @@ public class main extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Cambria", 0, 24)); // NOI18N
         jLabel18.setText("Bank");
 
-        input_bank_recipient.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        input_bank_recipient.setToolTipText("");
+        input_bank_recipient.setBorder(null);
 
         next_trans_btn.setBackground(new java.awt.Color(162, 103, 172));
         next_trans_btn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1740,7 +1637,7 @@ public class main extends javax.swing.JFrame {
                         .addGroup(transfer__inputLayout.createSequentialGroup()
                             .addComponent(jLabel18)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(input_bank_recipient, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(input_bank_recipient, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(transfer__inputLayout.createSequentialGroup()
                             .addComponent(jLabel16)
                             .addGap(6, 6, 6)
@@ -1848,8 +1745,8 @@ public class main extends javax.swing.JFrame {
         jLabel36.setForeground(new java.awt.Color(162, 103, 172));
         jLabel36.setText("To");
 
-        show_ac_bank_recipient1.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        show_ac_bank_recipient1.setText("###Trans_amount###");
+        show_amount_transfer.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        show_amount_transfer.setText("###Trans_amount###");
 
         jLabel32.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(162, 103, 172));
@@ -1965,7 +1862,7 @@ public class main extends javax.swing.JFrame {
                         .addGap(187, 187, 187)
                         .addGroup(transfer_confirmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(jLabel32)
-                            .addComponent(show_ac_bank_recipient1)
+                            .addComponent(show_amount_transfer)
                             .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel24)
                             .addComponent(input_pin_trans, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2030,7 +1927,7 @@ public class main extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(jLabel32)
                 .addGap(5, 5, 5)
-                .addComponent(show_ac_bank_recipient1)
+                .addComponent(show_amount_transfer)
                 .addGroup(transfer_confirmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(transfer_confirmLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -2050,6 +1947,115 @@ public class main extends javax.swing.JFrame {
         );
 
         card_panel.add(transfer_confirm, "transfer_confirm");
+
+        aboutme.setBackground(new java.awt.Color(232, 232, 255));
+
+        jLabel30.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
+        jLabel30.setText("Tools");
+
+        jLabel4.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel4.setText("Apache Netbeans IDE 12.5");
+
+        jLabel34.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel34.setText("IntelliJ IDEA 2021.2.2");
+
+        jLabel37.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel37.setText("XAMPP 3.3.0");
+
+        jLabel38.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel38.setText("MySQL");
+
+        jLabel39.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel39.setText("Project By : Anupat Kaewmee 6400922");
+
+        jLabel40.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
+        jLabel40.setText("DIT102 Project : Banking System");
+
+        jLabel41.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel41.setText("It is a banking simulator.");
+
+        jLabel42.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel42.setText("to simulate various financial transactions within the program,");
+
+        jLabel43.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel43.setText("1) Sign in - Sign up");
+
+        jLabel45.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel45.setText("2) Account Management");
+
+        jLabel46.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel46.setText("3) Financial Transactions");
+
+        jLabel47.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel47.setText("The data will be stored within the local server ");
+
+        jLabel48.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel48.setText("with the following systems:");
+
+        javax.swing.GroupLayout aboutmeLayout = new javax.swing.GroupLayout(aboutme);
+        aboutme.setLayout(aboutmeLayout);
+        aboutmeLayout.setHorizontalGroup(
+            aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(aboutmeLayout.createSequentialGroup()
+                .addContainerGap(362, Short.MAX_VALUE)
+                .addComponent(jLabel39)
+                .addContainerGap())
+            .addGroup(aboutmeLayout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addGroup(aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel34)
+                    .addComponent(jLabel37)
+                    .addComponent(jLabel38)
+                    .addComponent(jLabel30)
+                    .addComponent(jLabel40)
+                    .addComponent(jLabel41)
+                    .addComponent(jLabel43)
+                    .addComponent(jLabel45)
+                    .addComponent(jLabel46)
+                    .addComponent(jLabel47)
+                    .addComponent(jLabel48)
+                    .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel42))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        aboutmeLayout.setVerticalGroup(
+            aboutmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(aboutmeLayout.createSequentialGroup()
+                .addContainerGap(47, Short.MAX_VALUE)
+                .addComponent(jLabel40)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel42)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel48)
+                .addGap(35, 35, 35)
+                .addComponent(jLabel43)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel45)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel46)
+                .addGap(35, 35, 35)
+                .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel30)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addGap(8, 8, 8)
+                .addComponent(jLabel34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel38)
+                .addGap(42, 42, 42)
+                .addComponent(jLabel39)
+                .addContainerGap())
+        );
+
+        card_panel.add(aboutme, "aboutme");
 
         main_panel.add(card_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 670, 600));
 
@@ -2125,6 +2131,10 @@ public class main extends javax.swing.JFrame {
     private void trans_btnMouseClicked (java.awt.event.MouseEvent evt) {//GEN-FIRST:event_trans_btnMouseClicked
         // TODO add your handling code here:
         main_cardLayout.show( card_panel, "trans_input" );
+        input_money_trans_txt.setText(null);
+        input_ac_number_recipient_txt.setText(null);
+
+        if (input_bank_recipient.getItemCount() == 0) Method.SetBank_Combobox( input_bank_recipient );
     }//GEN-LAST:event_trans_btnMouseClicked
 
     private void input_ac_number_recipient_txtActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_ac_number_recipient_txtActionPerformed
@@ -2133,7 +2143,14 @@ public class main extends javax.swing.JFrame {
 
     private void next_trans_btnMouseClicked (java.awt.event.MouseEvent evt) {//GEN-FIRST:event_next_trans_btnMouseClicked
         // TODO add your handling code here:
-        main_cardLayout.show( card_panel, "transfer_confirm" );
+        if (Method.SetTransferDetails( AC_Select_Card.get_showwing_ac_number(), input_ac_number_recipient_txt.getText(),
+                input_bank_recipient.getSelectedItem().toString(), input_money_trans_txt.getText(),
+                show_ac_number_transferor,show_ac_name_transferor,show_ac_bank_transferor,
+                show_ac_number_recipient,show_ac_name_recipient,show_ac_bank_recipient, show_amount_transfer)) {
+            input_pin_trans.setText(null);
+            main_cardLayout.show( card_panel, "transfer_confirm" );
+        }
+
     }//GEN-LAST:event_next_trans_btnMouseClicked
 
     private void cancel_trans_btnMouseClicked (java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancel_trans_btnMouseClicked
@@ -2149,8 +2166,8 @@ public class main extends javax.swing.JFrame {
 
     private void confirm_transfer_btnMouseClicked (java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirm_transfer_btnMouseClicked
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog( this, "Confirm transfer" );
-        main_cardLayout.show( card_panel, "banking" );
+        if(Method.Transfer( input_pin_trans.getText() )) main_cardLayout.show( card_panel, "banking" );
+
     }//GEN-LAST:event_confirm_transfer_btnMouseClicked
 
     private void input_pin_transActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_pin_transActionPerformed
@@ -2172,9 +2189,6 @@ public class main extends javax.swing.JFrame {
 
     private String rg_ac_name, rg_ac_citizenid, rg_ac_tel, rg_ac_address, rg_ac_pin, rg_ac_bank,rg_ac_number,rg_bank_id;
     private void register_btnMouseClicked (java.awt.event.MouseEvent evt) {//GEN-FIRST:event_register_btnMouseClicked
-
-
-
 
         rg_ac_name = input_ac_name_txt.getText();
         rg_ac_citizenid = input_citizenid_txt.getText();
@@ -2255,6 +2269,12 @@ public class main extends javax.swing.JFrame {
     private void stm_detail_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stm_detail_btnMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_stm_detail_btnMouseClicked
+
+    private void withdraw_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_withdraw_btnMouseClicked
+        // TODO add your handling code here:
+        Method.Withdraw( JOptionPane.showInputDialog( this,"Amount to withdraw : " ), AC_Select_Card.get_showwing_ac_number() );
+        Method.SetAccountCard(new CardLayout(),show_ac_card);
+    }//GEN-LAST:event_withdraw_btnMouseClicked
 
 
     /**
@@ -2430,7 +2450,6 @@ public class main extends javax.swing.JFrame {
     private swing.PanelBorder round3;
     private swing.PanelBorder round4;
     private javax.swing.JLabel show_ac_bank_recipient;
-    private javax.swing.JLabel show_ac_bank_recipient1;
     private javax.swing.JLabel show_ac_bank_transferor;
     private swing.PanelBorder show_ac_card;
     private javax.swing.JLabel show_ac_name_recipient;
@@ -2439,6 +2458,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel show_ac_number_transferor;
     private swing.PanelBorder show_ac_panel;
     private swing.Table show_all_ac_dashboard;
+    private javax.swing.JLabel show_amount_transfer;
     private swing.Table show_recent_table;
     private javax.swing.JLabel show_rg_ac_address;
     private javax.swing.JLabel show_rg_ac_bank;

@@ -41,7 +41,7 @@ public class DB_Connection {
     }
     // -----------------------------------------------
 
-    // -----------Method for exceute Sql-----------------
+    // -----------Method for execute Sql-----------------
     public boolean execute (String query) throws SQLException {
         boolean rs;
         try{

@@ -7,72 +7,21 @@ import model.StatusType;
 import component.AC_Select_Card;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
 
 public class Method {
-    public static void displayError (String message) {
-        JOptionPane.showMessageDialog( null, message, "Alert", JOptionPane.ERROR_MESSAGE );
-    }
 
-    public static void displayInfo (String message) {
-        JOptionPane.showMessageDialog( null, message, "Information", JOptionPane.INFORMATION_MESSAGE );
-    }
+    // <editor-fold defaultstate="collapsed" desc="Main Program">
 
-    public static void displayInfo (double message) {
-        JOptionPane.showMessageDialog( null, String.valueOf(message), "Information", JOptionPane.INFORMATION_MESSAGE );
-    }
-
-    public static void displayInfo (int message) {
-        JOptionPane.showMessageDialog( null, String.valueOf(message), "Information", JOptionPane.INFORMATION_MESSAGE );
-    }
-
-    public static boolean isNumeric (String string) {
-        int intValue;
-        if ( string == null || string.equals( "" ) ) {
-            return false;
-        }
-
-        try {
-            intValue = Integer.parseInt( string );
-            return true;
-        } catch (NumberFormatException e) {
-        }
-        return false;
-    }
-
-    public static void center_screen (JFrame parent) {
-        int lebar = parent.getWidth() / 2;
-        int tinggi = parent.getHeight() / 2;
-        int x = ( Toolkit.getDefaultToolkit().getScreenSize().width / 2 ) - lebar;
-        int y = ( Toolkit.getDefaultToolkit().getScreenSize().height / 2 ) - tinggi;
-        parent.setLocation( x, y );
-    }
-
-    public static void Escape (JFrame parent) {
-        parent.getRootPane().getInputMap( JComponent.WHEN_IN_FOCUSED_WINDOW ).
-                put( KeyStroke.getKeyStroke( KeyEvent.VK_ESCAPE, 0 ), "Cancel" );
-
-        parent.getRootPane().getActionMap().put( "Cancel", new AbstractAction() {
-            public void actionPerformed (ActionEvent e) {
-                System.exit( 0 );
-            }
-        } );
-    }
-
-
-    // -------------------------------------- SignIn - SignUp Part --------------------------------------
+    // <editor-fold defaultstate="collapsed" desc="SignIn - SignUp Part">
     private static String current_id;
 
     public static void Login (JFrame parent, String user_id, String user_password) {
@@ -143,9 +92,9 @@ public class Method {
 
 
     }
-    // --------------------------------------------------------------------------------------------------
+    // </editor-fold>
 
-    // -------------------------------------- Dashboard Part --------------------------------------
+    // <editor-fold defaultstate="collapsed" desc="Dashboard Part">
     public static void SetTotalBalance_Dashboard (JLabel parent) {
         String query = String.format( "select sum(ac_balance) from account where user_id='%s' and ac_status='t'", current_id );
         DB_Connection db = new DB_Connection();
@@ -198,9 +147,9 @@ public class Method {
 
     }
 
-    // --------------------------------------------------------------------------------------------
+    // </editor-fold>
 
-    // -------------------------------------- Account Part --------------------------------------
+    // <editor-fold defaultstate="collapsed" desc="Account Part">
 
     public static void SetBank_Combobox (JComboBox parent) {
         String query = "select bank_name from bank";
@@ -303,14 +252,14 @@ public class Method {
                 rs.next();
                 db.disconnect();
             }
-        } catch (Exception ignored) {
+        } catch (Exception e) {
             return ac_number;
         }
 
     }
 
     public static void SetStatementsTable (String ac_number, Table parent, JScrollPane parent_scrollbar, JLabel label_display_number){
-        String query = String.format( "select st.stm_id,bt.type_name,st.ac_number,st.amount from statements as st " +
+        String query = String.format( "select st.stm_id,bt.type_name,st.amount from statements as st " +
                 "inner join banking_type as bt on st.type_id = bt.type_id " +
                 "where st.ac_number = '%s' order by st.stm_id DESC",ac_number);
         DB_Connection db = new DB_Connection();
@@ -319,7 +268,7 @@ public class Method {
             label_display_number.setText( ac_number );
             ResultSet rs = db.getResultSet( query );
             while (rs.next()) {
-                Object[] stm_data = {rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), rs.getString( 4 )+" ฿"};
+                Object[] stm_data = {rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 )+" ฿"};
                 parent.addRow( stm_data );
             }
             parent_scrollbar.setVerticalScrollBar( new ScrollBar());
@@ -330,9 +279,9 @@ public class Method {
     }
 
 
-    // ------------------------------------------------------------------------------------------
+    // </editor-fold>
 
-    // -------------------------------------- Banking Page --------------------------------------
+    // <editor-fold defaultstate="collapsed" desc="Banking Part">
 
     public static void SetAccountCard (CardLayout parent_layout, PanelBorder parent_panel) {
         parent_layout = (CardLayout) parent_panel.getLayout();
@@ -368,18 +317,20 @@ public class Method {
         boolean is_success;
 
         try {
+
             money = Double.parseDouble( amount_to_deposit );
+
             ResultSet rs;
 
             // Update Account balance after deposit
             query = String.format( "update account set ac_balance=((select ac_balance from account where ac_number='%s') + '%f') where ac_number='%s'",ac_number,money,ac_number);
             if ( db.execute( query ) ) {}
-            else throw new Exception( "Can't execute SQL");
+            else throw new Exception( "Can't execute SQL 1");
 
             // Save deposit history
             query = String.format("insert into moneydeposit (dp_money,ac_number) values ('%f','%s');",money,ac_number);
             if ( db.execute( query ) ) {}
-            else throw new Exception( "Can't execute SQL");
+            else throw new Exception( "Can't execute SQL 2");
 
             // Get deposit ID to save as statement
             query = "select MAX(dp_id) from moneydeposit ;";
@@ -388,9 +339,9 @@ public class Method {
             String dp_id = rs.getString(1);
 
             // Save transaction statement
-            query = String.format( "insert into statements (stm_date,type_id,ac_number,banking_id,amount) VALUES ('%s','%d','%s','%s','%f')",dateSql,1,ac_number,dp_id,money);
+            query = String.format( "insert into statements (stm_date,type_id,ac_number,banking_id,amount) VALUES ('%s','%s','%s','%s','%f')",dateSql,"1",ac_number,dp_id,money);
             if ( db.execute( query ) ) {}
-            else throw new Exception( "Can't execute SQL");
+            else throw new Exception( "Can't execute SQL 3");
 
             // Update bank balance by bank id from account number that deposit
             query = String.format("update bank set bank_balance = (select sum(ac_balance) " +
@@ -399,7 +350,7 @@ public class Method {
                     "where bank_id=(select bank_id from account where ac_number='%s')"
                     ,ac_number,ac_number);
             if ( db.execute( query ) ) is_success = true;
-            else throw new Exception( "Can't execute SQL");
+            else throw new Exception( "Can't execute SQL 4");
 
         } catch (ClassCastException e) {
             displayError( "Please input money to deposit" );
@@ -416,7 +367,252 @@ public class Method {
 
     }
 
-    // ------------------------------------------------------------------------------------------
+    public static void Withdraw (String amount_to_withdraw, String ac_number){
+
+        double money = 0.0;
+        String query;
+        DB_Connection db = new DB_Connection();
+        SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy HH:mm:ss" );
+        SimpleDateFormat sdfSql = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+        String date = sdf.format( new Date() );
+        String dateSql = sdfSql.format( new Date() );
+        boolean is_success;
+
+        try{
+
+            money = Double.parseDouble( amount_to_withdraw );
+
+            ResultSet rs;
+
+            // Update Account balance after withdraw
+            query = String.format( "update account set ac_balance=((select ac_balance from account where ac_number='%s') - '%f') where ac_number='%s'",ac_number,money,ac_number);
+            if ( db.execute( query ) ) {}
+            else throw new Exception( "Can't execute SQL 1");
+
+            // Save withdraw history
+            query = String.format("insert into moneywithdraw (wd_money,ac_number) values ('%f','%s');",money,ac_number);
+            if ( db.execute( query ) ) {}
+            else throw new Exception( "Can't execute SQL 2");
+
+            // Get deposit ID to save as statement
+            query = "select MAX(wd_id) from moneywithdraw ;";
+            rs = db.getResultSet(query);
+            rs.next();
+            String wd_id = rs.getString(1);
+
+            // Save transaction statement
+            query = String.format( "insert into statements (stm_date,type_id,ac_number,banking_id,amount) VALUES ('%s','%s','%s','%s','%f')",dateSql,"2",ac_number,wd_id,money);
+            if ( db.execute( query ) ) {}
+            else throw new Exception( "Can't execute SQL 3");
+
+            // Update bank balance by bank id from account number that withdraw
+            query = String.format("update bank set bank_balance = (select sum(ac_balance) " +
+                            "from account as ac inner join bank b on ac.bank_id = b.bank_id " +
+                            "where ac.bank_id=(select bank_id from account where ac_number='%s')) " +
+                            "where bank_id=(select bank_id from account where ac_number='%s')"
+                    ,ac_number,ac_number);
+            if ( db.execute( query ) ) is_success = true;
+            else throw new Exception( "Can't execute SQL 4");
+
+
+
+        }catch(ClassCastException e){
+            displayError( "Please input money to withdraw" );
+            is_success = false;
+        }
+        catch (Exception e) {
+            displayError( e.getMessage());
+            is_success = false;
+        }
+
+        if ( is_success )
+            displayInfo( String.format( "Transaction successful\nTime : %s\nWithdraw to account number : %s \nAmount to withdraw : %.2f ฿", date,ac_number, money ) );
+        else displayError( String.format( "Transaction fail\nTime : %s\n", date ) );
+
+    }
+
+    static String current_number_recipient, current_number_transferor,current_bank_name_recipient;
+    static double amount_to_transfer;
+    public static boolean SetTransferDetails(String ac_number_transferor, String ac_number_recipient,String bank_recipient,String amount,JLabel show_number_transferor,JLabel show_name_transferor,JLabel show_bank_transferor,JLabel show_number_recipient,JLabel show_name_recipient,JLabel show_bank_recipient,JLabel show_amount_trasfer){
+        String query;
+        DB_Connection db = new DB_Connection();
+        ResultSet rs;
+        try {
+            amount_to_transfer = Double.parseDouble( amount );
+            current_number_transferor = ac_number_transferor;
+            current_number_recipient = ac_number_recipient;
+            current_bank_name_recipient = bank_recipient;
+            if(ac_number_recipient.equals( "" )) throw new NumberFormatException();
+
+            // Set Label transferor
+            show_number_transferor.setText(ac_number_transferor);
+
+            query = String.format( "select ac.ac_name, bk.bank_name from account as ac inner join bank as bk on ac.bank_id = bk.bank_id where ac.ac_number = '%s'",ac_number_transferor);
+            rs = db.getResultSet( query );
+            if ( rs.next() ) {show_name_transferor.setText( rs.getString(1) ); show_bank_transferor.setText(rs.getString(2));}
+            else throw new Exception("Can't get account name transferor");
+
+
+            // Set Label recipient
+            show_number_recipient.setText( ac_number_recipient );
+
+            query = String.format( "select ac.ac_name, bk.bank_name from account as ac inner join bank as bk on ac.bank_id = bk.bank_id where ac.ac_number = '%s' and ac.ac_status='t'",ac_number_recipient);
+            rs = db.getResultSet( query );
+            if ( rs.next() ) {show_name_recipient.setText( rs.getString(1) ); show_bank_recipient.setText(rs.getString(2));}
+            else throw new Exception("Account number was wrong");
+
+
+            show_amount_trasfer.setText( amount_to_transfer + " ฿");
+            return true;
+
+        }catch(ClassCastException e){
+            displayError( "Please input money to transfer" );
+            return false;
+        }catch (NumberFormatException e){
+            displayError( "Please input amount or account number" );
+            return false;
+        }
+        catch (Exception e) {
+            displayError( e.getMessage());
+            return  false;
+        }
+    }
+
+    public static boolean Transfer (String pin){
+
+
+        String query;
+        DB_Connection db = new DB_Connection();
+        ResultSet rs;
+        SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy HH:mm:ss" );
+        SimpleDateFormat sdfSql = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+        String date = sdf.format( new Date() );
+        String dateSql = sdfSql.format( new Date() );
+        try {
+
+            if ( pin.equals("") ) throw new Exception("Please input PIN Code");
+
+            query = String.format( "select * from account where ac_number='%s' and ac_pin='%s'",current_number_transferor,pin);
+            rs = db.getResultSet( query );
+            if ( rs.next() ) {}
+            else throw new Exception( "Wrong Pin Code");
+
+            // <editor-fold defaultstate="collapsed" desc="Transferor Part">
+            // Update account balance
+            query = String.format( "update account set ac_balance=(select ac_balance from account where ac_number='%s') - %f where ac_number='%s'",current_number_transferor,amount_to_transfer,current_number_transferor);
+            if( db.execute(query) ) {}
+            else throw new Exception( "Can't execute SQL 1'");
+
+            // Update bank balance
+            query = String.format("update bank set bank_balance = (select sum(ac_balance) " +
+                            "from account as ac inner join bank b on ac.bank_id = b.bank_id " +
+                            "where ac.bank_id=(select bank_id from account where ac_number='%s')) " +
+                            "where bank_id=(select bank_id from account where ac_number='%s')"
+                    ,current_number_transferor,current_number_transferor);
+            if ( db.execute( query ) ) {}
+            else throw new Exception( "Can't execute SQL 2");
+            // </editor-fold>
+
+            // <editor-fold defaultstate="collapsed" desc="Recipient Part">
+            // Update account balance
+            query = String.format( "update account set ac_balance=(select ac_balance from account where ac_number='%s') + %f where ac_number='%s'",current_number_recipient,amount_to_transfer,current_number_recipient);
+            if( db.execute(query) ) {}
+            else throw new Exception( "Can't execute SQL 3'");
+
+            // Update bank balance
+            query = String.format("update bank set bank_balance = (select sum(ac_balance) " +
+                            "from account as ac inner join bank b on ac.bank_id = b.bank_id " +
+                            "where ac.bank_id=(select bank_id from account where ac_number='%s')) " +
+                            "where bank_id=(select bank_id from account where ac_number='%s')"
+                    ,current_number_recipient,current_number_recipient);
+            if ( db.execute( query ) ) {}
+            else throw new Exception( "Can't execute SQL 4");
+            // </editor-fold>
+
+            // Save transfer history
+            query = String.format( "insert into moneytransfer (tf_money,ac_number_transferor,ac_number_recipient) values ('%f','%s','%s')",amount_to_transfer,current_number_transferor,current_number_recipient );
+            if ( db.execute( query ) ) {}
+            else throw new Exception( "Can't execute SQL 5");
+
+            // Get transfer ID to save as statement
+            query = "select MAX(tf_id) from moneytransfer ;";
+            rs = db.getResultSet(query);
+            rs.next();
+            String tf_id = rs.getString(1);
+
+            // Save transaction statement
+            query = String.format( "insert into statements (stm_date,type_id,ac_number,banking_id,amount) VALUES ('%s','%s','%s','%s','%f')",dateSql,"3",current_number_transferor,tf_id,amount_to_transfer);
+            if ( db.execute( query ) ) {}
+            else throw new Exception( "Can't execute SQL 6");
+
+            query = String.format( "insert into statements (stm_date,type_id,ac_number,banking_id,amount) VALUES ('%s','%s','%s','%s','%f')",dateSql,"4",current_number_recipient,tf_id,amount_to_transfer);
+            if ( db.execute( query ) ) {}
+            else throw new Exception( "Can't execute SQL 7");
+
+            displayInfo( String.format( "Transaction successful\nTime : %s\nTransfer to account number : %s \nAmount to transfer : %.2f ฿", date,current_number_recipient, amount_to_transfer ) );
+            return true;
+        }catch (Exception e) {
+            displayError(e.getMessage());
+            displayError( String.format( "Transaction fail\nTime : %s\n", date ) );
+            return false;
+        }
+
+    }
+
+    // </editor-fold>
+
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Most use method">
+    public static void displayError (String message) {
+        JOptionPane.showMessageDialog( null, message, "Alert", JOptionPane.ERROR_MESSAGE );
+    }
+
+    public static void displayInfo (String message) {
+        JOptionPane.showMessageDialog( null, message, "Information", JOptionPane.INFORMATION_MESSAGE );
+    }
+
+    public static void displayInfo (double message) {
+        JOptionPane.showMessageDialog( null, String.valueOf(message), "Information", JOptionPane.INFORMATION_MESSAGE );
+    }
+
+    public static void displayInfo (int message) {
+        JOptionPane.showMessageDialog( null, String.valueOf(message), "Information", JOptionPane.INFORMATION_MESSAGE );
+    }
+
+    public static boolean isNumeric (String string) {
+        int intValue;
+        if ( string == null || string.equals( "" ) ) {
+            return false;
+        }
+
+        try {
+            intValue = Integer.parseInt( string );
+            return true;
+        } catch (NumberFormatException e) {
+        }
+        return false;
+    }
+
+    public static void center_screen (JFrame parent) {
+        int lebar = parent.getWidth() / 2;
+        int tinggi = parent.getHeight() / 2;
+        int x = ( Toolkit.getDefaultToolkit().getScreenSize().width / 2 ) - lebar;
+        int y = ( Toolkit.getDefaultToolkit().getScreenSize().height / 2 ) - tinggi;
+        parent.setLocation( x, y );
+    }
+
+    public static void Escape (JFrame parent) {
+        parent.getRootPane().getInputMap( JComponent.WHEN_IN_FOCUSED_WINDOW ).
+                put( KeyStroke.getKeyStroke( KeyEvent.VK_ESCAPE, 0 ), "Cancel" );
+
+        parent.getRootPane().getActionMap().put( "Cancel", new AbstractAction() {
+            public void actionPerformed (ActionEvent e) {
+                System.exit( 0 );
+            }
+        } );
+    }
+    // </editor-fold>
 
 
 }
