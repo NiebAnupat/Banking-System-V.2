@@ -278,6 +278,10 @@ public class Method {
         }
     }
 
+    public static String GetSelectedAccount () {
+        return AC_Select_Card.get_showwing_ac_number();
+    }
+
 
     // </editor-fold>
 
@@ -299,10 +303,6 @@ public class Method {
         } catch (Exception e) {
             displayError( e.getMessage() );
         }
-    }
-
-    public static String GetSelectedAccount () {
-        return AC_Select_Card.get_showwing_ac_number();
     }
 
     public static void Deposit (String amount_to_deposit, String ac_number) {
@@ -433,6 +433,7 @@ public class Method {
 
     static String current_number_recipient, current_number_transferor,current_bank_name_recipient;
     static double amount_to_transfer;
+
     public static boolean SetTransferDetails(String ac_number_transferor, String ac_number_recipient,String bank_recipient,String amount,JLabel show_number_transferor,JLabel show_name_transferor,JLabel show_bank_transferor,JLabel show_number_recipient,JLabel show_name_recipient,JLabel show_bank_recipient,JLabel show_amount_trasfer){
         String query;
         DB_Connection db = new DB_Connection();
@@ -441,25 +442,37 @@ public class Method {
             amount_to_transfer = Double.parseDouble( amount );
             current_number_transferor = ac_number_transferor;
             current_number_recipient = ac_number_recipient;
-            current_bank_name_recipient = bank_recipient;
             if(ac_number_recipient.equals( "" )) throw new NumberFormatException();
 
             // Set Label transferor
             show_number_transferor.setText(ac_number_transferor);
 
-            query = String.format( "select ac.ac_name, bk.bank_name from account as ac inner join bank as bk on ac.bank_id = bk.bank_id where ac.ac_number = '%s'",ac_number_transferor);
-            rs = db.getResultSet( query );
-            if ( rs.next() ) {show_name_transferor.setText( rs.getString(1) ); show_bank_transferor.setText(rs.getString(2));}
-            else throw new Exception("Can't get account name transferor");
-
+            try{
+                query = String.format( "select ac.ac_name, bk.bank_name from account as ac inner join bank as bk on ac.bank_id = bk.bank_id where ac.ac_number = '%s'",ac_number_transferor);
+                rs = db.getResultSet( query );
+                rs.next();
+                show_name_transferor.setText( rs.getString(1) );
+                show_bank_transferor.setText(rs.getString(2));
+            }
+            catch (Exception e){
+                throw new Exception("Can't get account name transferor");
+            }
 
             // Set Label recipient
             show_number_recipient.setText( ac_number_recipient );
 
-            query = String.format( "select ac.ac_name, bk.bank_name from account as ac inner join bank as bk on ac.bank_id = bk.bank_id where ac.ac_number = '%s' and ac.ac_status='t'",ac_number_recipient);
-            rs = db.getResultSet( query );
-            if ( rs.next() ) {show_name_recipient.setText( rs.getString(1) ); show_bank_recipient.setText(rs.getString(2));}
-            else throw new Exception("Account number was wrong");
+            try{
+                query = String.format( "select ac.ac_name, bk.bank_name from account as ac inner join bank as bk on ac.bank_id = bk.bank_id where ac.ac_number = '%s' and bk.bank_name='%s' and ac.ac_status='t'",ac_number_recipient,bank_recipient);
+                rs = db.getResultSet( query );
+                rs.next();
+                current_bank_name_recipient = bank_recipient;
+                show_name_recipient.setText( rs.getString(1) );
+                show_bank_recipient.setText(rs.getString(2));
+            }
+            catch(Exception e){
+                throw new Exception("Account number of bank was wrong");
+            }
+
 
 
             show_amount_trasfer.setText( amount_to_transfer + " ฿");
@@ -479,7 +492,6 @@ public class Method {
     }
 
     public static boolean Transfer (String pin){
-
 
         String query;
         DB_Connection db = new DB_Connection();
@@ -594,7 +606,7 @@ public class Method {
         return false;
     }
 
-    public static void center_screen (JFrame parent) {
+    public static void center_screen (JDialog parent) {
         int lebar = parent.getWidth() / 2;
         int tinggi = parent.getHeight() / 2;
         int x = ( Toolkit.getDefaultToolkit().getScreenSize().width / 2 ) - lebar;
@@ -612,6 +624,8 @@ public class Method {
             }
         } );
     }
+
+
     // </editor-fold>
 
 

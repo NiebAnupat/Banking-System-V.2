@@ -118,7 +118,7 @@ public class main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jProgressBar1 = new javax.swing.JProgressBar();
+        deactivate_confirm_dialog = new javax.swing.JDialog();
         main_panel = new swing.PanelBorder();
         sidebar = new component.Menu();
         card_panel = new swing.PanelBorder();
@@ -282,6 +282,17 @@ public class main extends javax.swing.JFrame {
         jLabel47 = new javax.swing.JLabel();
         jLabel48 = new javax.swing.JLabel();
         jSeparator9 = new javax.swing.JSeparator();
+
+        javax.swing.GroupLayout deactivate_confirm_dialogLayout = new javax.swing.GroupLayout(deactivate_confirm_dialog.getContentPane());
+        deactivate_confirm_dialog.getContentPane().setLayout(deactivate_confirm_dialogLayout);
+        deactivate_confirm_dialogLayout.setHorizontalGroup(
+            deactivate_confirm_dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 334, Short.MAX_VALUE)
+        );
+        deactivate_confirm_dialogLayout.setVerticalGroup(
+            deactivate_confirm_dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 202, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusable(false);
@@ -2143,7 +2154,7 @@ public class main extends javax.swing.JFrame {
 
     private void next_trans_btnMouseClicked (java.awt.event.MouseEvent evt) {//GEN-FIRST:event_next_trans_btnMouseClicked
         // TODO add your handling code here:
-        if (Method.SetTransferDetails( AC_Select_Card.get_showwing_ac_number(), input_ac_number_recipient_txt.getText(),
+        if (Method.SetTransferDetails( Method.GetSelectedAccount(), input_ac_number_recipient_txt.getText(),
                 input_bank_recipient.getSelectedItem().toString(), input_money_trans_txt.getText(),
                 show_ac_number_transferor,show_ac_name_transferor,show_ac_bank_transferor,
                 show_ac_number_recipient,show_ac_name_recipient,show_ac_bank_recipient, show_amount_transfer)) {
@@ -2242,7 +2253,7 @@ public class main extends javax.swing.JFrame {
 
     private void deposit_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deposit_btnMouseClicked
 
-        Method.Deposit( JOptionPane.showInputDialog( this,"Amount to deposit : " ), AC_Select_Card.get_showwing_ac_number() );
+        Method.Deposit( JOptionPane.showInputDialog( this,"Amount to deposit : " ),  Method.GetSelectedAccount() );
         Method.SetAccountCard(new CardLayout(),show_ac_card);
     }//GEN-LAST:event_deposit_btnMouseClicked
 
@@ -2272,7 +2283,7 @@ public class main extends javax.swing.JFrame {
 
     private void withdraw_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_withdraw_btnMouseClicked
         // TODO add your handling code here:
-        Method.Withdraw( JOptionPane.showInputDialog( this,"Amount to withdraw : " ), AC_Select_Card.get_showwing_ac_number() );
+        Method.Withdraw( JOptionPane.showInputDialog( this,"Amount to withdraw : " ),  Method.GetSelectedAccount() );
         Method.SetAccountCard(new CardLayout(),show_ac_card);
     }//GEN-LAST:event_withdraw_btnMouseClicked
 
@@ -2338,6 +2349,7 @@ public class main extends javax.swing.JFrame {
     private swing.PasswordText confirm_regis_pin;
     private swing.PanelBorder confirm_transfer_btn;
     private swing.PanelBorder dashboard;
+    private javax.swing.JDialog deactivate_confirm_dialog;
     private swing.PanelBorder deposit_btn;
     private swing.PanelBorder fianal_cancel_trans_btn;
     private javax.swing.JPanel input_ac_address_panel;
@@ -2417,7 +2429,6 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator11;

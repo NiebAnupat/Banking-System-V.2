@@ -17,7 +17,7 @@ public class temp extends javax.swing.JFrame {
     public temp() {
         initComponents();
 
-        Method.center_screen( this );
+
         Method.Escape( this );
 
     }
