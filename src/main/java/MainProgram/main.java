@@ -11,6 +11,7 @@ import java.util.Random;
 
 import component.AC_Select_Card;
 import event.EventMenuSelected;
+import message.MessageDialog;
 
 import javax.swing.*;
 
@@ -37,6 +38,8 @@ public class main extends javax.swing.JFrame {
     private void init () {
 
         setBackground( new Color( 0, 0, 0, 0 ) );
+        show_stm_detail.setBackground( new Color( 0, 0, 0, 0 ) );
+        show_stm_detail.setLocationRelativeTo( this );
         Method.Escape( this );
 
         main_cardLayout = (CardLayout) card_panel.getLayout();
@@ -118,7 +121,11 @@ public class main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        deactivate_confirm_dialog = new javax.swing.JDialog();
+        show_stm_detail = new javax.swing.JDialog();
+        panelBorder2 = new swing.PanelBorder();
+        jLabel54 = new javax.swing.JLabel();
+        jLabel57 = new javax.swing.JLabel();
+        close_btn = new javax.swing.JLabel();
         main_panel = new swing.PanelBorder();
         sidebar = new component.Menu();
         card_panel = new swing.PanelBorder();
@@ -283,15 +290,68 @@ public class main extends javax.swing.JFrame {
         jLabel48 = new javax.swing.JLabel();
         jSeparator9 = new javax.swing.JSeparator();
 
-        javax.swing.GroupLayout deactivate_confirm_dialogLayout = new javax.swing.GroupLayout(deactivate_confirm_dialog.getContentPane());
-        deactivate_confirm_dialog.getContentPane().setLayout(deactivate_confirm_dialogLayout);
-        deactivate_confirm_dialogLayout.setHorizontalGroup(
-            deactivate_confirm_dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 334, Short.MAX_VALUE)
+        show_stm_detail.setAlwaysOnTop(true);
+        show_stm_detail.setLocationByPlatform(true);
+        show_stm_detail.setMinimumSize(new java.awt.Dimension(400, 470));
+        show_stm_detail.setModal(true);
+        show_stm_detail.setUndecorated(true);
+        show_stm_detail.setResizable(false);
+
+        panelBorder2.setBackground(new java.awt.Color(104, 103, 172));
+
+        jLabel54.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel54.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel54.setText("Statement ID :");
+
+        jLabel57.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        jLabel57.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel57.setText("###STM_ID###");
+
+        close_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/close.png"))); // NOI18N
+        close_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        close_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                close_btnMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelBorder2Layout = new javax.swing.GroupLayout(panelBorder2);
+        panelBorder2.setLayout(panelBorder2Layout);
+        panelBorder2Layout.setHorizontalGroup(
+            panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBorder2Layout.createSequentialGroup()
+                .addContainerGap(81, Short.MAX_VALUE)
+                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder2Layout.createSequentialGroup()
+                        .addComponent(jLabel54)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel57)
+                        .addGap(71, 71, 71))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder2Layout.createSequentialGroup()
+                        .addComponent(close_btn)
+                        .addContainerGap())))
         );
-        deactivate_confirm_dialogLayout.setVerticalGroup(
-            deactivate_confirm_dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 202, Short.MAX_VALUE)
+        panelBorder2Layout.setVerticalGroup(
+            panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBorder2Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel54)
+                    .addComponent(jLabel57))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 386, Short.MAX_VALUE)
+                .addComponent(close_btn)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout show_stm_detailLayout = new javax.swing.GroupLayout(show_stm_detail.getContentPane());
+        show_stm_detail.getContentPane().setLayout(show_stm_detailLayout);
+        show_stm_detailLayout.setHorizontalGroup(
+            show_stm_detailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelBorder2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        show_stm_detailLayout.setVerticalGroup(
+            show_stm_detailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelBorder2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -2192,9 +2252,14 @@ public class main extends javax.swing.JFrame {
 
     private void close_ac_btnMouseClicked (java.awt.event.MouseEvent evt) {//GEN-FIRST:event_close_ac_btnMouseClicked
         // TODO add your handling code here:
-        String ac_number = all_ac_table_account.getValueAt( all_ac_table_account.getSelectedRow(), 0 ).toString();
-        Method.CloseAccount( ac_number );
-        Method.SetAllAcTable_Account( all_ac_table_account, all_ac_scroll_account );
+        MessageDialog md = new MessageDialog(this);
+        md.showMessage("Delete your account ?", String.format( "Account number : %s \nwill deactivate if you press ok button.",all_ac_table_account.getValueAt( all_ac_table_account.getSelectedRow(),0 ) ));
+        if (md.getMessageType() == MessageDialog.MessageType.OK) {
+            String ac_number = all_ac_table_account.getValueAt( all_ac_table_account.getSelectedRow(), 0 ).toString();
+            Method.CloseAccount( ac_number );
+            Method.SetAllAcTable_Account( all_ac_table_account, all_ac_scroll_account );
+        }
+
 
     }//GEN-LAST:event_close_ac_btnMouseClicked
 
@@ -2279,6 +2344,8 @@ public class main extends javax.swing.JFrame {
 
     private void stm_detail_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stm_detail_btnMouseClicked
         // TODO add your handling code here:
+        show_stm_detail.setVisible( true );
+        
     }//GEN-LAST:event_stm_detail_btnMouseClicked
 
     private void withdraw_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_withdraw_btnMouseClicked
@@ -2286,6 +2353,11 @@ public class main extends javax.swing.JFrame {
         Method.Withdraw( JOptionPane.showInputDialog( this,"Amount to withdraw : " ),  Method.GetSelectedAccount() );
         Method.SetAccountCard(new CardLayout(),show_ac_card);
     }//GEN-LAST:event_withdraw_btnMouseClicked
+
+    private void close_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_close_btnMouseClicked
+        // TODO add your handling code here:
+        show_stm_detail.dispose();
+    }//GEN-LAST:event_close_btnMouseClicked
 
 
     /**
@@ -2345,11 +2417,11 @@ public class main extends javax.swing.JFrame {
     private swing.PanelBorder cancle_regis_btn;
     private swing.PanelBorder card_panel;
     private swing.PanelBorder close_ac_btn;
+    private javax.swing.JLabel close_btn;
     private swing.PanelBorder con_register_btn;
     private swing.PasswordText confirm_regis_pin;
     private swing.PanelBorder confirm_transfer_btn;
     private swing.PanelBorder dashboard;
-    private javax.swing.JDialog deactivate_confirm_dialog;
     private swing.PanelBorder deposit_btn;
     private swing.PanelBorder fianal_cancel_trans_btn;
     private javax.swing.JPanel input_ac_address_panel;
@@ -2417,8 +2489,10 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
+    private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel60;
@@ -2451,6 +2525,7 @@ public class main extends javax.swing.JFrame {
     private swing.PanelBorder next_trans_btn;
     private swing.PanelBorder open_ac_comfirm;
     private swing.PanelBorder panelBorder1;
+    private swing.PanelBorder panelBorder2;
     private swing.PanelBorder recent_panel;
     private javax.swing.JScrollPane recent_scrollbar;
     private swing.PanelBorder refresh_table_btn;
@@ -2479,6 +2554,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel show_rg_ac_tel;
     private javax.swing.JScrollPane show_statement_scrollbar;
     private swing.Table show_statement_table;
+    private javax.swing.JDialog show_stm_detail;
     private javax.swing.JLabel show_total_balance;
     private component.Menu sidebar;
     private swing.PanelBorder statement_panel;

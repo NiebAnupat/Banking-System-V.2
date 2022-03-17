@@ -168,7 +168,7 @@ public class Method {
 
     public static void SetAllAcTable_Account (Table parent, JScrollPane parent_scrollbar) {
 
-        String query = String.format( "select ac_number,bk.bank_name,ac_name,ac_balance,ac_status from account inner join bank as bk on account.bank_id = bk.bank_id where user_id='%s'", current_id );
+        String query = String.format( "select ac_number,bk.bank_name,ac_name,ac_balance,ac_status from account inner join bank as bk on account.bank_id = bk.bank_id where user_id='%s' order by ac_status='t' DESC", current_id );
         DB_Connection db = new DB_Connection();
         // String columns[] = {"Number","Bank","Name","Balance","Status"};
         try {
@@ -199,7 +199,6 @@ public class Method {
         try {
             if ( db.execute( query ) ) {
                 AC_Select_Card.Reset_AC_number();
-                displayInfo( "Account number " + ac_number + " has deactivated" );
             } else throw new Exception( "Deactivate fail" );
         } catch (Exception e) {
             displayError( e.getMessage() );

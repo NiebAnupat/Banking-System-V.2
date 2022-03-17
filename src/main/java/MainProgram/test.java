@@ -10,6 +10,7 @@ import java.awt.*;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import message.MessageDialog;
 
 /**
  *
@@ -22,8 +23,7 @@ public class test extends javax.swing.JFrame {
      */
     public test() {
         initComponents();
-        jTable1.getTableHeader().setFont(new java.awt.Font("TH Sarabun New", 1, 18));
-
+        jDialog1.setLocationRelativeTo( this );
 
     }
 
@@ -36,54 +36,76 @@ public class test extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jDialog1 = new javax.swing.JDialog();
+        panelBorder1 = new swing.PanelBorder();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        buttonCustom1 = new swing.ButtonCustom();
 
-        jLabel1.setText("jLabel1");
+        jDialog1.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        jDialog1.setAlwaysOnTop(true);
+        jDialog1.setMinimumSize(new java.awt.Dimension(100, 100));
+        jDialog1.setUndecorated(true);
+        jDialog1.setSize(new java.awt.Dimension(100, 100));
+        jDialog1.setType(java.awt.Window.Type.POPUP);
+
+        panelBorder1.setBackground(new java.awt.Color(232, 232, 255));
+
+        jLabel2.setText("jLabel2");
+
+        javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
+        panelBorder1.setLayout(panelBorder1Layout);
+        panelBorder1Layout.setHorizontalGroup(
+            panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBorder1Layout.createSequentialGroup()
+                .addGap(163, 163, 163)
+                .addComponent(jLabel2)
+                .addContainerGap(200, Short.MAX_VALUE))
+        );
+        panelBorder1Layout.setVerticalGroup(
+            panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBorder1Layout.createSequentialGroup()
+                .addGap(83, 83, 83)
+                .addComponent(jLabel2)
+                .addContainerGap(201, Short.MAX_VALUE))
+        );
+
+        jDialog1.getContentPane().add(panelBorder1, java.awt.BorderLayout.CENTER);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(701, 477));
+        setPreferredSize(new java.awt.Dimension(701, 477));
+        setSize(new java.awt.Dimension(701, 477));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setFont(new java.awt.Font("TH Sarabun New", 1, 18)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"ฤฆฏ", "ฤฆฏ", "ฤฆฏ", null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "ฤฆฏ", "ฤฆฏ", "ฤฆฏ", "ฤฆฏ"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable1);
-
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 310, 210));
-
-        jLabel2.setFont(new java.awt.Font("TH Sarabun New", 1, 14)); // NOI18N
-        jLabel2.setText("ฤฆฏ");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 250, 80, -1));
-
-        jButton1.setFont(new java.awt.Font("TH Sarabun New", 1, 24)); // NOI18N
-        jButton1.setText("ปุ่ม");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, -1, -1));
+
+        buttonCustom1.setText("buttonCustom1");
+        getContentPane().add(buttonCustom1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, 150, 60));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        if ( jTable1.getSelectedRow() == -1 ) Method.displayError( "Please select item" );
-    }//GEN-LAST:event_jButton1ActionPerformed
+        MessageDialog md = new MessageDialog( this );
+//        md.showMessage("Delete your account ?", "All data will lose if you press ok button\nYou can restore any time within 30 days start from now.");
+//        if (md.getMessageType() == MessageDialog.MessageType.OK) {
+//            Method.displayInfo( "User click ok" );
+//        } else {
+//            Method.displayError( "User click cancel" );
+//        }
+        jDialog1.setBackground( new Color( 0, 0, 0, 0 ) );
+        jDialog1.setVisible( true );
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -123,10 +145,10 @@ public class test extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    private swing.ButtonCustom buttonCustom1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private swing.PanelBorder panelBorder1;
     // End of variables declaration//GEN-END:variables
 }
