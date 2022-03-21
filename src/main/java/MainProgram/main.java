@@ -542,19 +542,7 @@ public class main extends javax.swing.JFrame {
         input_ac_name_txt.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
         input_ac_name_txt.setForeground(new java.awt.Color(255, 255, 255));
         input_ac_name_txt.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        input_ac_name_txt.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                input_ac_name_txtFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                input_ac_name_txtFocusLost(evt);
-            }
-        });
-        input_ac_name_txt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                input_ac_name_txtActionPerformed(evt);
-            }
-        });
+
 
         javax.swing.GroupLayout roundLayout = new javax.swing.GroupLayout(round);
         round.setLayout(roundLayout);
@@ -611,19 +599,7 @@ public class main extends javax.swing.JFrame {
         input_citizenid_txt.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
         input_citizenid_txt.setForeground(new java.awt.Color(255, 255, 255));
         input_citizenid_txt.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        input_citizenid_txt.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                input_citizenid_txtFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                input_citizenid_txtFocusLost(evt);
-            }
-        });
-        input_citizenid_txt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                input_citizenid_txtActionPerformed(evt);
-            }
-        });
+
 
         javax.swing.GroupLayout round1Layout = new javax.swing.GroupLayout(round1);
         round1.setLayout(round1Layout);
@@ -680,19 +656,7 @@ public class main extends javax.swing.JFrame {
         input_tel_txt.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
         input_tel_txt.setForeground(new java.awt.Color(255, 255, 255));
         input_tel_txt.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        input_tel_txt.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                input_tel_txtFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                input_tel_txtFocusLost(evt);
-            }
-        });
-        input_tel_txt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                input_tel_txtActionPerformed(evt);
-            }
-        });
+
 
         javax.swing.GroupLayout round2Layout = new javax.swing.GroupLayout(round2);
         round2.setLayout(round2Layout);
@@ -835,19 +799,6 @@ public class main extends javax.swing.JFrame {
         input_ac_address_txt.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
         input_ac_address_txt.setForeground(new java.awt.Color(255, 255, 255));
         input_ac_address_txt.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        input_ac_address_txt.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                input_ac_address_txtFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                input_ac_address_txtFocusLost(evt);
-            }
-        });
-        input_ac_address_txt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                input_ac_address_txtActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout round3Layout = new javax.swing.GroupLayout(round3);
         round3.setLayout(round3Layout);
@@ -1613,11 +1564,7 @@ public class main extends javax.swing.JFrame {
 
         input_money_trans_txt.setBackground(new java.awt.Color(232, 232, 255));
         input_money_trans_txt.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
-        input_money_trans_txt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                input_money_trans_txtActionPerformed(evt);
-            }
-        });
+
 
         jLabel17.setFont(new java.awt.Font("Cambria", 0, 24)); // NOI18N
         jLabel17.setText("To Account Number");
@@ -1625,11 +1572,7 @@ public class main extends javax.swing.JFrame {
         input_ac_number_recipient_txt.setBackground(new java.awt.Color(232, 232, 255));
         input_ac_number_recipient_txt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         input_ac_number_recipient_txt.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
-        input_ac_number_recipient_txt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                input_ac_number_recipient_txtActionPerformed(evt);
-            }
-        });
+
 
         jLabel18.setFont(new java.awt.Font("Cambria", 0, 24)); // NOI18N
         jLabel18.setText("Bank");
@@ -1826,11 +1769,6 @@ public class main extends javax.swing.JFrame {
         input_pin_trans.setBackground(new java.awt.Color(232, 232, 255));
         input_pin_trans.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         input_pin_trans.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
-        input_pin_trans.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                input_pin_transActionPerformed(evt);
-            }
-        });
 
         jLabel24.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(162, 103, 172));
@@ -2145,60 +2083,6 @@ public class main extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void input_ac_name_txtFocusGained (java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_ac_name_txtFocusGained
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_input_ac_name_txtFocusGained
-
-    private void input_ac_name_txtFocusLost (java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_ac_name_txtFocusLost
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_input_ac_name_txtFocusLost
-
-    private void input_ac_name_txtActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_ac_name_txtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_input_ac_name_txtActionPerformed
-
-    private void input_citizenid_txtFocusGained (java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_citizenid_txtFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_input_citizenid_txtFocusGained
-
-    private void input_citizenid_txtFocusLost (java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_citizenid_txtFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_input_citizenid_txtFocusLost
-
-    private void input_citizenid_txtActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_citizenid_txtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_input_citizenid_txtActionPerformed
-
-    private void input_tel_txtFocusGained (java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_tel_txtFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_input_tel_txtFocusGained
-
-    private void input_tel_txtFocusLost (java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_tel_txtFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_input_tel_txtFocusLost
-
-    private void input_tel_txtActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_tel_txtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_input_tel_txtActionPerformed
-
-    private void input_ac_address_txtFocusGained (java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_ac_address_txtFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_input_ac_address_txtFocusGained
-
-    private void input_ac_address_txtFocusLost (java.awt.event.FocusEvent evt) {//GEN-FIRST:event_input_ac_address_txtFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_input_ac_address_txtFocusLost
-
-    private void input_ac_address_txtActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_ac_address_txtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_input_ac_address_txtActionPerformed
-
-    private void input_money_trans_txtActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_money_trans_txtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_input_money_trans_txtActionPerformed
-
     private void trans_btnMouseClicked (java.awt.event.MouseEvent evt) {//GEN-FIRST:event_trans_btnMouseClicked
         // TODO add your handling code here:
         main_cardLayout.show( card_panel, "trans_input" );
@@ -2207,10 +2091,6 @@ public class main extends javax.swing.JFrame {
 
         if (input_bank_recipient.getItemCount() == 0) Method.SetBank_Combobox( input_bank_recipient );
     }//GEN-LAST:event_trans_btnMouseClicked
-
-    private void input_ac_number_recipient_txtActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_ac_number_recipient_txtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_input_ac_number_recipient_txtActionPerformed
 
     private void next_trans_btnMouseClicked (java.awt.event.MouseEvent evt) {//GEN-FIRST:event_next_trans_btnMouseClicked
         // TODO add your handling code here:
@@ -2238,12 +2118,9 @@ public class main extends javax.swing.JFrame {
     private void confirm_transfer_btnMouseClicked (java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirm_transfer_btnMouseClicked
         // TODO add your handling code here:
         if(Method.Transfer( input_pin_trans.getText() )) main_cardLayout.show( card_panel, "banking" );
+        Method.SetAccountCard(new CardLayout(),show_ac_card);
 
     }//GEN-LAST:event_confirm_transfer_btnMouseClicked
-
-    private void input_pin_transActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_pin_transActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_input_pin_transActionPerformed
 
     private void refresh_table_btnMouseClicked (java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refresh_table_btnMouseClicked
         // TODO add your handling code here:
@@ -2259,7 +2136,6 @@ public class main extends javax.swing.JFrame {
             Method.CloseAccount( ac_number );
             Method.SetAllAcTable_Account( all_ac_table_account, all_ac_scroll_account );
         }
-
 
     }//GEN-LAST:event_close_ac_btnMouseClicked
 

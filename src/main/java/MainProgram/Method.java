@@ -194,12 +194,23 @@ public class Method {
 
     public static void CloseAccount (String ac_number) {
 
-        String query = String.format( "update account set ac_status='f' where ac_number='%s'", ac_number );
+        String query;
+        ResultSet rs;
         DB_Connection db = new DB_Connection();
         try {
-            if ( db.execute( query ) ) {
-                AC_Select_Card.Reset_AC_number();
-            } else throw new Exception( "Deactivate fail" );
+
+            String pin =JOptionPane.showInputDialog( null,"Please enter account PIN Code :");
+            if (  pin.equals("") ) throw new Exception("Please input PIN Code");
+
+            query = String.format( "select * from account where ac_number='%s' and ac_pin='%s'",ac_number,pin);
+            rs = db.getResultSet( query );
+            if ( rs.next() ) {}
+            else throw new Exception( "Wrong Pin Code");
+
+            query = String.format( "update account set ac_status='f' where ac_number='%s'", ac_number );
+            if ( db.execute( query ) )  AC_Select_Card.Reset_AC_number();
+            else throw new Exception( "Deactivate fail" );
+
         } catch (Exception e) {
             displayError( e.getMessage() );
         }
@@ -369,6 +380,7 @@ public class Method {
     public static void Withdraw (String amount_to_withdraw, String ac_number){
 
         double money = 0.0;
+        double ac_balance = 0.0;
         String query;
         DB_Connection db = new DB_Connection();
         SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy HH:mm:ss" );
@@ -380,40 +392,53 @@ public class Method {
         try{
 
             money = Double.parseDouble( amount_to_withdraw );
-
             ResultSet rs;
 
-            // Update Account balance after withdraw
-            query = String.format( "update account set ac_balance=((select ac_balance from account where ac_number='%s') - '%f') where ac_number='%s'",ac_number,money,ac_number);
-            if ( db.execute( query ) ) {}
-            else throw new Exception( "Can't execute SQL 1");
+            String pin =JOptionPane.showInputDialog( null,"Please enter account PIN Code :");
+            if (  pin.equals("") ) throw new Exception("Please input PIN Code");
 
-            // Save withdraw history
-            query = String.format("insert into moneywithdraw (wd_money,ac_number) values ('%f','%s');",money,ac_number);
-            if ( db.execute( query ) ) {}
-            else throw new Exception( "Can't execute SQL 2");
+            query = String.format( "select * from account where ac_number='%s' and ac_pin='%s'",ac_number,pin);
+            rs = db.getResultSet( query );
+            if ( rs.next() ) {}
+            else throw new Exception( "Wrong Pin Code");
 
-            // Get deposit ID to save as statement
-            query = "select MAX(wd_id) from moneywithdraw ;";
-            rs = db.getResultSet(query);
-            rs.next();
-            String wd_id = rs.getString(1);
+            query = String.format( "select ac_balance from account where ac_number='%s'", ac_number );
+            rs = db.getResultSet( query );
+            if ( rs.next() ) {
+                ac_balance = rs.getDouble( 1 );
+            }
 
-            // Save transaction statement
-            query = String.format( "insert into statements (stm_date,type_id,ac_number,banking_id,amount) VALUES ('%s','%s','%s','%s','%f')",dateSql,"2",ac_number,wd_id,money);
-            if ( db.execute( query ) ) {}
-            else throw new Exception( "Can't execute SQL 3");
+            if (ac_balance >= money){
+                // Update Account balance after withdraw
+                query = String.format( "update account set ac_balance=((select ac_balance from account where ac_number='%s') - '%f') where ac_number='%s'",ac_number,money,ac_number);
+                if ( db.execute( query ) ) {}
+                else throw new Exception( "Can't execute SQL 1");
 
-            // Update bank balance by bank id from account number that withdraw
-            query = String.format("update bank set bank_balance = (select sum(ac_balance) " +
-                            "from account as ac inner join bank b on ac.bank_id = b.bank_id " +
-                            "where ac.bank_id=(select bank_id from account where ac_number='%s')) " +
-                            "where bank_id=(select bank_id from account where ac_number='%s')"
-                    ,ac_number,ac_number);
-            if ( db.execute( query ) ) is_success = true;
-            else throw new Exception( "Can't execute SQL 4");
+                // Save withdraw history
+                query = String.format("insert into moneywithdraw (wd_money,ac_number) values ('%f','%s');",money,ac_number);
+                if ( db.execute( query ) ) {}
+                else throw new Exception( "Can't execute SQL 2");
 
+                // Get deposit ID to save as statement
+                query = "select MAX(wd_id) from moneywithdraw ;";
+                rs = db.getResultSet(query);
+                rs.next();
+                String wd_id = rs.getString(1);
 
+                // Save transaction statement
+                query = String.format( "insert into statements (stm_date,type_id,ac_number,banking_id,amount) VALUES ('%s','%s','%s','%s','%f')",dateSql,"2",ac_number,wd_id,money);
+                if ( db.execute( query ) ) {}
+                else throw new Exception( "Can't execute SQL 3");
+
+                // Update bank balance by bank id from account number that withdraw
+                query = String.format("update bank set bank_balance = (select sum(ac_balance) " +
+                                "from account as ac inner join bank b on ac.bank_id = b.bank_id " +
+                                "where ac.bank_id=(select bank_id from account where ac_number='%s')) " +
+                                "where bank_id=(select bank_id from account where ac_number='%s')"
+                        ,ac_number,ac_number);
+                if ( db.execute( query ) ) is_success = true;
+                else throw new Exception( "Can't execute SQL 4");
+            }else throw new Exception( "Money not enough" );
 
         }catch(ClassCastException e){
             displayError( "Please input money to withdraw" );
@@ -493,6 +518,7 @@ public class Method {
     public static boolean Transfer (String pin){
 
         String query;
+        double ac_balance = 0.0;
         DB_Connection db = new DB_Connection();
         ResultSet rs;
         SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy HH:mm:ss" );
@@ -508,60 +534,72 @@ public class Method {
             if ( rs.next() ) {}
             else throw new Exception( "Wrong Pin Code");
 
-            // <editor-fold defaultstate="collapsed" desc="Transferor Part">
-            // Update account balance
-            query = String.format( "update account set ac_balance=(select ac_balance from account where ac_number='%s') - %f where ac_number='%s'",current_number_transferor,amount_to_transfer,current_number_transferor);
-            if( db.execute(query) ) {}
-            else throw new Exception( "Can't execute SQL 1'");
+            query = String.format( "select ac_balance from account where ac_number='%s'", current_number_transferor );
+            rs = db.getResultSet( query );
+            if ( rs.next() ) {
+                ac_balance = rs.getDouble( 1 );
+            }
 
-            // Update bank balance
-            query = String.format("update bank set bank_balance = (select sum(ac_balance) " +
-                            "from account as ac inner join bank b on ac.bank_id = b.bank_id " +
-                            "where ac.bank_id=(select bank_id from account where ac_number='%s')) " +
-                            "where bank_id=(select bank_id from account where ac_number='%s')"
-                    ,current_number_transferor,current_number_transferor);
-            if ( db.execute( query ) ) {}
-            else throw new Exception( "Can't execute SQL 2");
-            // </editor-fold>
+            if (ac_balance >= amount_to_transfer){
 
-            // <editor-fold defaultstate="collapsed" desc="Recipient Part">
-            // Update account balance
-            query = String.format( "update account set ac_balance=(select ac_balance from account where ac_number='%s') + %f where ac_number='%s'",current_number_recipient,amount_to_transfer,current_number_recipient);
-            if( db.execute(query) ) {}
-            else throw new Exception( "Can't execute SQL 3'");
+                // <editor-fold defaultstate="collapsed" desc="Transferor Part">
+                // Update account balance
+                query = String.format( "update account set ac_balance=(select ac_balance from account where ac_number='%s') - %f where ac_number='%s'",current_number_transferor,amount_to_transfer,current_number_transferor);
+                if( db.execute(query) ) {}
+                else throw new Exception( "Can't execute SQL 1'");
 
-            // Update bank balance
-            query = String.format("update bank set bank_balance = (select sum(ac_balance) " +
-                            "from account as ac inner join bank b on ac.bank_id = b.bank_id " +
-                            "where ac.bank_id=(select bank_id from account where ac_number='%s')) " +
-                            "where bank_id=(select bank_id from account where ac_number='%s')"
-                    ,current_number_recipient,current_number_recipient);
-            if ( db.execute( query ) ) {}
-            else throw new Exception( "Can't execute SQL 4");
-            // </editor-fold>
+                // Update bank balance
+                query = String.format("update bank set bank_balance = (select sum(ac_balance) " +
+                                "from account as ac inner join bank b on ac.bank_id = b.bank_id " +
+                                "where ac.bank_id=(select bank_id from account where ac_number='%s')) " +
+                                "where bank_id=(select bank_id from account where ac_number='%s')"
+                        ,current_number_transferor,current_number_transferor);
+                if ( db.execute( query ) ) {}
+                else throw new Exception( "Can't execute SQL 2");
+                // </editor-fold>
 
-            // Save transfer history
-            query = String.format( "insert into moneytransfer (tf_money,ac_number_transferor,ac_number_recipient) values ('%f','%s','%s')",amount_to_transfer,current_number_transferor,current_number_recipient );
-            if ( db.execute( query ) ) {}
-            else throw new Exception( "Can't execute SQL 5");
+                // <editor-fold defaultstate="collapsed" desc="Recipient Part">
+                // Update account balance
+                query = String.format( "update account set ac_balance=(select ac_balance from account where ac_number='%s') + %f where ac_number='%s'",current_number_recipient,amount_to_transfer,current_number_recipient);
+                if( db.execute(query) ) {}
+                else throw new Exception( "Can't execute SQL 3'");
 
-            // Get transfer ID to save as statement
-            query = "select MAX(tf_id) from moneytransfer ;";
-            rs = db.getResultSet(query);
-            rs.next();
-            String tf_id = rs.getString(1);
+                // Update bank balance
+                query = String.format("update bank set bank_balance = (select sum(ac_balance) " +
+                                "from account as ac inner join bank b on ac.bank_id = b.bank_id " +
+                                "where ac.bank_id=(select bank_id from account where ac_number='%s')) " +
+                                "where bank_id=(select bank_id from account where ac_number='%s')"
+                        ,current_number_recipient,current_number_recipient);
+                if ( db.execute( query ) ) {}
+                else throw new Exception( "Can't execute SQL 4");
+                // </editor-fold>
 
-            // Save transaction statement
-            query = String.format( "insert into statements (stm_date,type_id,ac_number,banking_id,amount) VALUES ('%s','%s','%s','%s','%f')",dateSql,"3",current_number_transferor,tf_id,amount_to_transfer);
-            if ( db.execute( query ) ) {}
-            else throw new Exception( "Can't execute SQL 6");
+                // Save transfer history
+                query = String.format( "insert into moneytransfer (tf_money,ac_number_transferor,ac_number_recipient) values ('%f','%s','%s')",amount_to_transfer,current_number_transferor,current_number_recipient );
+                if ( db.execute( query ) ) {}
+                else throw new Exception( "Can't execute SQL 5");
 
-            query = String.format( "insert into statements (stm_date,type_id,ac_number,banking_id,amount) VALUES ('%s','%s','%s','%s','%f')",dateSql,"4",current_number_recipient,tf_id,amount_to_transfer);
-            if ( db.execute( query ) ) {}
-            else throw new Exception( "Can't execute SQL 7");
+                // Get transfer ID to save as statement
+                query = "select MAX(tf_id) from moneytransfer ;";
+                rs = db.getResultSet(query);
+                rs.next();
+                String tf_id = rs.getString(1);
 
-            displayInfo( String.format( "Transaction successful\nTime : %s\nTransfer to account number : %s \nAmount to transfer : %.2f ฿", date,current_number_recipient, amount_to_transfer ) );
-            return true;
+                // Save transaction statement
+                query = String.format( "insert into statements (stm_date,type_id,ac_number,banking_id,amount) VALUES ('%s','%s','%s','%s','%f')",dateSql,"3",current_number_transferor,tf_id,amount_to_transfer);
+                if ( db.execute( query ) ) {}
+                else throw new Exception( "Can't execute SQL 6");
+
+                query = String.format( "insert into statements (stm_date,type_id,ac_number,banking_id,amount) VALUES ('%s','%s','%s','%s','%f')",dateSql,"4",current_number_recipient,tf_id,amount_to_transfer);
+                if ( db.execute( query ) ) {}
+                else throw new Exception( "Can't execute SQL 7");
+
+                displayInfo( String.format( "Transaction successful\nTime : %s\nTransfer to account number : %s \nAmount to transfer : %.2f ฿", date,current_number_recipient, amount_to_transfer ) );
+                return true;
+
+            }else throw new Exception( "Money not enough" );
+
+
         }catch (Exception e) {
             displayError(e.getMessage());
             displayError( String.format( "Transaction fail\nTime : %s\n", date ) );

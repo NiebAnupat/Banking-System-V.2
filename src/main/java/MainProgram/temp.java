@@ -403,11 +403,17 @@ public class temp extends javax.swing.JFrame {
 
     private void aboutme_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutme_btnMouseClicked
         // TODO add your handling code here:
-        aboutme_btn.setBackground( new Color( 174, 173, 235 ) );
-        account_btn.setBackground( new Color(104, 103, 172));
-        banking_btn.setBackground( new Color(104, 103, 172) );
-        dashboard_btn.setBackground( new Color(104, 103, 172) );
-        main_pane.setSelectedIndex( 3 );
+//        aboutme_btn.setBackground( new Color( 174, 173, 235 ) );
+//        account_btn.setBackground( new Color(104, 103, 172));
+//        banking_btn.setBackground( new Color(104, 103, 172) );
+//        dashboard_btn.setBackground( new Color(104, 103, 172) );
+//        main_pane.setSelectedIndex( 3 );
+
+
+        test t1 = new test(test.Get_btn_status());
+        this.dispose();
+        t1.setVisible( true );
+
     }//GEN-LAST:event_aboutme_btnMouseClicked
 
     /**

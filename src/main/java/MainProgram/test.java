@@ -23,9 +23,17 @@ public class test extends javax.swing.JFrame {
      */
     public test() {
         initComponents();
+        jButton1.setEnabled(false);
         jDialog1.setLocationRelativeTo( this );
 
     }
+
+    public test(boolean btn_status) {
+        initComponents();
+        jButton1.setEnabled( btn_status );
+
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -41,6 +49,7 @@ public class test extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         buttonCustom1 = new swing.ButtonCustom();
+        jButton1 = new javax.swing.JButton();
 
         jDialog1.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         jDialog1.setAlwaysOnTop(true);
@@ -89,6 +98,9 @@ public class test extends javax.swing.JFrame {
         buttonCustom1.setText("buttonCustom1");
         getContentPane().add(buttonCustom1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, 150, 60));
 
+        jButton1.setText("jButton1");
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 200, -1, -1));
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -102,11 +114,18 @@ public class test extends javax.swing.JFrame {
 //        } else {
 //            Method.displayError( "User click cancel" );
 //        }
-        jDialog1.setBackground( new Color( 0, 0, 0, 0 ) );
-        jDialog1.setVisible( true );
+//        jDialog1.setBackground( new Color( 0, 0, 0, 0 ) );
+//        jDialog1.setVisible( true );
+        jButton1.setEnabled(true);
+        temp tm = new temp();
+        this.dispose();
+        tm.setVisible( true );
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    public static boolean Get_btn_status(){
+        return jButton1.isEnabled();
+    }
     /**
      * @param args the command line arguments
      */
@@ -146,6 +165,7 @@ public class test extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private swing.ButtonCustom buttonCustom1;
+    private static javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel2;
