@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -101,7 +102,7 @@ public class Method {
         try {
             ResultSet rs = db.getResultSet( query );
             if ( rs.next() ) {
-                parent.setText( rs.getString( 1 ) + " ฿" );
+                parent.setText( getDecimalFormat().format( rs.getDouble( 1 ) ));
             } else {
                 displayError( "Error" );
             }
@@ -118,7 +119,7 @@ public class Method {
         try {
             ResultSet rs = db.getResultSet( query );
             while (rs.next()) {
-                Object[] ac_data = {rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), rs.getString( 4 )+" ฿"};
+                Object[] ac_data = {rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), getDecimalFormat().format( rs.getDouble( 4 ) )};
                 parent.addRow( ac_data );
             }
             parent_scrollbar.setVerticalScrollBar( new ScrollBar() );
@@ -137,7 +138,7 @@ public class Method {
                     "where ac.user_id = '%s' and ac.ac_status='t' order by st.stm_id DESC",current_id);
             ResultSet rs = db.getResultSet( query );
             while (rs.next()) {
-                Object[] recent_data = {rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), rs.getString( 4 )+" ฿"};
+                Object[] recent_data = {rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), getDecimalFormat().format( rs.getDouble( 4 ) )};
                 parent.addRow( recent_data );
             }
             parent_scrollbar.setVerticalScrollBar( new ScrollBar());
@@ -178,9 +179,9 @@ public class Method {
             //DefaultTableModel model = new DefaultTableModel(columns,1);
             while (rs.next()) {
                 if ( rs.getString( 5 ).equals( "t" ) ) {
-                    ac_data = new Object[]{rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), rs.getString( 4 ) + " ฿", StatusType.ACTIVATE};
+                    ac_data = new Object[]{rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), getDecimalFormat().format(rs.getDouble( 4 )), StatusType.ACTIVATE};
                 } else
-                    ac_data = new Object[]{rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), rs.getString( 4 ) + " ฿", StatusType.DEACTIVATE};
+                    ac_data = new Object[]{rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), getDecimalFormat().format(rs.getDouble( 4 )), StatusType.DEACTIVATE};
 
                 parent.addRow( ac_data );
 
@@ -237,8 +238,28 @@ public class Method {
 
         DB_Connection db = new DB_Connection();
         try {
+
+            if ( isNumeric( ac_pin ) ){}
+            else throw new Exception( "PIN Code must be digit" );
+
+            if ( isNumeric( ac_tel ) ){}
+            else throw new Exception( "Tel. must be digit" );
+
+            if ( isNumeric( ac_citizenid ) ){}
+            else throw new Exception( "Citizen ID must be digit" );
+
+            if ( ac_pin.length() == 4 ){}
+            else throw new Exception( "PIN Code must have 4 digit" );
+
+            if ( ac_citizenid.length() == 13 ){}
+            else throw new Exception( "Citizen ID must have 13 digit" );
+
+            if ( ac_tel.length() == 10 ){}
+            else throw new Exception( "Citizen ID must have 10 digit" );
+
             if ( db.execute( query ) ) displayInfo( "Open account done" );
             else throw new Exception( "Fail to open account" );
+
             AC_Select_Card.Reset_AC_number();
 
         } catch (Exception e) {
@@ -278,7 +299,7 @@ public class Method {
             label_display_number.setText( ac_number );
             ResultSet rs = db.getResultSet( query );
             while (rs.next()) {
-                Object[] stm_data = {rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 )+" ฿"};
+                Object[] stm_data = {rs.getString( 1 ), rs.getString( 2 ), getDecimalFormat().format(rs.getDouble( 3 ))};
                 parent.addRow( stm_data );
             }
             parent_scrollbar.setVerticalScrollBar( new ScrollBar());
@@ -307,7 +328,7 @@ public class Method {
             int num = 0;
             while (rs.next()) {
                 num++;
-                parent_panel.add( new AC_Select_Card( parent_layout, parent_panel, rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), rs.getDouble( 4 ) ), String.valueOf( num ) );
+                parent_panel.add( new AC_Select_Card( parent_layout, parent_panel, rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), getDecimalFormat().format(rs.getDouble( 4 )) ), String.valueOf( num ) );
             }
             parent_layout.show( parent_panel, "1" );
         } catch (Exception e) {
@@ -328,7 +349,9 @@ public class Method {
 
         try {
 
-            money = Double.parseDouble( amount_to_deposit );
+            if (isNumeric( amount_to_deposit )) money =  money = Double.parseDouble( amount_to_deposit );
+            else throw new Exception("Please input money to deposit");
+
 
             ResultSet rs;
 
@@ -371,7 +394,7 @@ public class Method {
         }
 
         if ( is_success )
-            displayInfo( String.format( "Transaction successful\nTime : %s\nDeposit to account number : %s \nAmount to deposit : %.2f ฿", date,ac_number, money ) );
+            displayInfo( String.format( "Transaction successful\nTime : %s\nDeposit to account number : %s \nAmount to deposit : %s", date,ac_number, getDecimalFormat().format(money) ) );
         else displayError( String.format( "Transaction fail\nTime : %s\n", date ) );
 
 
@@ -391,7 +414,9 @@ public class Method {
 
         try{
 
-            money = Double.parseDouble( amount_to_withdraw );
+            if (isNumeric( amount_to_withdraw )) money = Double.parseDouble( amount_to_withdraw );
+            else throw new Exception("Please input money to withdraw");
+
             ResultSet rs;
 
             String pin =JOptionPane.showInputDialog( null,"Please enter account PIN Code :");
@@ -450,7 +475,7 @@ public class Method {
         }
 
         if ( is_success )
-            displayInfo( String.format( "Transaction successful\nTime : %s\nWithdraw to account number : %s \nAmount to withdraw : %.2f ฿", date,ac_number, money ) );
+            displayInfo( String.format( "Transaction successful\nTime : %s\nWithdraw to account number : %s \nAmount to withdraw : %s", date,ac_number, getDecimalFormat().format(money) ) );
         else displayError( String.format( "Transaction fail\nTime : %s\n", date ) );
 
     }
@@ -463,7 +488,11 @@ public class Method {
         DB_Connection db = new DB_Connection();
         ResultSet rs;
         try {
-            amount_to_transfer = Double.parseDouble( amount );
+
+            if (isNumeric( amount )) amount_to_transfer = Double.parseDouble( amount );
+            else throw new Exception("Please input money to transfer");
+
+
             current_number_transferor = ac_number_transferor;
             current_number_recipient = ac_number_recipient;
             if(ac_number_recipient.equals( "" )) throw new NumberFormatException();
@@ -499,7 +528,7 @@ public class Method {
 
 
 
-            show_amount_trasfer.setText( amount_to_transfer + " ฿");
+            show_amount_trasfer.setText( getDecimalFormat().format(amount_to_transfer));
             return true;
 
         }catch(ClassCastException e){
@@ -594,7 +623,7 @@ public class Method {
                 if ( db.execute( query ) ) {}
                 else throw new Exception( "Can't execute SQL 7");
 
-                displayInfo( String.format( "Transaction successful\nTime : %s\nTransfer to account number : %s \nAmount to transfer : %.2f ฿", date,current_number_recipient, amount_to_transfer ) );
+                displayInfo( String.format( "Transaction successful\nTime : %s\nTransfer to account number : %s \nAmount to transfer : %s", date,current_number_recipient, getDecimalFormat().format(amount_to_transfer) ) );
                 return true;
 
             }else throw new Exception( "Money not enough" );
@@ -638,9 +667,8 @@ public class Method {
         try {
             intValue = Integer.parseInt( string );
             return true;
-        } catch (NumberFormatException e) {
-        }
-        return false;
+        } catch (NumberFormatException e) {return false;}
+
     }
 
     public static void center_screen (JDialog parent) {
@@ -660,6 +688,11 @@ public class Method {
                 System.exit( 0 );
             }
         } );
+    }
+
+    public static DecimalFormat getDecimalFormat(){
+        DecimalFormat df = new DecimalFormat("#,###,###.## ฿");
+        return df;
     }
 
 

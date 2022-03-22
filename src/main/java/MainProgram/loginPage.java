@@ -283,6 +283,7 @@ public class loginPage extends javax.swing.JFrame {
     private void pwd_txtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pwd_txtKeyPressed
         // TODO add your handling code here:
         if( evt.getKeyCode() == KeyEvent.VK_ENTER) Method.Login( this,id_txt.getText(),pwd_txt.getText() );
+
     }//GEN-LAST:event_pwd_txtKeyPressed
 
     /**

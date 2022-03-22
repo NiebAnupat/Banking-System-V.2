@@ -22,7 +22,7 @@ public class AC_Select_Card extends javax.swing.JPanel {
     PanelBorder current_panel;
     private static final ArrayList<String> all_ac_number = new ArrayList<String>();
     private static int Index = 0 ;
-    public AC_Select_Card(CardLayout parent_layout, PanelBorder parent_panel, String ac_bank_name, String ac_name, String ac_number, Double ac_balance) {
+    public AC_Select_Card(CardLayout parent_layout, PanelBorder parent_panel, String ac_bank_name, String ac_name, String ac_number, String ac_balance) {
         initComponents();
         setShow_ac_bank( ac_bank_name );
         setShow_ac_name( ac_name );
@@ -187,8 +187,8 @@ public class AC_Select_Card extends javax.swing.JPanel {
         show_ac_number.setText( ac_number );
     }
 
-    private void setShow_ac_balance(Double ac_balance){
-        show_ac_balance.setText( String.valueOf( ac_balance )+" ฿" );
+    private void setShow_ac_balance(String ac_balance){
+        show_ac_balance.setText( ac_balance );
     }
 
     public static String get_showwing_ac_number (){
