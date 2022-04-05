@@ -65,7 +65,7 @@ public class DB_Connection {
             st = conn.createStatement();
             rs = st.executeQuery(query);
 
-        }catch (Exception ex){
+        }catch (SQLException ex){
             rs = null;
         }
         return rs;

@@ -1,5 +1,8 @@
 package MainProgram;
 
+import component.receive_detail;
+import component.transfer_detail;
+import org.w3c.dom.Text;
 import swing.PanelBorder;
 import swing.ScrollBar;
 import swing.Table;
@@ -312,6 +315,36 @@ public class Method {
     public static String GetSelectedAccount () {
         return AC_Select_Card.get_showwing_ac_number();
     }
+
+    public static void ShowStmDetail(JDialog parent, String stm_id , String type_name, JLabel show_stm_id, JLabel show_bank_name, JLabel show_ac_number, JLabel show_ac_name, JLabel show_bank_type, JLabel show_amount,
+                                     JPanel trans_detail) {
+
+        String query = String.format("select b.bank_name,ac.ac_number,ac.ac_name,s.amount,s.type_id from account as ac inner join bank b on ac.bank_id = b.bank_id inner join statements s on ac.ac_number = s.ac_number where stm_id='%s'",stm_id);
+        DB_Connection db = new DB_Connection();
+        try {
+            int temp = 0;
+            ResultSet rs = db.getResultSet(query);
+            if (rs.next()) {
+                show_stm_id.setText( stm_id );
+                show_bank_name.setText( rs.getString(1) );
+                show_ac_number.setText( rs.getString(2) );
+                show_ac_name.setText( rs.getString(3) );
+                show_bank_type.setText( type_name );
+                show_amount.setText( getDecimalFormat().format( rs.getDouble(4) ) );
+                if(rs.getInt( 5 ) == 3) {trans_detail.removeAll(); trans_detail.add( new transfer_detail( stm_id) );}
+                else if (rs.getInt( 5 ) == 4) {trans_detail.removeAll(); trans_detail.add( new receive_detail(stm_id));}
+                else trans_detail.removeAll();
+
+            }
+            parent.setVisible( true );
+
+        }catch (Exception e) {
+            displayError( e.getMessage() );
+        }
+    }
+
+
+
 
 
     // </editor-fold>
@@ -668,7 +701,6 @@ public class Method {
             intValue = Integer.parseInt( string );
             return true;
         } catch (NumberFormatException e) {return false;}
-
     }
 
     public static void center_screen (JDialog parent) {
@@ -680,6 +712,17 @@ public class Method {
     }
 
     public static void Escape (JFrame parent) {
+        parent.getRootPane().getInputMap( JComponent.WHEN_IN_FOCUSED_WINDOW ).
+                put( KeyStroke.getKeyStroke( KeyEvent.VK_ESCAPE, 0 ), "Cancel" );
+
+        parent.getRootPane().getActionMap().put( "Cancel", new AbstractAction() {
+            public void actionPerformed (ActionEvent e) {
+                System.exit( 0 );
+            }
+        } );
+    }
+
+    public static void Escape (JDialog parent) {
         parent.getRootPane().getInputMap( JComponent.WHEN_IN_FOCUSED_WINDOW ).
                 put( KeyStroke.getKeyStroke( KeyEvent.VK_ESCAPE, 0 ), "Cancel" );
 
