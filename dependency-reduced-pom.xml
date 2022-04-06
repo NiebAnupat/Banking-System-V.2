@@ -5,7 +5,7 @@
   <artifactId>Banking-System-V2</artifactId>
   <version>Banking-System-Ver2-1.0</version>
   <build>
-    <finalName>TestBuild</finalName>
+    <finalName>DIT102 BankingSystem</finalName>
     <pluginManagement>
       <plugins>
         <plugin>

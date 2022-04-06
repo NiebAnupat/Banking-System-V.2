@@ -117,6 +117,7 @@ public class registerPage extends javax.swing.JFrame {
 
         id_txt.setBackground(new java.awt.Color(232, 232, 255));
         id_txt.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+        id_txt.setNextFocusableComponent(pwd_txt);
         id_txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 id_txtActionPerformed(evt);
@@ -168,27 +169,32 @@ public class registerPage extends javax.swing.JFrame {
 
         name_txt.setBackground(new java.awt.Color(232, 232, 255));
         name_txt.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+        name_txt.setNextFocusableComponent(citizenid_txt);
 
         jLabel9.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
         jLabel9.setText("Citizen ID.");
 
         citizenid_txt.setBackground(new java.awt.Color(232, 232, 255));
         citizenid_txt.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+        citizenid_txt.setNextFocusableComponent(address_txt);
 
         address_txt.setBackground(new java.awt.Color(232, 232, 255));
         address_txt.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+        address_txt.setNextFocusableComponent(mail_txt);
 
         jLabel10.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
         jLabel10.setText("Address");
 
         mail_txt.setBackground(new java.awt.Color(232, 232, 255));
         mail_txt.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+        mail_txt.setNextFocusableComponent(tel_txt);
 
         jLabel11.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
         jLabel11.setText("E-Mail");
 
         tel_txt.setBackground(new java.awt.Color(232, 232, 255));
         tel_txt.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+        tel_txt.setNextFocusableComponent(id_txt);
 
         jLabel12.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
         jLabel12.setText("Tel.");
@@ -225,9 +231,11 @@ public class registerPage extends javax.swing.JFrame {
 
         pwd_txt.setBackground(new java.awt.Color(232, 232, 255));
         pwd_txt.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+        pwd_txt.setNextFocusableComponent(con_pwd_txt);
 
         con_pwd_txt.setBackground(new java.awt.Color(232, 232, 255));
         con_pwd_txt.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+        con_pwd_txt.setNextFocusableComponent(name_txt);
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);

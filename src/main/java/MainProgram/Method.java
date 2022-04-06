@@ -44,7 +44,7 @@ public class Method {
                 main m = new main();
                 m.setVisible( true );
                 parent.dispose();
-            }
+            } else displayError( "ID or password was wrong!" );
         } catch (SQLException e) {
             displayError( e.getMessage() );
         }
@@ -53,46 +53,44 @@ public class Method {
     public static void Register (JFrame parent, String user_id, String user_password, String user_confirm_password, String user_name, String user_tel, String user_mail, String user_citizen_id, String user_address) {
 
         boolean temp;
-        if ( user_password.equals( user_confirm_password ) ) {
-            DB_Connection db = new DB_Connection();
-            try {
-
-                String query = String.format( "SELECT user_id FROM users WHERE user_id='%s'", user_id );
-                ResultSet rs = db.getResultSet( query );
-                if ( rs.next() ) {
-                    throw new SQLException( "Your ID has already used" );
-                } else {
-                    query = String.format( "INSERT INTO users(user_id,user_password,user_name,user_tel,user_mail,user_citizen_id,user_address) " +
-                            "VALUES('%s','%s','%s','%s','%s','%s','%s');", user_id, user_password, user_name, user_tel, user_mail, user_citizen_id, user_address );
-                    temp = db.execute( query );
-                }
-            } catch (SQLException e) {
-                temp = false;
-                Method.displayError( e.getMessage() );
-
-            } catch (Exception e) {
-                temp = false;
-                Method.displayError( "Error : " + e );
-            } finally {
+        if ( isValidString( user_id ) && isValidString( user_password ) && isValidString( user_confirm_password ) && isValidString( user_name ) && isValidString( user_tel ) && isValidString( user_mail ) && isValidString( user_citizen_id ) && isValidString( user_address ) ) {
+            if ( user_password.equals( user_confirm_password ) ) {
+                DB_Connection db = new DB_Connection();
                 try {
-                    db.disconnect();
+                    String query = String.format( "SELECT user_id FROM users WHERE user_id='%s'", user_id );
+                    ResultSet rs = db.getResultSet( query );
+                    if ( rs.next() ) {
+                        throw new SQLException( "Your ID has already used" );
+                    } else {
+                        query = String.format( "INSERT INTO users(user_id,user_password,user_name,user_tel,user_mail,user_citizen_id,user_address) " +
+                                "VALUES('%s','%s','%s','%s','%s','%s','%s');", user_id, user_password, user_name, user_tel, user_mail, user_citizen_id, user_address );
+                        temp = db.execute( query );
+                    }
                 } catch (SQLException e) {
+                    temp = false;
                     Method.displayError( e.getMessage() );
+
+                } catch (Exception e) {
+                    temp = false;
+                    Method.displayError( "Error : " + e );
+                } finally {
+                    try {
+                        db.disconnect();
+                    } catch (SQLException e) {
+                        Method.displayError( e.getMessage() );
+                    }
                 }
-            }
 
-            if ( temp ) {
-                Method.displayInfo( "Register done" );
-                loginPage lp = new loginPage();
-                lp.setVisible( true );
-                parent.dispose();
-            } else {
-                Method.displayError( "Register fail" );
-
-            }
-        } else {
-            Method.displayError( "Password and Confirm Password must be same!" );
-        }
+                if ( temp ) {
+                    Method.displayInfo( "Register done" );
+                    loginPage lp = new loginPage();
+                    lp.setVisible( true );
+                    parent.dispose();
+                } else {
+                    Method.displayError( "Register fail" );
+                }
+            } else Method.displayError( "Password and Confirm Password must be same!" );
+        } else Method.displayError( "Please enter infomation" );
 
 
     }
@@ -105,7 +103,7 @@ public class Method {
         try {
             ResultSet rs = db.getResultSet( query );
             if ( rs.next() ) {
-                parent.setText( getDecimalFormat().format( rs.getDouble( 1 ) ));
+                parent.setText( getDecimalFormat().format( rs.getDouble( 1 ) ) );
             } else {
                 displayError( "Error" );
             }
@@ -131,21 +129,21 @@ public class Method {
         }
     }
 
-    public static void SetRecentTable (Table parent,JScrollPane parent_scrollbar) {
+    public static void SetRecentTable (Table parent, JScrollPane parent_scrollbar) {
         parent.clearTable();
         DB_Connection db = new DB_Connection();
         try {
             String query = String.format( "select st.stm_id,bt.type_name,st.ac_number,st.amount from statements as st " +
                     "inner join banking_type as bt on st.type_id = bt.type_id " +
                     "inner join account as ac on st.ac_number = ac.ac_number " +
-                    "where ac.user_id = '%s' and ac.ac_status='t' order by st.stm_id DESC",current_id);
+                    "where ac.user_id = '%s' and ac.ac_status='t' order by st.stm_id DESC", current_id );
             ResultSet rs = db.getResultSet( query );
             while (rs.next()) {
                 Object[] recent_data = {rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), getDecimalFormat().format( rs.getDouble( 4 ) )};
                 parent.addRow( recent_data );
             }
-            parent_scrollbar.setVerticalScrollBar( new ScrollBar());
-        }catch (Exception e) {
+            parent_scrollbar.setVerticalScrollBar( new ScrollBar() );
+        } catch (Exception e) {
             displayError( e.getMessage() );
         }
 
@@ -182,9 +180,9 @@ public class Method {
             //DefaultTableModel model = new DefaultTableModel(columns,1);
             while (rs.next()) {
                 if ( rs.getString( 5 ).equals( "t" ) ) {
-                    ac_data = new Object[]{rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), getDecimalFormat().format(rs.getDouble( 4 )), StatusType.ACTIVATE};
+                    ac_data = new Object[]{rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), getDecimalFormat().format( rs.getDouble( 4 ) ), StatusType.ACTIVATE};
                 } else
-                    ac_data = new Object[]{rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), getDecimalFormat().format(rs.getDouble( 4 )), StatusType.DEACTIVATE};
+                    ac_data = new Object[]{rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), getDecimalFormat().format( rs.getDouble( 4 ) ), StatusType.DEACTIVATE};
 
                 parent.addRow( ac_data );
 
@@ -203,16 +201,16 @@ public class Method {
         DB_Connection db = new DB_Connection();
         try {
 
-            String pin =JOptionPane.showInputDialog( null,"Please enter account PIN Code :");
-            if (  pin.equals("") ) throw new Exception("Please input PIN Code");
+            String pin = JOptionPane.showInputDialog( null, "Please enter account PIN Code :" );
+            if ( pin.equals( "" ) ) throw new Exception( "Please input PIN Code" );
 
-            query = String.format( "select * from account where ac_number='%s' and ac_pin='%s'",ac_number,pin);
+            query = String.format( "select * from account where ac_number='%s' and ac_pin='%s'", ac_number, pin );
             rs = db.getResultSet( query );
-            if ( rs.next() ) {}
-            else throw new Exception( "Wrong Pin Code");
+            if ( rs.next() ) {
+            } else throw new Exception( "Wrong Pin Code" );
 
             query = String.format( "update account set ac_status='f' where ac_number='%s'", ac_number );
-            if ( db.execute( query ) )  AC_Select_Card.Reset_AC_number();
+            if ( db.execute( query ) ) AC_Select_Card.Reset_AC_number();
             else throw new Exception( "Deactivate fail" );
 
         } catch (Exception e) {
@@ -220,7 +218,7 @@ public class Method {
         }
     }
 
-    public static void ActivateAccount (String ac_number){
+    public static void ActivateAccount (String ac_number) {
         String query = String.format( "update account set ac_status='t' where ac_number='%s'", ac_number );
         DB_Connection db = new DB_Connection();
         try {
@@ -242,23 +240,23 @@ public class Method {
         DB_Connection db = new DB_Connection();
         try {
 
-            if ( isNumeric( ac_pin ) ){}
-            else throw new Exception( "PIN Code must be digit" );
+            if ( isNumeric( ac_pin ) ) {
+            } else throw new Exception( "PIN Code must be digit" );
 
-            if ( isNumeric( ac_tel ) ){}
-            else throw new Exception( "Tel. must be digit" );
+            if ( isNumeric( ac_tel ) ) {
+            } else throw new Exception( "Tel. must be digit" );
 
-            if ( isNumeric( ac_citizenid ) ){}
-            else throw new Exception( "Citizen ID must be digit" );
+            if ( isNumeric( ac_citizenid ) ) {
+            } else throw new Exception( "Citizen ID must be digit" );
 
-            if ( ac_pin.length() == 4 ){}
-            else throw new Exception( "PIN Code must have 4 digit" );
+            if ( ac_pin.length() == 4 ) {
+            } else throw new Exception( "PIN Code must have 4 digit" );
 
-            if ( ac_citizenid.length() == 13 ){}
-            else throw new Exception( "Citizen ID must have 13 digit" );
+            if ( ac_citizenid.length() == 13 ) {
+            } else throw new Exception( "Citizen ID must have 13 digit" );
 
-            if ( ac_tel.length() == 10 ){}
-            else throw new Exception( "Citizen ID must have 10 digit" );
+            if ( ac_tel.length() == 10 ) {
+            } else throw new Exception( "Citizen ID must have 10 digit" );
 
             if ( db.execute( query ) ) displayInfo( "Open account done" );
             else throw new Exception( "Fail to open account" );
@@ -292,22 +290,22 @@ public class Method {
 
     }
 
-    public static void SetStatementsTable (String ac_number, Table parent, JScrollPane parent_scrollbar, JLabel label_display_number){
+    public static void SetStatementsTable (String ac_number, Table parent, JScrollPane parent_scrollbar, JLabel label_display_number) {
         String query = String.format( "select st.stm_id,bt.type_name,st.amount from statements as st " +
                 "inner join banking_type as bt on st.type_id = bt.type_id " +
-                "where st.ac_number = '%s' order by st.stm_id DESC",ac_number);
+                "where st.ac_number = '%s' order by st.stm_id DESC", ac_number );
         DB_Connection db = new DB_Connection();
         parent.clearTable();
-        try{
+        try {
             label_display_number.setText( ac_number );
             ResultSet rs = db.getResultSet( query );
             while (rs.next()) {
-                Object[] stm_data = {rs.getString( 1 ), rs.getString( 2 ), getDecimalFormat().format(rs.getDouble( 3 ))};
+                Object[] stm_data = {rs.getString( 1 ), rs.getString( 2 ), getDecimalFormat().format( rs.getDouble( 3 ) )};
                 parent.addRow( stm_data );
             }
-            parent_scrollbar.setVerticalScrollBar( new ScrollBar());
+            parent_scrollbar.setVerticalScrollBar( new ScrollBar() );
 
-        }catch(Exception e){
+        } catch (Exception e) {
             displayError( e.getMessage() );
         }
     }
@@ -316,35 +314,36 @@ public class Method {
         return AC_Select_Card.get_showwing_ac_number();
     }
 
-    public static void ShowStmDetail(JDialog parent, String stm_id , String type_name, JLabel show_stm_id, JLabel show_bank_name, JLabel show_ac_number, JLabel show_ac_name, JLabel show_bank_type, JLabel show_amount,
-                                     JPanel trans_detail) {
+    public static void ShowStmDetail (JDialog parent, String stm_id, String type_name, JLabel show_stm_id, JLabel show_bank_name, JLabel show_ac_number, JLabel show_ac_name, JLabel show_bank_type, JLabel show_amount,
+                                      JPanel trans_detail) {
 
-        String query = String.format("select b.bank_name,ac.ac_number,ac.ac_name,s.amount,s.type_id from account as ac inner join bank b on ac.bank_id = b.bank_id inner join statements s on ac.ac_number = s.ac_number where stm_id='%s'",stm_id);
+        String query = String.format( "select b.bank_name,ac.ac_number,ac.ac_name,s.amount,s.type_id from account as ac inner join bank b on ac.bank_id = b.bank_id inner join statements s on ac.ac_number = s.ac_number where stm_id='%s'", stm_id );
         DB_Connection db = new DB_Connection();
         try {
             int temp = 0;
-            ResultSet rs = db.getResultSet(query);
-            if (rs.next()) {
+            ResultSet rs = db.getResultSet( query );
+            if ( rs.next() ) {
                 show_stm_id.setText( stm_id );
-                show_bank_name.setText( rs.getString(1) );
-                show_ac_number.setText( rs.getString(2) );
-                show_ac_name.setText( rs.getString(3) );
+                show_bank_name.setText( rs.getString( 1 ) );
+                show_ac_number.setText( rs.getString( 2 ) );
+                show_ac_name.setText( rs.getString( 3 ) );
                 show_bank_type.setText( type_name );
-                show_amount.setText( getDecimalFormat().format( rs.getDouble(4) ) );
-                if(rs.getInt( 5 ) == 3) {trans_detail.removeAll(); trans_detail.add( new transfer_detail( stm_id) );}
-                else if (rs.getInt( 5 ) == 4) {trans_detail.removeAll(); trans_detail.add( new receive_detail(stm_id));}
-                else trans_detail.removeAll();
+                show_amount.setText( getDecimalFormat().format( rs.getDouble( 4 ) ) );
+                if ( rs.getInt( 5 ) == 3 ) {
+                    trans_detail.removeAll();
+                    trans_detail.add( new transfer_detail( stm_id ) );
+                } else if ( rs.getInt( 5 ) == 4 ) {
+                    trans_detail.removeAll();
+                    trans_detail.add( new receive_detail( stm_id ) );
+                } else trans_detail.removeAll();
 
             }
             parent.setVisible( true );
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             displayError( e.getMessage() );
         }
     }
-
-
-
 
 
     // </editor-fold>
@@ -361,7 +360,7 @@ public class Method {
             int num = 0;
             while (rs.next()) {
                 num++;
-                parent_panel.add( new AC_Select_Card( parent_layout, parent_panel, rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), getDecimalFormat().format(rs.getDouble( 4 )) ), String.valueOf( num ) );
+                parent_panel.add( new AC_Select_Card( parent_layout, parent_panel, rs.getString( 1 ), rs.getString( 2 ), rs.getString( 3 ), getDecimalFormat().format( rs.getDouble( 4 ) ) ), String.valueOf( num ) );
             }
             parent_layout.show( parent_panel, "1" );
         } catch (Exception e) {
@@ -382,41 +381,41 @@ public class Method {
 
         try {
 
-            if (isNumeric( amount_to_deposit )) money =  money = Double.parseDouble( amount_to_deposit );
-            else throw new Exception("Please input money to deposit");
+            if ( isNumeric( amount_to_deposit ) ) money = money = Double.parseDouble( amount_to_deposit );
+            else throw new Exception( "Please input money to deposit" );
 
 
             ResultSet rs;
 
             // Update Account balance after deposit
-            query = String.format( "update account set ac_balance=((select ac_balance from account where ac_number='%s') + '%f') where ac_number='%s'",ac_number,money,ac_number);
-            if ( db.execute( query ) ) {}
-            else throw new Exception( "Can't execute SQL 1");
+            query = String.format( "update account set ac_balance=((select ac_balance from account where ac_number='%s') + '%f') where ac_number='%s'", ac_number, money, ac_number );
+            if ( db.execute( query ) ) {
+            } else throw new Exception( "Can't execute SQL 1" );
 
             // Save deposit history
-            query = String.format("insert into moneydeposit (dp_money,ac_number) values ('%f','%s');",money,ac_number);
-            if ( db.execute( query ) ) {}
-            else throw new Exception( "Can't execute SQL 2");
+            query = String.format( "insert into moneydeposit (dp_money,ac_number) values ('%f','%s');", money, ac_number );
+            if ( db.execute( query ) ) {
+            } else throw new Exception( "Can't execute SQL 2" );
 
             // Get deposit ID to save as statement
             query = "select MAX(dp_id) from moneydeposit ;";
-            rs = db.getResultSet(query);
+            rs = db.getResultSet( query );
             rs.next();
-            String dp_id = rs.getString(1);
+            String dp_id = rs.getString( 1 );
 
             // Save transaction statement
-            query = String.format( "insert into statements (stm_date,type_id,ac_number,banking_id,amount) VALUES ('%s','%s','%s','%s','%f')",dateSql,"1",ac_number,dp_id,money);
-            if ( db.execute( query ) ) {}
-            else throw new Exception( "Can't execute SQL 3");
+            query = String.format( "insert into statements (stm_date,type_id,ac_number,banking_id,amount) VALUES ('%s','%s','%s','%s','%f')", dateSql, "1", ac_number, dp_id, money );
+            if ( db.execute( query ) ) {
+            } else throw new Exception( "Can't execute SQL 3" );
 
             // Update bank balance by bank id from account number that deposit
-            query = String.format("update bank set bank_balance = (select sum(ac_balance) " +
-                    "from account as ac inner join bank b on ac.bank_id = b.bank_id " +
-                    "where ac.bank_id=(select bank_id from account where ac_number='%s')) " +
-                    "where bank_id=(select bank_id from account where ac_number='%s')"
-                    ,ac_number,ac_number);
+            query = String.format( "update bank set bank_balance = (select sum(ac_balance) " +
+                            "from account as ac inner join bank b on ac.bank_id = b.bank_id " +
+                            "where ac.bank_id=(select bank_id from account where ac_number='%s')) " +
+                            "where bank_id=(select bank_id from account where ac_number='%s')"
+                    , ac_number, ac_number );
             if ( db.execute( query ) ) is_success = true;
-            else throw new Exception( "Can't execute SQL 4");
+            else throw new Exception( "Can't execute SQL 4" );
 
         } catch (ClassCastException e) {
             displayError( "Please input money to deposit" );
@@ -427,13 +426,13 @@ public class Method {
         }
 
         if ( is_success )
-            displayInfo( String.format( "Transaction successful\nTime : %s\nDeposit to account number : %s \nAmount to deposit : %s", date,ac_number, getDecimalFormat().format(money) ) );
+            displayInfo( String.format( "Transaction successful\nTime : %s\nDeposit to account number : %s \nAmount to deposit : %s", date, ac_number, getDecimalFormat().format( money ) ) );
         else displayError( String.format( "Transaction fail\nTime : %s\n", date ) );
 
 
     }
 
-    public static void Withdraw (String amount_to_withdraw, String ac_number){
+    public static void Withdraw (String amount_to_withdraw, String ac_number) {
 
         double money = 0.0;
         double ac_balance = 0.0;
@@ -445,20 +444,20 @@ public class Method {
         String dateSql = sdfSql.format( new Date() );
         boolean is_success;
 
-        try{
+        try {
 
-            if (isNumeric( amount_to_withdraw )) money = Double.parseDouble( amount_to_withdraw );
-            else throw new Exception("Please input money to withdraw");
+            if ( isNumeric( amount_to_withdraw ) ) money = Double.parseDouble( amount_to_withdraw );
+            else throw new Exception( "Please input money to withdraw" );
 
             ResultSet rs;
 
-            String pin =JOptionPane.showInputDialog( null,"Please enter account PIN Code :");
-            if (  pin.equals("") ) throw new Exception("Please input PIN Code");
+            String pin = JOptionPane.showInputDialog( null, "Please enter account PIN Code :" );
+            if ( pin.equals( "" ) ) throw new Exception( "Please input PIN Code" );
 
-            query = String.format( "select * from account where ac_number='%s' and ac_pin='%s'",ac_number,pin);
+            query = String.format( "select * from account where ac_number='%s' and ac_pin='%s'", ac_number, pin );
             rs = db.getResultSet( query );
-            if ( rs.next() ) {}
-            else throw new Exception( "Wrong Pin Code");
+            if ( rs.next() ) {
+            } else throw new Exception( "Wrong Pin Code" );
 
             query = String.format( "select ac_balance from account where ac_number='%s'", ac_number );
             rs = db.getResultSet( query );
@@ -466,118 +465,113 @@ public class Method {
                 ac_balance = rs.getDouble( 1 );
             }
 
-            if (ac_balance >= money){
+            if ( ac_balance >= money ) {
                 // Update Account balance after withdraw
-                query = String.format( "update account set ac_balance=((select ac_balance from account where ac_number='%s') - '%f') where ac_number='%s'",ac_number,money,ac_number);
-                if ( db.execute( query ) ) {}
-                else throw new Exception( "Can't execute SQL 1");
+                query = String.format( "update account set ac_balance=((select ac_balance from account where ac_number='%s') - '%f') where ac_number='%s'", ac_number, money, ac_number );
+                if ( db.execute( query ) ) {
+                } else throw new Exception( "Can't execute SQL 1" );
 
                 // Save withdraw history
-                query = String.format("insert into moneywithdraw (wd_money,ac_number) values ('%f','%s');",money,ac_number);
-                if ( db.execute( query ) ) {}
-                else throw new Exception( "Can't execute SQL 2");
+                query = String.format( "insert into moneywithdraw (wd_money,ac_number) values ('%f','%s');", money, ac_number );
+                if ( db.execute( query ) ) {
+                } else throw new Exception( "Can't execute SQL 2" );
 
                 // Get deposit ID to save as statement
                 query = "select MAX(wd_id) from moneywithdraw ;";
-                rs = db.getResultSet(query);
+                rs = db.getResultSet( query );
                 rs.next();
-                String wd_id = rs.getString(1);
+                String wd_id = rs.getString( 1 );
 
                 // Save transaction statement
-                query = String.format( "insert into statements (stm_date,type_id,ac_number,banking_id,amount) VALUES ('%s','%s','%s','%s','%f')",dateSql,"2",ac_number,wd_id,money);
-                if ( db.execute( query ) ) {}
-                else throw new Exception( "Can't execute SQL 3");
+                query = String.format( "insert into statements (stm_date,type_id,ac_number,banking_id,amount) VALUES ('%s','%s','%s','%s','%f')", dateSql, "2", ac_number, wd_id, money );
+                if ( db.execute( query ) ) {
+                } else throw new Exception( "Can't execute SQL 3" );
 
                 // Update bank balance by bank id from account number that withdraw
-                query = String.format("update bank set bank_balance = (select sum(ac_balance) " +
+                query = String.format( "update bank set bank_balance = (select sum(ac_balance) " +
                                 "from account as ac inner join bank b on ac.bank_id = b.bank_id " +
                                 "where ac.bank_id=(select bank_id from account where ac_number='%s')) " +
                                 "where bank_id=(select bank_id from account where ac_number='%s')"
-                        ,ac_number,ac_number);
+                        , ac_number, ac_number );
                 if ( db.execute( query ) ) is_success = true;
-                else throw new Exception( "Can't execute SQL 4");
-            }else throw new Exception( "Money not enough" );
+                else throw new Exception( "Can't execute SQL 4" );
+            } else throw new Exception( "Money not enough" );
 
-        }catch(ClassCastException e){
+        } catch (ClassCastException e) {
             displayError( "Please input money to withdraw" );
             is_success = false;
-        }
-        catch (Exception e) {
-            displayError( e.getMessage());
+        } catch (Exception e) {
+            displayError( e.getMessage() );
             is_success = false;
         }
 
         if ( is_success )
-            displayInfo( String.format( "Transaction successful\nTime : %s\nWithdraw to account number : %s \nAmount to withdraw : %s", date,ac_number, getDecimalFormat().format(money) ) );
+            displayInfo( String.format( "Transaction successful\nTime : %s\nWithdraw to account number : %s \nAmount to withdraw : %s", date, ac_number, getDecimalFormat().format( money ) ) );
         else displayError( String.format( "Transaction fail\nTime : %s\n", date ) );
 
     }
 
-    static String current_number_recipient, current_number_transferor,current_bank_name_recipient;
+    static String current_number_recipient, current_number_transferor, current_bank_name_recipient;
     static double amount_to_transfer;
 
-    public static boolean SetTransferDetails(String ac_number_transferor, String ac_number_recipient,String bank_recipient,String amount,JLabel show_number_transferor,JLabel show_name_transferor,JLabel show_bank_transferor,JLabel show_number_recipient,JLabel show_name_recipient,JLabel show_bank_recipient,JLabel show_amount_trasfer){
+    public static boolean SetTransferDetails (String ac_number_transferor, String ac_number_recipient, String bank_recipient, String amount, JLabel show_number_transferor, JLabel show_name_transferor, JLabel show_bank_transferor, JLabel show_number_recipient, JLabel show_name_recipient, JLabel show_bank_recipient, JLabel show_amount_trasfer) {
         String query;
         DB_Connection db = new DB_Connection();
         ResultSet rs;
         try {
 
-            if (isNumeric( amount )) amount_to_transfer = Double.parseDouble( amount );
-            else throw new Exception("Please input money to transfer");
+            if ( isNumeric( amount ) ) amount_to_transfer = Double.parseDouble( amount );
+            else throw new Exception( "Please input money to transfer" );
 
 
             current_number_transferor = ac_number_transferor;
             current_number_recipient = ac_number_recipient;
-            if(ac_number_recipient.equals( "" )) throw new NumberFormatException();
+            if ( ac_number_recipient.equals( "" ) ) throw new NumberFormatException();
 
             // Set Label transferor
-            show_number_transferor.setText(ac_number_transferor);
+            show_number_transferor.setText( ac_number_transferor );
 
-            try{
-                query = String.format( "select ac.ac_name, bk.bank_name from account as ac inner join bank as bk on ac.bank_id = bk.bank_id where ac.ac_number = '%s'",ac_number_transferor);
+            try {
+                query = String.format( "select ac.ac_name, bk.bank_name from account as ac inner join bank as bk on ac.bank_id = bk.bank_id where ac.ac_number = '%s'", ac_number_transferor );
                 rs = db.getResultSet( query );
                 rs.next();
-                show_name_transferor.setText( rs.getString(1) );
-                show_bank_transferor.setText(rs.getString(2));
-            }
-            catch (Exception e){
-                throw new Exception("Can't get account name transferor");
+                show_name_transferor.setText( rs.getString( 1 ) );
+                show_bank_transferor.setText( rs.getString( 2 ) );
+            } catch (Exception e) {
+                throw new Exception( "Can't get account name transferor" );
             }
 
             // Set Label recipient
             show_number_recipient.setText( ac_number_recipient );
 
-            try{
-                query = String.format( "select ac.ac_name, bk.bank_name from account as ac inner join bank as bk on ac.bank_id = bk.bank_id where ac.ac_number = '%s' and bk.bank_name='%s' and ac.ac_status='t'",ac_number_recipient,bank_recipient);
+            try {
+                query = String.format( "select ac.ac_name, bk.bank_name from account as ac inner join bank as bk on ac.bank_id = bk.bank_id where ac.ac_number = '%s' and bk.bank_name='%s' and ac.ac_status='t'", ac_number_recipient, bank_recipient );
                 rs = db.getResultSet( query );
                 rs.next();
                 current_bank_name_recipient = bank_recipient;
-                show_name_recipient.setText( rs.getString(1) );
-                show_bank_recipient.setText(rs.getString(2));
+                show_name_recipient.setText( rs.getString( 1 ) );
+                show_bank_recipient.setText( rs.getString( 2 ) );
+            } catch (Exception e) {
+                throw new Exception( "Account number of bank was wrong" );
             }
-            catch(Exception e){
-                throw new Exception("Account number of bank was wrong");
-            }
 
 
-
-            show_amount_trasfer.setText( getDecimalFormat().format(amount_to_transfer));
+            show_amount_trasfer.setText( getDecimalFormat().format( amount_to_transfer ) );
             return true;
 
-        }catch(ClassCastException e){
+        } catch (ClassCastException e) {
             displayError( "Please input money to transfer" );
             return false;
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             displayError( "Please input amount or account number" );
             return false;
-        }
-        catch (Exception e) {
-            displayError( e.getMessage());
-            return  false;
+        } catch (Exception e) {
+            displayError( e.getMessage() );
+            return false;
         }
     }
 
-    public static boolean Transfer (String pin){
+    public static boolean Transfer (String pin) {
 
         String query;
         double ac_balance = 0.0;
@@ -589,12 +583,12 @@ public class Method {
         String dateSql = sdfSql.format( new Date() );
         try {
 
-            if ( pin.equals("") ) throw new Exception("Please input PIN Code");
+            if ( pin.equals( "" ) ) throw new Exception( "Please input PIN Code" );
 
-            query = String.format( "select * from account where ac_number='%s' and ac_pin='%s'",current_number_transferor,pin);
+            query = String.format( "select * from account where ac_number='%s' and ac_pin='%s'", current_number_transferor, pin );
             rs = db.getResultSet( query );
-            if ( rs.next() ) {}
-            else throw new Exception( "Wrong Pin Code");
+            if ( rs.next() ) {
+            } else throw new Exception( "Wrong Pin Code" );
 
             query = String.format( "select ac_balance from account where ac_number='%s'", current_number_transferor );
             rs = db.getResultSet( query );
@@ -602,68 +596,68 @@ public class Method {
                 ac_balance = rs.getDouble( 1 );
             }
 
-            if (ac_balance >= amount_to_transfer){
+            if ( ac_balance >= amount_to_transfer ) {
 
                 // <editor-fold defaultstate="collapsed" desc="Transferor Part">
                 // Update account balance
-                query = String.format( "update account set ac_balance=(select ac_balance from account where ac_number='%s') - %f where ac_number='%s'",current_number_transferor,amount_to_transfer,current_number_transferor);
-                if( db.execute(query) ) {}
-                else throw new Exception( "Can't execute SQL 1'");
+                query = String.format( "update account set ac_balance=(select ac_balance from account where ac_number='%s') - %f where ac_number='%s'", current_number_transferor, amount_to_transfer, current_number_transferor );
+                if ( db.execute( query ) ) {
+                } else throw new Exception( "Can't execute SQL 1'" );
 
                 // Update bank balance
-                query = String.format("update bank set bank_balance = (select sum(ac_balance) " +
+                query = String.format( "update bank set bank_balance = (select sum(ac_balance) " +
                                 "from account as ac inner join bank b on ac.bank_id = b.bank_id " +
                                 "where ac.bank_id=(select bank_id from account where ac_number='%s')) " +
                                 "where bank_id=(select bank_id from account where ac_number='%s')"
-                        ,current_number_transferor,current_number_transferor);
-                if ( db.execute( query ) ) {}
-                else throw new Exception( "Can't execute SQL 2");
+                        , current_number_transferor, current_number_transferor );
+                if ( db.execute( query ) ) {
+                } else throw new Exception( "Can't execute SQL 2" );
                 // </editor-fold>
 
                 // <editor-fold defaultstate="collapsed" desc="Recipient Part">
                 // Update account balance
-                query = String.format( "update account set ac_balance=(select ac_balance from account where ac_number='%s') + %f where ac_number='%s'",current_number_recipient,amount_to_transfer,current_number_recipient);
-                if( db.execute(query) ) {}
-                else throw new Exception( "Can't execute SQL 3'");
+                query = String.format( "update account set ac_balance=(select ac_balance from account where ac_number='%s') + %f where ac_number='%s'", current_number_recipient, amount_to_transfer, current_number_recipient );
+                if ( db.execute( query ) ) {
+                } else throw new Exception( "Can't execute SQL 3'" );
 
                 // Update bank balance
-                query = String.format("update bank set bank_balance = (select sum(ac_balance) " +
+                query = String.format( "update bank set bank_balance = (select sum(ac_balance) " +
                                 "from account as ac inner join bank b on ac.bank_id = b.bank_id " +
                                 "where ac.bank_id=(select bank_id from account where ac_number='%s')) " +
                                 "where bank_id=(select bank_id from account where ac_number='%s')"
-                        ,current_number_recipient,current_number_recipient);
-                if ( db.execute( query ) ) {}
-                else throw new Exception( "Can't execute SQL 4");
+                        , current_number_recipient, current_number_recipient );
+                if ( db.execute( query ) ) {
+                } else throw new Exception( "Can't execute SQL 4" );
                 // </editor-fold>
 
                 // Save transfer history
-                query = String.format( "insert into moneytransfer (tf_money,ac_number_transferor,ac_number_recipient) values ('%f','%s','%s')",amount_to_transfer,current_number_transferor,current_number_recipient );
-                if ( db.execute( query ) ) {}
-                else throw new Exception( "Can't execute SQL 5");
+                query = String.format( "insert into moneytransfer (tf_money,ac_number_transferor,ac_number_recipient) values ('%f','%s','%s')", amount_to_transfer, current_number_transferor, current_number_recipient );
+                if ( db.execute( query ) ) {
+                } else throw new Exception( "Can't execute SQL 5" );
 
                 // Get transfer ID to save as statement
                 query = "select MAX(tf_id) from moneytransfer ;";
-                rs = db.getResultSet(query);
+                rs = db.getResultSet( query );
                 rs.next();
-                String tf_id = rs.getString(1);
+                String tf_id = rs.getString( 1 );
 
                 // Save transaction statement
-                query = String.format( "insert into statements (stm_date,type_id,ac_number,banking_id,amount) VALUES ('%s','%s','%s','%s','%f')",dateSql,"3",current_number_transferor,tf_id,amount_to_transfer);
-                if ( db.execute( query ) ) {}
-                else throw new Exception( "Can't execute SQL 6");
+                query = String.format( "insert into statements (stm_date,type_id,ac_number,banking_id,amount) VALUES ('%s','%s','%s','%s','%f')", dateSql, "3", current_number_transferor, tf_id, amount_to_transfer );
+                if ( db.execute( query ) ) {
+                } else throw new Exception( "Can't execute SQL 6" );
 
-                query = String.format( "insert into statements (stm_date,type_id,ac_number,banking_id,amount) VALUES ('%s','%s','%s','%s','%f')",dateSql,"4",current_number_recipient,tf_id,amount_to_transfer);
-                if ( db.execute( query ) ) {}
-                else throw new Exception( "Can't execute SQL 7");
+                query = String.format( "insert into statements (stm_date,type_id,ac_number,banking_id,amount) VALUES ('%s','%s','%s','%s','%f')", dateSql, "4", current_number_recipient, tf_id, amount_to_transfer );
+                if ( db.execute( query ) ) {
+                } else throw new Exception( "Can't execute SQL 7" );
 
-                displayInfo( String.format( "Transaction successful\nTime : %s\nTransfer to account number : %s \nAmount to transfer : %s", date,current_number_recipient, getDecimalFormat().format(amount_to_transfer) ) );
+                displayInfo( String.format( "Transaction successful\nTime : %s\nTransfer to account number : %s \nAmount to transfer : %s", date, current_number_recipient, getDecimalFormat().format( amount_to_transfer ) ) );
                 return true;
 
-            }else throw new Exception( "Money not enough" );
+            } else throw new Exception( "Money not enough" );
 
 
-        }catch (Exception e) {
-            displayError(e.getMessage());
+        } catch (Exception e) {
+            displayError( e.getMessage() );
             displayError( String.format( "Transaction fail\nTime : %s\n", date ) );
             return false;
         }
@@ -684,11 +678,11 @@ public class Method {
     }
 
     public static void displayInfo (double message) {
-        JOptionPane.showMessageDialog( null, String.valueOf(message), "Information", JOptionPane.INFORMATION_MESSAGE );
+        JOptionPane.showMessageDialog( null, String.valueOf( message ), "Information", JOptionPane.INFORMATION_MESSAGE );
     }
 
     public static void displayInfo (int message) {
-        JOptionPane.showMessageDialog( null, String.valueOf(message), "Information", JOptionPane.INFORMATION_MESSAGE );
+        JOptionPane.showMessageDialog( null, String.valueOf( message ), "Information", JOptionPane.INFORMATION_MESSAGE );
     }
 
     public static boolean isNumeric (String string) {
@@ -700,7 +694,14 @@ public class Method {
         try {
             intValue = Integer.parseInt( string );
             return true;
-        } catch (NumberFormatException e) {return false;}
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public static boolean isValidString (String string) {
+        if ( !string.equals( "" ) ) return true;
+        else return false;
     }
 
     public static void center_screen (JDialog parent) {
@@ -733,8 +734,8 @@ public class Method {
         } );
     }
 
-    public static DecimalFormat getDecimalFormat(){
-        DecimalFormat df = new DecimalFormat("#,###,###.## ฿");
+    public static DecimalFormat getDecimalFormat () {
+        DecimalFormat df = new DecimalFormat( "#,###,###.## ฿" );
         return df;
     }
 
