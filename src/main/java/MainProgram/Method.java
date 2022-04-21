@@ -239,28 +239,7 @@ public class Method {
 
         DB_Connection db = new DB_Connection();
         try {
-
-            if ( isNumeric( ac_pin ) ) {
-            } else throw new Exception( "PIN Code must be digit" );
-
-            if ( isNumeric( ac_tel ) ) {
-            } else throw new Exception( "Tel. must be digit" );
-
-            if ( isNumeric( ac_citizenid ) ) {
-            } else throw new Exception( "Citizen ID must be digit" );
-
-            if ( ac_pin.length() == 4 ) {
-            } else throw new Exception( "PIN Code must have 4 digit" );
-
-            if ( ac_citizenid.length() == 13 ) {
-            } else throw new Exception( "Citizen ID must have 13 digit" );
-
-            if ( ac_tel.length() == 10 ) {
-            } else throw new Exception( "Citizen ID must have 10 digit" );
-
-            if ( db.execute( query ) ) displayInfo( "Open account done" );
-            else throw new Exception( "Fail to open account" );
-
+           if(db.execute( query ))displayInfo("Complete");
             AC_Select_Card.Reset_AC_number();
 
         } catch (Exception e) {
@@ -687,6 +666,7 @@ public class Method {
 
     public static boolean isNumeric (String string) {
         int intValue;
+        displayInfo(string);
         if ( string == null || string.equals( "" ) ) {
             return false;
         }
