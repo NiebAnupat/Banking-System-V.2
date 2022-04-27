@@ -53,7 +53,7 @@ public class Method {
     public static void Register (JFrame parent, String user_id, String user_password, String user_confirm_password, String user_name, String user_tel, String user_mail, String user_citizen_id, String user_address) {
 
         boolean temp;
-        if ( isValidString( user_id ) && isValidString( user_password ) && isValidString( user_confirm_password ) && isValidString( user_name ) && isValidString( user_tel ) && isValidString( user_mail ) && isValidString( user_citizen_id ) && isValidString( user_address ) ) {
+        if ( isValidString( user_id ) && isValidString( user_password ) && isValidString( user_confirm_password ) && isValidString( user_name ) && isValidString( user_tel ) && isValidString( user_mail ) && isValidString( user_citizen_id ) && isValidString( user_address ) && user_citizen_id.length() == 13 ) {
             if ( user_password.equals( user_confirm_password ) ) {
                 DB_Connection db = new DB_Connection();
                 try {
@@ -233,18 +233,20 @@ public class Method {
 
     public static void Register_ac (String ac_number, String bank_id, String ac_name, String ac_pin, String ac_tel, String ac_citizenid, String ac_address) {
 
-        String query = String.format( "insert into account " +
-                        "values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')",
-                current_id, ac_number, bank_id, ac_name, 0.0, ac_pin, ac_tel, ac_citizenid, ac_address, "t" );
+        if ( !isValidString( ac_number ) && !isValidString( bank_id ) && !isValidString( ac_name ) && !isValidString( ac_pin ) && !isValidString( ac_tel ) && !isValidString( ac_citizenid ) && !isValidString( ac_address ) && ac_citizenid.length() == 13 && ac_tel.length() == 10 ) {
+            String query = String.format( "insert into account " +
+                            "values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')",
+                    current_id, ac_number, bank_id, ac_name, 0.0, ac_pin, ac_tel, ac_citizenid, ac_address, "t" );
 
-        DB_Connection db = new DB_Connection();
-        try {
-           if(db.execute( query ))displayInfo("Complete");
-            AC_Select_Card.Reset_AC_number();
+            DB_Connection db = new DB_Connection();
+            try {
+                if ( db.execute( query ) ) displayInfo( "Complete" );
+                AC_Select_Card.Reset_AC_number();
 
-        } catch (Exception e) {
-            displayError( e.getMessage() );
-        }
+            } catch (Exception e) {
+                displayError( e.getMessage() );
+            }
+        }else displayError( "Please enter your information" );
 
     }
 
@@ -666,8 +668,7 @@ public class Method {
 
     public static boolean isNumeric (String string) {
         int intValue;
-        displayInfo(string);
-        if ( string == null || string.equals( "" ) ) {
+        if ( isValidString( string )) {
             return false;
         }
 
@@ -680,16 +681,8 @@ public class Method {
     }
 
     public static boolean isValidString (String string) {
-        if ( !string.equals( "" ) ) return true;
+        if ( !string.equals( "" ) || !string.isEmpty() ) return true;
         else return false;
-    }
-
-    public static void center_screen (JDialog parent) {
-        int lebar = parent.getWidth() / 2;
-        int tinggi = parent.getHeight() / 2;
-        int x = ( Toolkit.getDefaultToolkit().getScreenSize().width / 2 ) - lebar;
-        int y = ( Toolkit.getDefaultToolkit().getScreenSize().height / 2 ) - tinggi;
-        parent.setLocation( x, y );
     }
 
     public static void Escape (JFrame parent) {
